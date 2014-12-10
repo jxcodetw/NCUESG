@@ -1,0 +1,83 @@
+extends layout
+
+block stylesheet
+  link(rel='stylesheet', href='/css/login.css')
+
+block content
+  div.content-wrapper
+    div.content-main
+      h1= error
+      if type === 'login'
+        h1 登入 中央電競大賽
+        p.
+          你必須登入之後才可以參加相關比賽
+      else
+        h1 註冊 中央電競大賽
+        p.
+          凡是與中央大學有直接或間接關係者皆可以加入會員
+      div.pure-menu.pure-menu-open.pure-menu-horizontal
+        ul
+          if type === 'login'
+            li.pure-menu-selected
+              a(href) 登入
+            li
+              a(href='register') 註冊
+          else
+            li
+              a(href='login') 登入
+            li.pure-menu-selected
+              a(href) 註冊
+      form.pure-form.pure-form-stacked(role='form', action='/' + type, method='post')
+        fieldset
+          br
+          label(for='email') 電子郵件
+          input(id='email',type='email',name='email', placeholder='Email')
+          label(for='password') 密碼
+          input(id='password',type='password',name='password', placeholder='Password')
+          if type === 'register'
+            label(for='password2') 確認密碼
+            input(id='password2',type='password',name='password2' placeholder='Password Again')
+            label(for='name') 姓名
+            input(id='name',type='text',name='name')
+            div.pure-g
+              div.pure-u-1-2
+                label(for='student_number') 學號
+                input(id='student_number',type='text',name='studentid')
+                label(for='phone') 手機
+                input(id='phone',type='text',name='phone')
+              div.pure-u-1-2
+                label(for='department') 系所
+                  select(name='department')
+                    option(value="1") 校外人士
+                    option(value="2") 中國文學系
+                    option(value="3") 英美語文學系
+                    option(value="4") 法國語文學系
+                    option(value="5") 理學院學士班
+                    option(value="6") 物理學系
+                    option(value="7") 數學系
+                    option(value="8") 化學學系
+                    option(value="9") 生命科學系
+                    option(value="10") 光電科學與工程學系
+                    option(value="11") 化學工程與材料工程學系
+                    option(value="12") 土木工程學系
+                    option(value="13") 機械工程學系
+                    option(value="14") 企業管理學系
+                    option(value="15") 資訊管理學系
+                    option(value="16") 財務金融學系
+                    option(value="17") 經濟學系
+                    option(value="18") 電機工程學系
+                    option(value="19") 資訊工程學系
+                    option(value="20") 通訊工程學系
+                    option(value="21") 地球科學學系
+                    option(value="22") 大氣科學學系
+                label(for='grade') 年級
+                  select(name='grade')
+                    option(value="1") 1年級
+                    option(value="2") 2年級
+                    option(value="3") 3年級
+                    option(value="4") 4年級
+                    option(value="5") 碩士
+                    option(value="6") 博士
+          hr
+          div.btnarea
+            button#btn-submit.pure-button.pure-button-primary(type='submit')= (type==='login') ? '登入' : '註冊'

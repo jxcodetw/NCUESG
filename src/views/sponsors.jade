@@ -1,0 +1,41 @@
+extends layout
+
+block stylesheet
+  link(rel='stylesheet', href='/css/sponsors.css')
+  link(rel='stylesheet', href='/css/sponsors-slider.css')
+
+block content
+  div#slideshow-wrap
+    input(type='radio', id='button-1',onclick='pic=1;' name='controls', checked='checked')
+    label(for='button-1')
+    input(type='radio', id='button-2',onclick='pic=2;' name='controls')
+    label(for='button-2')
+    input(type='radio', id='button-3',onclick='pic=3;' name='controls')
+    label(for='button-3')
+    input(type='radio', id='button-4',onclick='pic=4;' name='controls')
+    label(for='button-4')
+    label(for='button-1', class='arrows',id='arrow-1')
+    label(for='button-2', class='arrows',id='arrow-2')
+    label(for='button-3', class='arrows',id='arrow-3')
+    label(for='button-4', class='arrows',id='arrow-4')
+    div#slideshow-inner
+      ul
+        li#slide1
+          img(src='http://images.alphacoders.com/464/464155.jpg')
+          div#starcraftinfo
+            h1 《星海爭霸®II：蟲族之心™》
+            p.
+              蟲族之心™延續星海爭霸®II的故事劇情：人類，蟲族與神族之間的鬥爭。除了這些互相爭鬥的種族之外，還有外星神使企圖要掃除銀河系中所剩無幾的一絲平和。
+        li#slide2
+          img(src='http://www.gamersbook.com/Portals/0/images/2013/11/hearthstone-screenshot-1.jpg')
+          div#hearthstoneinfo
+            h1 《爐石戰記：魔獸英雄傳》
+            p.
+              收起你的寶劍，拿出你的套牌，準備好迎接爐石戰記：魔獸英雄傳 - 一個快節奏戰術卡牌遊戲，簡單易學又非常好玩。快到 Battle.net 開始免費遊戲，使用你的卡牌來施展法術，召喚生物並指揮魔獸爭霸的英雄進行壯闊的戰術對決吧。
+        li#slide3
+          img(src='http://images.gameskinny.com/gameskinny/aa5f9befb703b984032d560eed0dc311.jpg')
+        li#slide4
+          img(src='http://cms-content.s.aeriastatic.com/501e8c7ac40e2184903a27ec9283944b/files/ava/image/1/1920_four.jpg')
+    div#progress
+  div#spacer
+  script(src='/js/sponsors.js')

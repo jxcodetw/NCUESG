@@ -1,0 +1,23 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: sans-serif, "微軟正黑體","Microsoft JhengHei","Times New Roman",Times,serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.footer {
+  background: #101014;
+  color: #999;
+  text-align: center;
+  height: 100px;
+  line-height: 100px;
+}
+
+#logo {
+  background-image: url('../img/logo.png');
+  background-size: 39px 39px;
+  background-repeat: no-repeat;
+  padding-left: 39px;
+}

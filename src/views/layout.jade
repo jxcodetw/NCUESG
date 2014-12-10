@@ -1,0 +1,52 @@
+doctype html
+html
+  head
+    title= "2015中央電競大賽" + ((title === undefined) ? '' : ' - ' + title)
+    link(rel='stylesheet', href='/css/pure-min.css')
+    link(rel='stylesheet', href='/css/style.css')
+    link(rel='stylesheet', href='/css/menu.css')
+    block stylesheet
+  body
+    div.header
+      div#topmenu.home-menu.pure-menu.pure-menu-open.pure-menu-horizontal
+        a#logo.pure-menu-heading(href='/') 2015中央電競大賽
+        ul#std-menu-items
+          li
+            a(href='/competitions') 賽事中心
+          li
+            a(href='/rule') 大賽規則
+          li
+            a(href='/participation_help') 報名須知
+          li
+            a(href='/contact') 問題舉報
+          li
+            a(href='/sponsors') 贊助商
+          li#menu-separator.pure-menu-separator
+          if !user
+            li
+              a(href='/login') 登入
+            li
+              a#btn-login.pure-button.pure-button-primary(href='/register') 註冊
+          else
+            li
+              a(href='/user/'+user.id)= user.local.name
+            li
+              a#btn-settings.pure-button.pure-button-primary(href='#', onclick='toggleMenu()', onfocus='showMenu()', onblur='hideMenu()') 選單
+              ul#submenu
+                li
+                  a(href='#') 創立隊伍
+                li.pure-menu-separator
+                li
+                  a(href='#') 會員列表
+                li
+                  a(href='#') 隊伍列表
+                li.pure-menu-separator
+                li
+                  a(href='#') 帳號設定
+                li.pure-menu-separator
+                li
+                  a(href='/logout') 登出
+    block content
+    div.footer
+      span.copyright ©2015 NCU CSIE E-Sports Game All Rights Reserved.
+    script(src='/js/all.js')
