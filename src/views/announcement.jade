@@ -78,7 +78,7 @@ block content
                               button.pure-button.pure-button-primary(type='submit', style='margin-right:20px;') 送出
                               button.pure-button(type='button', data-dismiss='modal') 取消
                 td
-                  a.del(href='/announcement/delete/' + ann.id)
+                  a.del(href='/announcement/' + ann.id + '/delete')
                     img(src='/img/delete.png', width='20')
 block javascript
   script(src='/js/modal.js')

@@ -78,7 +78,7 @@ module.exports = function(passport) {
             }
           });
         } else {
-          return done(null, false, req.flash('signupMessage', '密碼不相符'));
+          return done(null, false, req.flash('signupMessage', '兩次輸入的密碼不相符'));
         }
       });
     });

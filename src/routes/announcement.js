@@ -35,7 +35,7 @@ router.post('/edit', isAdmin, function(req, res) {
   res.redirect('/announcement');
 });
 
-router.get('/delete/:id', isAdmin, function(req, res) {  
+router.get('/:id/delete', isAdmin, function(req, res) {  
   Announcement.findById(req.params.id, function(err, doc) {
     doc.remove();
   });

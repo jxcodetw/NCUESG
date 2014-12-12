@@ -7,7 +7,8 @@ block stylesheet
 block content
   div.content-wrapper
     div.content-main
-      h1= error
+      if error != ""
+        p.error= error
       if type === 'login'
         h1 登入 中央電競大賽
         p.
@@ -32,20 +33,20 @@ block content
         fieldset
           br
           label(for='email') 電子郵件
-          input(id='email',type='email',name='email', placeholder='Email')
+          input(id='email',type='email',name='email', placeholder='Email',required)
           label(for='password') 密碼
-          input(id='password',type='password',name='password', placeholder='Password')
+          input(id='password',type='password',name='password', placeholder='Password',required)
           if type === 'register'
             label(for='password2') 確認密碼
-            input(id='password2',type='password',name='password2' placeholder='Password Again')
+            input(id='password2',type='password',name='password2' placeholder='Password Again',required)
             label(for='name') 姓名
-            input(id='name',type='text',name='name', placeholder='Name')
+            input(id='name',type='text',name='name', placeholder='Name',required, autocomplete='off')
             div.pure-g
               div.pure-u-1-2
                 label(for='student_number') 學號
-                input(id='student_number',type='text',name='studentid', placeholder='StudentNumber')
+                input(id='student_number',type='text',name='studentid', placeholder='StudentNumber',required, autocomplete='off')
                 label(for='phone') 手機
-                input(id='phone',type='text',name='phone', placeholder='PhoneNumber')
+                input(id='phone',type='text',name='phone', placeholder='PhoneNumber', required, autocomplete='off')
               div.pure-u-1-2
                 label(for='department') 系所
                   select(name='department')
@@ -88,8 +89,16 @@ block content
                   div.modal-header
                     h1#myModalLabel.modal-title 報名須知
                   div.modal-body
+                    h2 購買啟動碼
+                    p 凡是欲參加比賽之戰隊，皆須購買啟動碼
                     pre.
-                      hello
+                      時間：2014/02/17 ~ 2014/02/21
+                      地點：中央大學宵夜街口-77乳加攤位
+                      報名費用(以戰隊為單位)：
+                      英雄聯盟:250(5+1人)
+                      星海爭霸:免費!(1人)
+                      詳細獎項請見賽事中心
+                    h2 戰隊之中必須有一半人為中央大學在學學生，否則該戰隊不予參賽
                   div.modal-footer
                     button.pure-button(type='button', data-dismiss='modal') 關閉
           hr

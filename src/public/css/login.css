@@ -54,3 +54,13 @@ input {
 select {
   margin: 1em 0 !important;
 }
+
+.error {
+  background: rgb(202, 60, 60);
+  height: 20px;
+  line-height: 20px;
+  border-radius: 3px;
+  text-align: center;
+  color: #fff;
+  padding: 5px;
+}

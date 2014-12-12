@@ -65,7 +65,8 @@ module.exports = function(passport) {
   router.get('/register', isLoggedIn, function(req, res) {
     res.render('login', {
       title: '註冊',
-      type: 'register'
+      type: 'register',
+      error: req.flash('signupMessage')
     });
   });
 
