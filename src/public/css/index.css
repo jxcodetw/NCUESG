@@ -27,7 +27,9 @@
 }
 
 .section-announcement {
-  height: 380px;
+  background: #fff;
+  min-height: 300px;
+  padding-bottom: 30px;
 }
 
 .announcement {
@@ -45,3 +47,12 @@ table {
   width: 95%;
 }
 
+h2 > span.more {
+  float: right;
+  font-size: 14px;
+}
+
+td a {
+  color: #0078E7;
+  text-decoration: none;
+}

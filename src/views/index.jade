@@ -2,6 +2,7 @@ extends layout
 
 block stylesheet
   link(rel='stylesheet', href='/css/index.css')
+  link(rel='stylesheet', href='/css/modal.css')
 
 block content
   div.content-wrapper
@@ -30,36 +31,51 @@ block content
       div.announcement.pure-g
         div.pure-u-1-2
           h2 重要公告
+            span.more
+              a.pure-button(href='/announcement') 更多
           table.pure-table.pure-table-horizontal
             thead
               tr
                 th 標題
                 th(width="30%") 發布日期
             tbody
-              tr
-                td 決賽賽程公告
-                td 2014-03-21
-              tr
-                td 決賽賽制更改
-                td 2014-03-21
-              tr
-                td 複賽賽制更動&賽程公布
-                td 2014-03-17
               each important in announcement_important
                 tr
-                  td= important.title
-                  td= important.created
+                  td 
+                    a(href='#'+important.id role='button' data-toggle='modal')= important.title
+                    div.modal.fade(id=important.id, tabindex='-1', role='dialog', aria-hidden='true')
+                      div.modal-dialog
+                        div.modal-content
+                          div.modal-header
+                            h1.modal-title= important.title
+                          div.modal-body
+                            pre!= important.content
+                          div.modal-footer
+                            button.pure-button(type='button', data-dismiss='modal') 關閉
+                  td= important.created.getFullYear() + "/" + (important.created.getMonth()+1) + "/" + important.created.getDate()
         div.pure-u-1-2
           h2 一般公告
+            span.more
+              a.pure-button(href='/announcement') 更多
           table.pure-table.pure-table-horizontal
             thead
               tr
                 th 標題
                 th(width="30%") 發布日期
             tbody
-              tr
-                td 跑跑卡丁車規則更正
-                td 2014-02-20
-              tr
-                td 星海爭霸冠軍獎品變更
-                td 2014-02-20
+              each normal in announcement_normal
+                tr
+                  td 
+                    a(href='#'+normal.id role='button' data-toggle='modal')= normal.title
+                    div.modal.fade(id=normal.id, tabindex='-1', role='dialog', aria-hidden='true')
+                      div.modal-dialog
+                        div.modal-content
+                          div.modal-header
+                            h1.modal-title= normal.title
+                          div.modal-body
+                            pre!= normal.content
+                          div.modal-footer
+                            button.pure-button(type='button', data-dismiss='modal') 關閉
+                  td= normal.created.getFullYear() + "/" + (normal.created.getMonth()+1) + "/" + normal.created.getDate()
+block javascript
+  script(src='/js/modal.js')

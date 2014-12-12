@@ -12,6 +12,10 @@ var userSchema = mongoose.Schema({
     department: Number,
     grade: Number,
     level: Number,
+    teamLOL: String,
+    teamAVA: String,
+    teamSC: String,
+    teamHS: String,
     created: Date,
     updated: {type: Date, default: Date.now}
   }

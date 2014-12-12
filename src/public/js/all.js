@@ -12,7 +12,7 @@ if (btnMenu != null) {
   btnMenu.addEventListener('blur', function() {
     setTimeout(function() {
       document.getElementById('submenu').style.visibility = 'hidden';
-    }, 100);
+    }, 500);
   });
 
   btnMenu.addEventListener('click', function(e) {

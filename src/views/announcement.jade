@@ -1,0 +1,84 @@
+extends layout
+
+block stylesheet
+  link(rel='stylesheet', href='/css/announcement.css')
+  link(rel='stylesheet', href='/css/modal.css')
+
+block content
+  div.content-wrapper
+    div.section-announcement
+      h1(style='text-align:center;') 電競大賽公告
+      if user && user.local.level > 0
+        a.pure-button.pure-button-primary(href='#newpost' role='button' data-toggle='modal') 新增公告
+        div#newpost.modal.fade(tabindex='-1', role='dialog', aria-hidden='true')
+          div.modal-dialog
+            div.modal-content
+              div.modal-header
+                h1.modal-title 新增公告
+              form.pure-form.pure-form-stacked(action='/announcement/new', method='post')
+                fieldset
+                  div.modal-body
+                        select(id='level', name='level')
+                          option(value='0') 一般公告
+                          option(value='1') 重要公告
+                        input(type='text', name='title', placeholder='Title', style='width: 70%;')
+                        textarea(name='content', style='width: 100%;height: 300px;', placeholder='content...')
+                  div.modal-footer
+                    button.pure-button.pure-button-primary(type='submit', style='margin-right:20px;') 送出
+                    button.pure-button(type='button', data-dismiss='modal') 取消
+      table#announcements.pure-table.pure-table-horizontal
+        thead
+          tr
+            th 標題
+            th(width="100px") 發布日期
+            if user && user.local.level > 0
+              th(width="40px") 編輯
+              th(width="40px") 刪除
+        tbody
+          each ann in announcements
+            tr
+              td 
+                a(href='#'+ann.id, role='button', data-toggle='modal')
+                  if ann.level == 1
+                    span.hot TOP!
+                  = " " + ann.title
+                div.modal.fade(id=ann.id, tabindex='-1', role='dialog', aria-hidden='true')
+                  div.modal-dialog
+                    div.modal-content
+                      div.modal-header
+                        h1#myModalLabel.modal-title= ann.title
+                      div.modal-body
+                        pre!= ann.content
+                      div.modal-footer
+                        button.pure-button(type='button', data-dismiss='modal') 關閉
+              td= ann.created.getFullYear() + "/" + (ann.created.getMonth()+1) + "/" + ann.created.getDate()
+              if user && user.local.level > 0
+                td
+                  a.edit(href='#edit' + ann.id, role='button', data-toggle='modal')
+                    img(src='/img/edit.png', width='20')
+                  div.modal.fade(id='edit' + ann.id, tabindex='-1', role='dialog', aria-hidden='true')
+                    div.modal-dialog
+                      div.modal-content
+                        div.modal-header
+                          h1.modal-title 編輯公告
+                        form.pure-form.pure-form-stacked(action='/announcement/edit', method='post')
+                          fieldset
+                            div.modal-body
+                                  select(id='level', name='level')
+                                    if ann.level == 0
+                                      option(value='0', selected='selected') 一般公告
+                                      option(value='1') 重要公告
+                                    else
+                                      option(value='0') 一般公告
+                                      option(value='1', selected='selected') 重要公告
+                                  input(type='text', name='title', placeholder='Title', style='width: 70%;', value=ann.title)
+                                  input(type='hidden', name='id', value=ann.id)
+                                  textarea(name='content', style='width: 100%;height: 300px;', placeholder='content')= ann.content
+                            div.modal-footer
+                              button.pure-button.pure-button-primary(type='submit', style='margin-right:20px;') 送出
+                              button.pure-button(type='button', data-dismiss='modal') 取消
+                td
+                  a.del(href='/announcement/delete/' + ann.id)
+                    img(src='/img/delete.png', width='20')
+block javascript
+  script(src='/js/modal.js')

@@ -2,6 +2,7 @@ extends layout
 
 block stylesheet
   link(rel='stylesheet', href='/css/login.css')
+  link(rel='stylesheet', href='/css/modal.css')
 
 block content
   div.content-wrapper
@@ -38,13 +39,13 @@ block content
             label(for='password2') 確認密碼
             input(id='password2',type='password',name='password2' placeholder='Password Again')
             label(for='name') 姓名
-            input(id='name',type='text',name='name')
+            input(id='name',type='text',name='name', placeholder='Name')
             div.pure-g
               div.pure-u-1-2
                 label(for='student_number') 學號
-                input(id='student_number',type='text',name='studentid')
+                input(id='student_number',type='text',name='studentid', placeholder='StudentNumber')
                 label(for='phone') 手機
-                input(id='phone',type='text',name='phone')
+                input(id='phone',type='text',name='phone', placeholder='PhoneNumber')
               div.pure-u-1-2
                 label(for='department') 系所
                   select(name='department')
@@ -78,6 +79,21 @@ block content
                     option(value="4") 4年級
                     option(value="5") 碩士
                     option(value="6") 博士
+          if type == 'register'
+            當我按下註冊代表我已經閱讀過 
+            a(href='#needtoknow' role='button' data-toggle='modal') 報名須知
+            div#needtoknow.modal.fade(tabindex='-1', role='dialog', aria-hidden='true')
+              div.modal-dialog
+                div.modal-content
+                  div.modal-header
+                    h1#myModalLabel.modal-title 報名須知
+                  div.modal-body
+                    pre.
+                      hello
+                  div.modal-footer
+                    button.pure-button(type='button', data-dismiss='modal') 關閉
           hr
           div.btnarea
             button#btn-submit.pure-button.pure-button-primary(type='submit')= (type==='login') ? '登入' : '註冊'
+block javascript
+  script(src='/js/modal.js')

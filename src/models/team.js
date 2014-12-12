@@ -9,9 +9,9 @@ var teamSchema = mongoose.Schema({
 teamSchema.methods.addMember = function(userId) {
   if (this.game == 'lol' || this.game == 'ava' && member.length >= 6) 
     return "Team full";
-  if (this.game == 'hs' || this.game =='sc2' && member.length >= 1)
-    return "Team full";
-  member.push(userId);
+  if (this.game == 'hs' || this.game =='sc2')
+    return "Only one player";
+  this.member.push(userId);
   this.save();
 }
 

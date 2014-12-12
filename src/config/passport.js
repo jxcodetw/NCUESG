@@ -1,5 +1,6 @@
 var LocalStrategy = require('passport-local');
 var User = require('../models/user');
+var sanitize = require('../lib/sanitize');
 
 module.exports = function(passport) {
   passport.serializeUser(function(user, done) {
@@ -27,9 +28,9 @@ module.exports = function(passport) {
         if (err)
           return done(err);
         if (!user)
-          return done(null, false, req.flash('loginMessage', 'No user found.'));
+          return done(null, false, req.flash('loginMessage', '帳號錯誤'));
         if (!user.validPassword(password))
-          return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
+          return done(null, false, req.flash('loginMessage', '密碼錯誤'));
         else
           return done(null, user);
       });
@@ -52,26 +53,32 @@ module.exports = function(passport) {
         }
         
         if (user) {
-          return done(null, false, req.flash('signupMessage', 'already taken'));
-        } else {
+          return done(null, false, req.flash('signupMessage', '已有相同帳號被註冊'));
+        } else if (password == req.body.password2) {
           var newUser = new User();
-          newUser.local.email = email;
+          newUser.local.email = sanitize(email);
           newUser.local.password = newUser.generateHash(password);
-          newUser.local.name = req.body.name;
-          newUser.local.studentid = req.body.studentid;
-          newUser.local.phone = req.body.phone;
-          newUser.local.department = req.body.department;
-          newUser.local.grade = req.body.grade;
+          newUser.local.name = sanitize(req.body.name);
+          newUser.local.studentid = sanitize(req.body.studentid);
+          newUser.local.phone = sanitize(req.body.phone);
+          newUser.local.department = sanitize(req.body.department);
+          newUser.local.grade = sanitize(req.body.grade);
           newUser.local.level = 0;
+          newUser.local.teamLOL = 0;
+          newUser.local.teamAVA = 0;
+          newUser.local.teamSC = 0;
+          newUser.local.teamHS = 0;
           newUser.local.created = new Date();
 
           newUser.save(function(err) {
             if (err) {
-              throw err;
+              return done(null, false, req.flash('signupMessage', '不知名錯誤'));
             } else {
               return done(null, newUser);
             }
           });
+        } else {
+          return done(null, false, req.flash('signupMessage', '密碼不相符'));
         }
       });
     });

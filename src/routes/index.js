@@ -6,7 +6,7 @@ module.exports = function(passport) {
   router.get('/', function(req, res) {
     var important;
     var normal;
-    Announcement.find({'level': {$gt: 0}}, function(err, ann) {
+    Announcement.find({'level': {$gt: 0}}).sort({created: 'desc'}).limit(5).exec(function(err, ann) {
       important = ann;
       Announcement.find({level: {$lt: 1}}, function(err, ann) {
         normal = ann;

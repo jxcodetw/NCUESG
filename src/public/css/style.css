@@ -1,13 +1,18 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   font-family: sans-serif, "微軟正黑體","Microsoft JhengHei","Times New Roman",Times,serif;
+  background-color: #eee;
 }
 
-a {
+li a {
   color: #00B7FF;
 }
 
 .footer {
+  position:absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
   background: #101014;
   color: #999;
   text-align: center;
@@ -20,4 +25,12 @@ a {
   background-size: 39px 39px;
   background-repeat: no-repeat;
   padding-left: 39px;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin: 0 0 100px;
 }

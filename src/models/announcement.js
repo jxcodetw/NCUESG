@@ -8,12 +8,4 @@ var announcementSchema = mongoose.Schema({
   updated: {type: Date, default: Date.now}
 });
 
-announcementSchema.methods.getImportant = function(max) {
-
-}
-
-announcementSchema.methods.getNormal = function(max) {
-
-}
-
 module.exports = mongoose.model('Announcement', announcementSchema);
