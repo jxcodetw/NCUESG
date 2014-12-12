@@ -7,7 +7,7 @@
 # for jxcode
 * get  -> /team  
 * get  -> /team/dashboard  
-* get  -> /tema/new  
+* get  -> /team/new  
 * post -> /team/new  
 * get  -> /team/:id  
 * get  -> /team/:id/edit  

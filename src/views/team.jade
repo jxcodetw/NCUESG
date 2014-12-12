@@ -1,0 +1,40 @@
+extends layout
+
+block stylesheet
+  link(rel='stylesheet', href='/css/team.css')
+  link(rel='stylesheet', href='/css/tab.css')
+
+block content
+  div.content-wrapper
+    div.section-team
+      h1(style='text-align:center;') 隊伍列表
+      div.tab
+        div.tab-painel
+          input#tab-1.tab-open(name='gametype', type='radio', checked)
+          label.tab-nav(for='tab-1') 英雄聯盟
+          div.tab-inner
+            table.team.pure-table.pure-table-horizontal
+              thead
+                tr
+                  th 隊名
+                  th 隊長
+                  th 隊員
+              tbody
+                tr
+                  td 守護家園
+                  td 無期輪
+                  td 安安 安安123
+        div.tab-painel
+          input#tab-2.tab-open(name='gametype', type='radio')
+          label.tab-nav(for='tab-2') 爐石戰記
+          div.tab-inner test2
+        div.tab-painel
+          input#tab-3.tab-open(name='gametype', type='radio')
+          label.tab-nav(for='tab-3') 星海爭霸
+          div.tab-inner test3
+        div.tab-painel
+          input#tab-4.tab-open(name='gametype', type='radio')
+          label.tab-nav(for='tab-4') AVA
+          div.tab-inner test4
+
+
