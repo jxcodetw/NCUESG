@@ -1,0 +1,69 @@
+extends layout
+
+block stylesheet
+  link(rel='stylesheet', href='/css/dashboard.css')
+  link(rel='stylesheet', href='/css/modal.css')
+
+block content
+  div.content-wrapper
+    div.section-games
+      div#lol.gameboard.pure-g
+        div.pure-u-5-12
+          img(src='http://sms111.org/wallpapers/wp-content/gallery/league-of-legends/leagueofl-18.jpg' height='200')
+        div.pure-u-7-12
+          h2 《英雄聯盟》
+          if team.lol
+            h3= '隊名：' + team.lol.name
+            h4.member
+              = '隊長：'
+              a(href='/user/' + team.lol.leader.id)= team.lol.leader.local.name
+              != '&nbsp;&nbsp;&nbsp;&nbsp;隊員：'
+              if team.lol.member.length == 0
+                = None
+              else
+                each m in team.lol.member
+                  a(href='/user/'+m.id)= m.local.name
+                  != '&nbsp;&nbsp;'
+            div.btns
+              if team.lol.leader.id == user.id
+                a.pure-button.pure-button-primary(href='/team/' + team.lol.id + '/edit') 編輯隊伍
+              a.pure-button.pure-button-primary 填寫玩家基本資料
+          else
+            h3 尚未加入組隊
+            div.btns
+              a.pure-button.pure-button-primary(href='#createlol' role='button' data-toggle='modal') 創立隊伍
+              div#createlol.modal.fade(tabindex='-1', role='dialog', aria-hidden='true')
+                div.modal-dialog
+                  div.modal-content
+                    form.pure-form.pure-form-stacked(action='/team/new', method='post')
+                      fieldset
+                        div.modal-header
+                          h1.modal-title 創立隊伍LOL
+                          label 隊名
+                          input(type='text', name='teamName', placeholder='Name', style='width: 70%;')
+                        div.modal-body
+                          input(type='hidden', name='gametype', value='0')
+                          label 簡介
+                          textarea(name='teamIntro', style='width: 100%;height: 100px;', placeholder='introduction...')
+                          label 啟動碼
+                          input(type='text', name='activateCode', placeholder='activation code', style='width: 70%;')
+                        div.modal-footer
+                          button.pure-button.pure-button-primary(type='submit', style='margin-right:20px;') 送出
+                          button.pure-button(type='button', data-dismiss='modal') 取消
+      div#hs.gameboard.pure-g
+        div.pure-u-5-12
+          img(src='http://toucharcade.com/wp-content/uploads/2014/09/hearthstone.jpg', height='200')
+        div.pure-u-7-12
+          h2 《爐石戰記：魔獸英雄傳》
+      div#sc.gameboard.pure-g
+        div.pure-u-5-12
+          img(src='http://www.blizzplanet.com/wp-content/uploads/starcraft-ii-hots-loading-screen-queen-of-blades-face.jpg', height='200')
+        div.pure-u-7-12
+          h2 《星海爭霸®II：蟲族之心™》
+      div#ava.gameboard.pure-g
+        div.pure-u-5-12
+          img(src='http://cms-content.s.aeriastatic.com/501e8c7ac40e2184903a27ec9283944b/files/ava/image/1/1920_four.jpg', height='200')
+        div.pure-u-7-12
+          h2 《A.V.A 戰地之王》
+block javascript
+  script(src='/js/modal.js')

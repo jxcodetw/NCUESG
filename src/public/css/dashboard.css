@@ -1,0 +1,57 @@
+.content-wrapper {
+  padding: 30px 0;
+}
+.section-games {
+  padding: 15px 30px;
+  border: 1px solid #ccc;
+  background: #fff;
+  width: 800px;
+  margin: 0 auto;
+}
+
+.gameboard {
+  height: 200px;
+  width: 100%;
+  margin: 10px 0;
+  box-shadow:0px 2px 12px -2px rgba(20%,20%,40%,0.5);
+}
+
+.pure-u-5-12 {
+  overflow: hidden;
+}
+
+.pure-u-7-12 {
+  box-shadow: inset 7px 0 9px -7px rgba(0,0,0,0.4);
+  background-image: url(http://subtlepatterns.com/patterns/dark_wall.png);
+  background-repeat: repeat;
+  box-sizing:border-box;
+  padding: 0px 20px;
+  color: #fff;
+}
+
+.modal-content {
+  color: #000;
+}
+
+.btns .pure-button {
+  margin-right: 20px;
+}
+
+.button-error {
+  color: #fff;
+  background: rgb(202, 60, 60);
+}
+
+.button-success {
+  color: #fff;
+  background: rgb(28, 184, 65);
+}
+
+.member a {
+  color: #0075c3;
+  text-decoration: none;
+}
+
+.member a:hover {
+  text-decoration: underline;
+}

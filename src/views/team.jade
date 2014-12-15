@@ -17,13 +17,17 @@ block content
               thead
                 tr
                   th 隊名
-                  th 隊長
-                  th 隊員
+                  th(width='100') 隊長
+                  th(width='400') 隊員
               tbody
                 tr
-                  td 守護家園
-                  td 無期輪
-                  td 安安 安安123
+                  td 
+                    a(href='#') 守護家園
+                  td 
+                    a(href='#') 無期輪
+                  td 
+                    a.member(href='#') 安安1
+                    a.member(href='#') 安安123
         div.tab-painel
           input#tab-2.tab-open(name='gametype', type='radio')
           label.tab-nav(for='tab-2') 爐石戰記
@@ -36,5 +40,3 @@ block content
           input#tab-4.tab-open(name='gametype', type='radio')
           label.tab-nav(for='tab-4') AVA
           div.tab-inner test4
-
-

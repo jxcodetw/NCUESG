@@ -64,14 +64,11 @@ module.exports = function(passport) {
           newUser.local.department = sanitize(req.body.department);
           newUser.local.grade = sanitize(req.body.grade);
           newUser.local.level = 0;
-          newUser.local.teamLOL = 0;
-          newUser.local.teamAVA = 0;
-          newUser.local.teamSC = 0;
-          newUser.local.teamHS = 0;
           newUser.local.created = new Date();
 
           newUser.save(function(err) {
             if (err) {
+              console.log(err);
               return done(null, false, req.flash('signupMessage', '不知名錯誤'));
             } else {
               return done(null, newUser);

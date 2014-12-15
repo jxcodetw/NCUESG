@@ -21,6 +21,6 @@
     "connect-flash": "latest",
     "bcrypt-nodejs": "latest",
     "sanitize-html": "latest",
-    "markdown" : "latest"
+    "async" : "latest"
   }
 }

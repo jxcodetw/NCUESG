@@ -12,13 +12,11 @@ var userSchema = mongoose.Schema({
     department: Number,
     grade: Number,
     level: Number,
-    teamLOL: String,
-    teamAVA: String,
-    teamSC: String,
-    teamHS: String,
+    teamLOL: {type: mongoose.Schema.Types.ObjectId, ref: 'Team'},
+    team: [{type: mongoose.Schema.Types.ObjectId, ref: 'Team'}],
     created: Date,
     updated: {type: Date, default: Date.now}
-  }
+  },
 });
 
 userSchema.methods.generateHash = function(password) {
