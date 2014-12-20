@@ -1,3 +1,6 @@
+.content-wrapper {
+  padding: 10px 0;
+}
 .section-team {
   width: 800px;
   margin: 30px auto;
@@ -32,4 +35,20 @@
 
 .member {
   margin-right: 5px;
+}
+
+.tab-nav {
+  display: inline;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.tab-nav:hover {
+  background: #eee;
+}
+
+.tab {
+  margin-bottom: 20px;
 }

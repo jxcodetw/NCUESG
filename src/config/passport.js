@@ -64,6 +64,7 @@ module.exports = function(passport) {
           newUser.local.department = sanitize(req.body.department);
           newUser.local.grade = sanitize(req.body.grade);
           newUser.local.level = 0;
+          newUser.local.team = [null, null, null, null];
           newUser.local.created = new Date();
 
           newUser.save(function(err) {

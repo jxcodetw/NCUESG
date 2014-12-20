@@ -23,20 +23,19 @@ block content
               table#membertable.pure-table.pure-table-horizontal
                 thead
                   tr
-                    th(width='100px') Name
+                    th(width='150px') Name
                     th email
-                    th op
                 tbody
-                  tr
-                    td 123
-                    td jxcode.org@gmail.com
-                    td x
-                  tr
+                  each member in teamMember
+                    tr
+                      td= member.local.name
+                      td= member.local.email
+                  tr#newmemberrow
                     td New Member
                     td
                       input#newemail(type='email', placeholder='enter email address...')
-                    td
                       button#btnnewemail.pure-button.pure-button-primary(type='button') Add
+                      span#addmembermsg
 
 block javascript
   script(src='/js/teamedit.js')

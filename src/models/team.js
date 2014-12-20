@@ -8,15 +8,14 @@ var teamSchema = mongoose.Schema({
   member: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
 
-teamSchema.methods.addMember = function(user, cb) {
-  if (this.game == 'lol' || this.game == 'ava' && member.length >= 5) 
-    return "Team full";
-  if (this.game == 'hs' || this.game =='sc2')
-    return "Only one player";
-  this.member.push(user);
-  this.save(function(err, doc) {
-    cb();
-  });
+teamSchema.methods.isFull = function() {
+  // lol, hs, sc, ava
+  // 0  , 1 , 2 , 3
+  if ((this.game == 0 || this.game == 3) && this.member.length >= 5) 
+    return "team is fulled";
+  if (this.game == 1 || this.game == 2)
+    return "only one player allowed";
+  return false;
 }
 
 teamSchema.methods.removeMember = function(userId) {

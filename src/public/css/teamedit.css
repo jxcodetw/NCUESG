@@ -22,10 +22,15 @@
 }
 
 #newemail {
-   width: 100%;
+  width: 200px;
+  margin-right: 10px; 
+  display: inline-block;
 }
 
 #updateinfomsg {
   margin-left: 10px;
-  color: green;
+}
+
+#addmembermsg {
+  margin-left: 10px;
 }

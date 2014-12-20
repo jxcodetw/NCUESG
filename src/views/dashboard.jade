@@ -55,15 +55,115 @@ block content
           img(src='http://toucharcade.com/wp-content/uploads/2014/09/hearthstone.jpg', height='200')
         div.pure-u-7-12
           h2 《爐石戰記：魔獸英雄傳》
+          if team.hs
+            h3= '隊名：' + team.hs.name
+            h4.member
+              = '隊長：'
+              a(href='/user/' + team.hs.leader.id)= team.hs.leader.local.name
+            div.btns
+              if team.hs.leader.id == user.id
+                a.pure-button.pure-button-primary(href='/team/' + team.hs.id + '/edit') 編輯隊伍
+              a.pure-button.pure-button-primary 填寫玩家基本資料
+          else
+            h3 尚未加入組隊
+            div.btns
+              a.pure-button.pure-button-primary(href='#createhs' role='button' data-toggle='modal') 創立隊伍
+              div#createhs.modal.fade(tabindex='-1', role='dialog', aria-hidden='true')
+                div.modal-dialog
+                  div.modal-content
+                    form.pure-form.pure-form-stacked(action='/team/new', method='post')
+                      fieldset
+                        div.modal-header
+                          h1.modal-title 創立隊伍HS
+                          label 隊名
+                          input(type='text', name='teamName', placeholder='Name', style='width: 70%;')
+                        div.modal-body
+                          input(type='hidden', name='gametype', value='1')
+                          label 簡介
+                          textarea(name='teamIntro', style='width: 100%;height: 100px;', placeholder='introduction...')
+                          label 啟動碼
+                          input(type='text', name='activateCode', placeholder='activation code', style='width: 70%;')
+                        div.modal-footer
+                          button.pure-button.pure-button-primary(type='submit', style='margin-right:20px;') 送出
+                          button.pure-button(type='button', data-dismiss='modal') 取消
       div#sc.gameboard.pure-g
         div.pure-u-5-12
           img(src='http://www.blizzplanet.com/wp-content/uploads/starcraft-ii-hots-loading-screen-queen-of-blades-face.jpg', height='200')
         div.pure-u-7-12
           h2 《星海爭霸®II：蟲族之心™》
+          if team.sc
+            h3= '隊名：' + team.sc.name
+            h4.member
+              = '隊長：'
+              a(href='/user/' + team.sc.leader.id)= team.sc.leader.local.name
+            div.btns
+              if team.sc.leader.id == user.id
+                a.pure-button.pure-button-primary(href='/team/' + team.sc.id + '/edit') 編輯隊伍
+              a.pure-button.pure-button-primary 填寫玩家基本資料
+          else
+            h3 尚未加入組隊
+            div.btns
+              a.pure-button.pure-button-primary(href='#createsc' role='button' data-toggle='modal') 創立隊伍
+              div#createsc.modal.fade(tabindex='-1', role='dialog', aria-hidden='true')
+                div.modal-dialog
+                  div.modal-content
+                    form.pure-form.pure-form-stacked(action='/team/new', method='post')
+                      fieldset
+                        div.modal-header
+                          h1.modal-title 創立隊伍SC
+                          label 隊名
+                          input(type='text', name='teamName', placeholder='Name', style='width: 70%;')
+                        div.modal-body
+                          input(type='hidden', name='gametype', value='2')
+                          label 簡介
+                          textarea(name='teamIntro', style='width: 100%;height: 100px;', placeholder='introduction...')
+                          label 啟動碼
+                          input(type='text', name='activateCode', placeholder='activation code', style='width: 70%;')
+                        div.modal-footer
+                          button.pure-button.pure-button-primary(type='submit', style='margin-right:20px;') 送出
+                          button.pure-button(type='button', data-dismiss='modal') 取消
       div#ava.gameboard.pure-g
         div.pure-u-5-12
           img(src='http://cms-content.s.aeriastatic.com/501e8c7ac40e2184903a27ec9283944b/files/ava/image/1/1920_four.jpg', height='200')
         div.pure-u-7-12
           h2 《A.V.A 戰地之王》
+          if team.ava
+            h3= '隊名：' + team.ava.name
+            h4.member
+              = '隊長：'
+              a(href='/user/' + team.ava.leader.id)= team.ava.leader.local.name
+              != '&nbsp;&nbsp;&nbsp;&nbsp;隊員：'
+              if team.ava.member.length == 0
+                = None
+              else
+                each m in team.ava.member
+                  a(href='/user/'+m.id)= m.local.name
+                  != '&nbsp;&nbsp;'
+            div.btns
+              if team.ava.leader.id == user.id
+                a.pure-button.pure-button-primary(href='/team/' + team.ava.id + '/edit') 編輯隊伍
+              a.pure-button.pure-button-primary 填寫玩家基本資料
+          else
+            h3 尚未加入組隊
+            div.btns
+              a.pure-button.pure-button-primary(href='#createava' role='button' data-toggle='modal') 創立隊伍
+              div#createava.modal.fade(tabindex='-1', role='dialog', aria-hidden='true')
+                div.modal-dialog
+                  div.modal-content
+                    form.pure-form.pure-form-stacked(action='/team/new', method='post')
+                      fieldset
+                        div.modal-header
+                          h1.modal-title 創立隊伍AVA
+                          label 隊名
+                          input(type='text', name='teamName', placeholder='Name', style='width: 70%;')
+                        div.modal-body
+                          input(type='hidden', name='gametype', value='3')
+                          label 簡介
+                          textarea(name='teamIntro', style='width: 100%;height: 100px;', placeholder='introduction...')
+                          label 啟動碼
+                          input(type='text', name='activateCode', placeholder='activation code', style='width: 70%;')
+                        div.modal-footer
+                          button.pure-button.pure-button-primary(type='submit', style='margin-right:20px;') 送出
+                          button.pure-button(type='button', data-dismiss='modal') 取消
 block javascript
   script(src='/js/modal.js')
