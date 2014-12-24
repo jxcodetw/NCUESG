@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var Announcement = require('../models/announcement');
 var sanitize = require('../lib/sanitize-announcement');
-var markdown = require('markdown').markdown;
 
 
 router.get('/', function(req, res) {

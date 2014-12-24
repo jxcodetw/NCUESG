@@ -47,8 +47,7 @@ block content
           thead
             tr
               th 隊名
-              th(width='100') 隊長
-              th(width='400') 隊員
+              th 隊長
           tbody
             each team in scTeams
               tr
@@ -56,9 +55,6 @@ block content
                   a(href='/team/'+team.id)= team.name
                 td
                   a(href='/user/'+team.leader.id)= team.leader.local.name
-                td
-                  each member in team.member
-                    a.member(href='/user/'+member.id)= member.local.name
       div#panel-4.panel(style='display:none;')
         table.team.pure-table.pure-table-horizontal
           thead
