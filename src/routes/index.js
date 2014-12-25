@@ -4,11 +4,12 @@ var Announcement = require('../models/announcement');
 
 module.exports = function(passport) {
   router.get('/', function(req, res) {
+    // get some announcements
     var important;
     var normal;
     Announcement.find({'level': {$gt: 0}}).sort({created: 'desc'}).limit(5).exec(function(err, ann) {
       important = ann;
-      Announcement.find({level: {$lt: 1}}, function(err, ann) {
+      Announcement.find({'level': {$lt: 1}}, function(err, ann) {
         normal = ann;
         res.render('index', {
           title: '',

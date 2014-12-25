@@ -1,12 +1,21 @@
 var express = require('express');
 var router = express.Router();
+var Team = require('../models/team');
+var User = require('../models/user');
 
 router.get('/', isLoggedIn, function(req, res) {
-  res.render('user', { user: req.user});
+  User.find().populate('team').exec(function(err, users) {
+    res.render('users', {
+      user: req.user,
+      users: users
+    });
+  });
 });
-/* GET users listing. */
+
 router.get('/:id', function(req, res) {
-  res.send('respond with a resource' + req.params.id);
+  User.findById(req.params.id).populate('local.team').exec(function(err, user) {
+    res.render('user', { user: user });
+  });
 });
 
 router.get('/:id/edit', isEditable, function(req, res) {

@@ -1,4 +1,16 @@
 extends layout
 
 block content
-  h1= 'Hello' + user.local.name
+  h1= 'Name: ' + user.local.name
+  h1= 'Student ID: ' + user.local.studentid
+  h1= 'Department: ' + user.local.department
+  h1= 'Grade: ' + user.local.grade
+  hr
+  h1= 'Teams:'
+  each t in user.local.team
+    if t != null
+      h2= t.name
+      h2= t.intro
+      h2= t.game
+      hr
+

@@ -47,11 +47,14 @@
   background: rgb(28, 184, 65);
 }
 
-.member a {
+.member a,
+.teamname a {
   color: #0075c3;
   text-decoration: none;
 }
 
-.member a:hover {
+.member a:hover,
+.teamname a:hover {
   text-decoration: underline;
 }
+

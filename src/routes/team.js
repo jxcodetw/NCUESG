@@ -6,6 +6,7 @@ var async = require('async');
 var sanitize = require('../lib/sanitize');
 
 router.get('/', function(req, res) {
+  // async wait for all task to be done.
   async.parallel(
     {
       lolTeams: function(cb) {
@@ -30,7 +31,7 @@ router.get('/', function(req, res) {
       },
     },
     function(err, result) {
-      res.render('team', {
+      res.render('teams', {
         user: req.user,
         lolTeams: result.lolTeams,
         hsTeams: result.hsTeams,
@@ -41,34 +42,35 @@ router.get('/', function(req, res) {
   );
 });
 
+
 router.post('/updateinfo', function(req, res) {
   var teamId = req.body.teamId;
   var teamName = req.body.teamName;
   var teamIntro = req.body.teamIntro;
-  if (req.isAuthenticated()) {
-    Team.findById(teamId).populate('leader').exec(function(err, team) {
-      if (team.leader.id == req.user.id) {
-        team.name = teamName;
-        team.intro = teamIntro;
-        team.save(function(err, doc) {
-          res.json({
-            ok: true,
-            msg: 'good'
-          });
-        });
-      } else {
-        res.json({
-          ok: false,
-          msg: 'you are not leader'
-        });
-      }
-    });
-  } else {
+  if (!req.isAuthenticated()) {
     res.json({
       ok: false,
       msg: 'login first'
     });
+    return;
   }
+  Team.findById(teamId).populate('leader').exec(function(err, team) {
+    if (team.leader.id == req.user.id) {
+      team.name = teamName;
+      team.intro = teamIntro;
+      team.save(function(err, doc) {
+        res.json({
+          ok: true,
+          msg: 'good'
+        });
+      });
+    } else {
+      res.json({
+        ok: false,
+        msg: 'you are not leader'
+      });
+    }
+  });
 });
 
 router.get('/dashboard', isLoggedIn, function(req, res) {
@@ -118,6 +120,15 @@ router.get('/dashboard', isLoggedIn, function(req, res) {
       });
     }
   );
+});
+
+router.get('/:id', isLoggedIn, function(req, res) {
+  Team.findById(req.params.id).populate('leader').populate('member').exec(function(err, team) {
+    res.render('team', {
+      user: req.user,
+      team:team
+    });
+  });
 });
 
 router.get('/:id/unlink', isLoggedIn, function(req, res) {

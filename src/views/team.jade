@@ -1,76 +1,10 @@
 extends layout
 
-block stylesheet
-  link(rel='stylesheet', href='/css/team.css')
-
 block content
-  div.content-wrapper
-    div.section-team
-      h1(style='text-align:center;') 隊伍列表
-      div.tab
-        div#tab-nav-1.tab-nav 英雄聯盟
-        div#tab-nav-2.tab-nav 爐石戰記
-        div#tab-nav-3.tab-nav 星海爭霸
-        div#tab-nav-4.tab-nav AVA
-      div#panel-1.panel(style='display:block;')
-        table.team.pure-table.pure-table-horizontal
-          thead
-            tr
-              th 隊名
-              th(width='100') 隊長
-              th(width='400') 隊員
-          tbody
-            each team in lolTeams
-              tr
-                td
-                  a(href='/team/'+team.id)= team.name
-                td
-                  a(href='/user/'+team.leader.id)= team.leader.local.name
-                td
-                  each member in team.member
-                    a.member(href='/user/'+member.id)= member.local.name
-      div#panel-2.panel(style='display:none;')
-        table.team.pure-table.pure-table-horizontal
-          thead
-            tr
-              th 隊名
-              th 隊長
-          tbody
-            each team in hsTeams
-              tr
-                td
-                  a(href='/team/'+team.id)= team.name
-                td
-                  a(href='/user/'+team.leader.id)= team.leader.local.name
-      div#panel-3.panel(style='display:none;')
-        table.team.pure-table.pure-table-horizontal
-          thead
-            tr
-              th 隊名
-              th 隊長
-          tbody
-            each team in scTeams
-              tr
-                td
-                  a(href='/team/'+team.id)= team.name
-                td
-                  a(href='/user/'+team.leader.id)= team.leader.local.name
-      div#panel-4.panel(style='display:none;')
-        table.team.pure-table.pure-table-horizontal
-          thead
-            tr
-              th 隊名
-              th(width='100') 隊長
-              th(width='400') 隊員
-          tbody
-            each team in avaTeams
-              tr
-                td
-                  a(href='/team/'+team.id)= team.name
-                td
-                  a(href='/user/'+team.leader.id)= team.leader.local.name
-                td
-                  each member in team.member
-                    a.member(href='/user/'+member.id)= member.local.name
-block javascript
-  script(src='/js/team.js')
+  h1= 'Name: ' + team.name
+  h1= 'Intro: ' + team.intro
+  h1= 'type: '+ team.game
+  h1= 'Leader: ' + team.leader.local.name
+  h1= 'Member'
+  each m in team.member
+    h2= m.local.name

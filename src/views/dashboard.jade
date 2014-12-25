@@ -13,7 +13,9 @@ block content
         div.pure-u-7-12
           h2 《英雄聯盟》
           if team.lol
-            h3= '隊名：' + team.lol.name
+            h3.teamname
+              = '隊名：'
+              a(href='/team/'+team.lol.id)= team.lol.name
             h4.member
               = '隊長：'
               a(href='/user/' + team.lol.leader.id)= team.lol.leader.local.name
@@ -56,7 +58,9 @@ block content
         div.pure-u-7-12
           h2 《爐石戰記：魔獸英雄傳》
           if team.hs
-            h3= '隊名：' + team.hs.name
+            h3.teamname
+              = '隊名：'
+              a(href='/team/'+team.hs.id)= team.hs.name
             h4.member
               = '隊長：'
               a(href='/user/' + team.hs.leader.id)= team.hs.leader.local.name
@@ -92,7 +96,9 @@ block content
         div.pure-u-7-12
           h2 《星海爭霸®II：蟲族之心™》
           if team.sc
-            h3= '隊名：' + team.sc.name
+            h3.teamname
+              = '隊名：'
+              a(href='/team/'+team.sc.id)= team.sc.name
             h4.member
               = '隊長：'
               a(href='/user/' + team.sc.leader.id)= team.sc.leader.local.name
@@ -128,7 +134,9 @@ block content
         div.pure-u-7-12
           h2 《A.V.A 戰地之王》
           if team.ava
-            h3= '隊名：' + team.ava.name
+            h3.teamname
+              = '隊名：'
+              a(href='/team/'+team.ava.id)= team.ava.name
             h4.member
               = '隊長：'
               a(href='/user/' + team.ava.leader.id)= team.ava.leader.local.name
