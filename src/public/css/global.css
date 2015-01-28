@@ -20,3 +20,7 @@ html, body {
   text-align: center;
   line-height: 50px;
 }
+
+.right.menu .button a {
+  color: #fff;
+}
