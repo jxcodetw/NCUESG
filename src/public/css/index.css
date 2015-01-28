@@ -1,7 +1,3 @@
-#footer {
-  text-align: center;
-  padding: 3em 0;
-  position: absolute;
-  width: 100%;
-  bottom: 0;
+#home .ui.segment {
+  margin: 0;
 }

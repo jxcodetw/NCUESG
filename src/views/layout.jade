@@ -8,37 +8,39 @@ html
 
     title 2015中央大學電競大賽
     link(rel='stylesheet', type='text/css', href='/css/semantic.min.css')
+    link(rel='stylesheet', type='text/css', href='/css/global.css')
     block stylesheet
     script(src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js')
     script(src='/js/semantic.min.js')
   body#home
-    .ui.masthead.segment
-      .ui.page.grid
-        .column
-          .ui.menu
-            a.header.item 
-              i.home.icon
-              2015中央電競大賽
-            a.item 公告
-            a.item 賽事中心
-            a.item 大賽規則
-            a.item 報名須知
-            a.item 問題舉報
-            .ui.dropdown.link.item
-              贊助商
-              i.dropdown.icon
-              div.menu
-                a.item Garena
-                a.item Blizzard
-                a.item 其他贊助
-            div.right.menu
-              a.item 登入
-              div.item
-                div.primary.animated.fade.ui.button
-                  div.visible.content 註冊
-                  div.hidden.content 衝一發
-    block content
-    #footer.ui.inverted.footer.vertical.segment
+    .page-wrap
+      .ui.masthead.segment
+        .ui.page.grid
+          .column
+            .ui.menu
+              a.header.item 
+                i.home.icon
+                2015中央電競大賽
+              a.item 公告
+              a.item 賽事中心
+              a.item 大賽規則
+              a.item 報名須知
+              a.item 問題舉報
+              .ui.dropdown.link.item
+                贊助商
+                i.dropdown.icon
+                div.menu
+                  a.item Garena
+                  a.item Blizzard
+                  a.item 其他贊助
+              .right.menu
+                a.item 登入
+                .item
+                  .primary.animated.fade.ui.button
+                    .visible.content 註冊
+                    .hidden.content 衝一發
+      block content
+    #footer.ui.inverted.footer.vertical.segment.site-footer
       2015 © NCU CSIE E-Sports Game All Rights Reserved.
     script(src='/js/global.js')
     block javascript
