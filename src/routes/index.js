@@ -51,8 +51,6 @@ module.exports = function(passport) {
 
   router.get('/login', isLoggedIn, function(req, res) {
     res.render('login', {
-      title: '登入',
-      type: 'login',
       error: req.flash('loginMessage')
     });
   });
@@ -64,9 +62,7 @@ module.exports = function(passport) {
   }));
 
   router.get('/register', isLoggedIn, function(req, res) {
-    res.render('login', {
-      title: '註冊',
-      type: 'register',
+    res.render('register', {
       error: req.flash('signupMessage')
     });
   });

@@ -1,3 +1,9 @@
 #home .ui.segment {
   margin: 0;
 }
+
+#live {
+  background: url('/img/home.jpg');
+  background-size: cover;
+  min-height: 500px;
+}

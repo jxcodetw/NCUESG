@@ -5,12 +5,12 @@ block stylesheet
 
 block content
   #login
-    h1 登入 中央電競大賽
+    h1 註冊 中央電競大賽
     p 你必須登入之後才可以參加相關比賽
     .ui.breadcrumb
-      .active.section 登入
+      a.section(href='/login') 登入
       .divider /
-      a.section(href='/register') 註冊
+      .active.section 註冊
     form.ui.form
       label Email
       .field
@@ -21,4 +21,4 @@ block content
       .field
         a.ui.basic.right.button
           i.icon.user
-          | 登入
+          | 註冊

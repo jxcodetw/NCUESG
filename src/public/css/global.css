@@ -7,18 +7,18 @@ html, body {
 .page-wrap {
   min-height: 100%;
   /* equal to footer height */
-  margin-bottom: -100px; 
+  margin-bottom: -70px; 
 }
 .page-wrap:after {
   content: "";
   display: block;
 }
 .site-footer, .page-wrap:after {
-  height: 100px; 
+  height: 70px; 
 }
 .site-footer {
   text-align: center;
-  line-height: 50px;
+  line-height: 45px;
 }
 
 .right.menu .button a {
