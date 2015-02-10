@@ -11,7 +11,7 @@ block content
       a.section(href='/login') 登入
       .divider /
       .active.section 註冊
-    form#form-reg.ui.form
+    form#form-reg.ui.form(method='post', action='/register')
       #loader.ui.inverted.dimmer
         .ui.text.loader Registering...
       .field

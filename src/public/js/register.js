@@ -59,32 +59,5 @@ $(function() {
         prompt: 'Please select a grade'
       }]
     }
-  }, {
-    onSuccess: function(e) {
-      $('#loader').addClass('active');
-      $('#btn-submit').addClass('loading');
-      $.ajax({
-        type: "POST",
-        url: "/register",
-        data: $('#form-reg').serialize(),
-        success: function(res) {
-          $('#loader').removeClass('active');
-          $('#btn-submit').removeClass('loading');
-          if (res.error === 1) {
-            $('#btn-submit').removeClass('disabled');
-          } else {
-            $('#btn-submit').addClass('disabled')
-            $('#btn-submit').html('Created').after($('<i class="checkmark icon"></i>'));
-            setTimeout(function() {
-              window.location = '/login';
-            }, 2000);
-          }
-        },
-        error: function() {
-          console.log('error');
-        }
-      });
-      e.preventDefault();
-    }
   });
 });
