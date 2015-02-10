@@ -1,35 +1,7 @@
-.section-announcement {
-  width: 800px;
-  margin: 30px auto;
-  padding: 10px 30px;
+.container {
   background: #fff;
-  border: 1px solid #ccc;
-}
-
-.hot {
-  color: red;
-}
-
-#announcements {
-  width: 100%;
-  border: none;
-}
-
-#announcements thead {
-  background: #fff;
-  border-bottom: 3px solid #eee;
-} 
-
-#announcements tr {
-  height: 40px;
-}
-
-tbody tr:nth-child(odd) {
-  background: #f9f9f9;
-}
-
-td a {
-  color: #0078E7;
-  text-decoration: none;
-  font-size: 16px;
+  width: 850px;
+  margin: 0 auto;
+  padding: 30px;
+  box-shadow: 0px 2px 12px -2px rgba(51, 51, 102, 0.5);
 }
