@@ -11,7 +11,7 @@ block content
       .active.section 登入
       .divider /
       a.section(href='/register') 註冊
-    form.ui.form
+    form.ui.form(method='post', action='/login')
       label Email
       .field
         input(type='email', name='email', placeholder='email')
@@ -19,6 +19,4 @@ block content
       .field
         input(type='password', name='password', placeholder='password')
       .field
-        a.ui.basic.right.button
-          i.icon.user
-          | 登入
+        input.ui.submit.button(type='submit', value='登入')

@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var Announcement = require('../models/announcement');
+var User = require('../models/user');
+var sanitize = require('../lib/sanitize');
 
 module.exports = function(passport) {
   router.get('/', function(req, res) {
@@ -62,16 +64,53 @@ module.exports = function(passport) {
   }));
 
   router.get('/register', isLoggedIn, function(req, res) {
-    res.render('register', {
-      error: req.flash('signupMessage')
-    });
+    res.render('register');
   });
 
-  router.post('/register', isLoggedIn, passport.authenticate('local-signup', {
-    successRedirect: '/',
-    failureRedirect: '/register',
-    failureFlash: true
-  }));
+  router.post('/register', isLoggedIn, function(req, res) {
+    var email = req.body.email, password = req.body.password;
+    if (email)
+      email = email.toLowerCase();
+    process.nextTick(function() {
+      User.findOne({'local.email': email}, function(err, user) {
+        if (err) {
+          res.json({error: 1, msg: 'unknown error'});
+          return;
+        }
+        
+        if (user) {
+          res.json({error: 1, msg: '已有相同帳號被註冊'});
+          return;
+        } else if (password == req.body.password2) {
+          var newUser = new User();
+          newUser.local.email = sanitize(email);
+          newUser.local.password = newUser.generateHash(password);
+          newUser.local.name = sanitize(req.body.name);
+          newUser.local.studentid = sanitize(req.body.studentid);
+          newUser.local.phone = sanitize(req.body.phone);
+          newUser.local.department = sanitize(req.body.department);
+          newUser.local.grade = sanitize(req.body.grade);
+          newUser.local.level = 0;
+          newUser.local.team = [null, null, null, null];
+          newUser.local.created = new Date();
+
+          newUser.save(function(err) {
+            if (err) {
+              console.log(err);
+              res.json({error: 1, msg: '不知名錯誤'});
+              return;
+            } else {
+              res.json({error: 0, msg: 'done'});
+              return;
+            }
+          });
+        } else {
+          res.json({error: 0, msg: '兩次輸入的密碼不相符'});
+          return;
+        }
+      });
+    });
+  });
 
   router.get('/logout', function(req, res) {
     req.logout();
