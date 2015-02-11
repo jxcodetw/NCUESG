@@ -10,7 +10,7 @@ html
     link(rel='stylesheet', type='text/css', href='/css/semantic.min.css')
     link(rel='stylesheet', type='text/css', href='/css/global.css')
     block stylesheet
-    script(src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js')
+    script(src='/js/jquery-2.1.3.min.js')
     script(src='/js/semantic.min.js')
   body#home
     .page-wrap
@@ -34,11 +34,34 @@ html
                   a.item Blizzard
                   a.item 其他贊助
               .right.menu
-                a.item(href='/login') 登入
-                .item
-                  .primary.animated.fade.ui.button
-                    a.visible.content(href='/register') 註冊
-                    a.hidden.content(href='/register') 衝一發
+                if user
+                  a.item(href='/user/'+user.id)= "Hao, "+user.local.name
+                  .ui.dropdown.link.item
+                    | Settings
+                    i.dropdown.icon
+                    div.menu
+                      a.item
+                        i.dashboard.icon
+                        | Dashboard
+                      a.item
+                        i.users.icon
+                        | Teams
+                      a.item
+                        i.user.icon
+                        | Users
+                      .ui.horizontal.divider
+                      a.item
+                        i.settings.icon
+                        | Settings
+                      a.item(href='/logout')
+                        i.log.out.icon
+                        | Logout
+                else
+                  a.item(href='/login') 登入
+                  .item
+                    .primary.animated.fade.ui.button
+                      a.visible.content(href='/register') 註冊
+                      a.hidden.content(href='/register') 衝一發
       block content
     #footer.ui.inverted.footer.vertical.segment.site-footer 2015 © NCU CSIE E-Sports Game All Rights Reserved.
     script(src='/js/global.js')
