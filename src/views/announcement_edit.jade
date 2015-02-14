@@ -24,7 +24,7 @@ block content
 
         .twelve.wide.field
           label 公告標題
-          input(type='text', name='title', placeholder='公告標題', value=announcement.title)
+          input(type='text', name='title',autocomplete="off", placeholder='公告標題', value=announcement.title)
       .ui.message
         .header 公告內文可用的HTML標籤
         .content &lt;br&gt;&lt;a&gt;&lt;h3~h5&gt;&lt;strong&gt;&lt;i&gt;&lt;ul&gt;&lt;li&gt;
@@ -34,4 +34,4 @@ block content
       .ui.error.message
 
 block javascript
-  script(src='/js/announcement_new.js')
+  script(src='/js/announcement.js')
