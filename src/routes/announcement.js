@@ -13,6 +13,12 @@ router.get('/', function(req, res) {
   });
 });
 
+router.get('/new', isAdmin, function(req, res) {
+  res.render('announcement_new', {
+    user: req.user
+  });
+});
+
 router.post('/new', isAdmin, function(req, res) {
   var ann = new Announcement();
   ann.title = sanitize(req.body.title);
@@ -47,5 +53,5 @@ function isAdmin(req, res, next) {
   if (req.isAuthenticated() && req.user.local.level > 0)
     return next();
   else
-    res.redirect('/');
+    res.redirect('/announcement');
 }

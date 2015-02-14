@@ -12,30 +12,28 @@ block content
       .divider /
       .active.section 註冊
     form#form-reg.ui.form(method='post', action='/register')
-      #loader.ui.inverted.dimmer
-        .ui.text.loader Registering...
       .field
-        label Email
-        input(type='email', name='email', placeholder='email')
+        label 電子郵件
+        input(type='email', name='email', placeholder='電子郵件')
       .two.fields
         .field
-          label Password
-          input(type='password', name='password', placeholder='password')
+          label 密碼
+          input(type='password', name='password', placeholder='密碼')
         .field
-          label Password Again
-          input(type='password', name='password2', placeholder='password again')
+          label 請再次輸入你的密碼
+          input(type='password', name='password2', placeholder='請再次輸入你的密碼')
 
-      .ui.horizontal.divider Personal Information
+      .ui.horizontal.divider 個人資訊
 
       .field
-        label Name
-        input(type='text', name='name', placeholder='Name')
+        label 姓名
+        input(type='text', name='name', placeholder='姓名')
       .two.fields
         .field
-          label Department
+          label 系所
           .ui.selection.dropdown
             input(type='hidden', name='department')
-            .default.text Department
+            .default.text 系所
             i.dropdown.icon
             .menu
               .item(data-value="1") 校外人士
@@ -61,10 +59,10 @@ block content
               .item(data-value="21") 地球科學學系
               .item(data-value="22") 大氣科學學系
         .field
-          label Grade
+          label 年級
           .ui.selection.dropdown
             input(type='hidden', name='grade')
-            .default.text Grade
+            .default.text 年級
             i.dropdown.icon
             .menu
               .item(data-value="1") 1年級
@@ -75,12 +73,12 @@ block content
               .item(data-value="6") 博士
       .two.fields
         .field
-          label Phone
-          input(type='text', name='phone', placeholder='Phone')
+          label 手機號碼
+          input(type='text', name='phone', placeholder='手機號碼')
         .field
-          label Student Number
-          input(type='text', name='student_number', placeholder='Student Number')
-      #btn-submit.ui.blue.submit.button Register
+          label 學號
+          input(type='text', name='studentid', placeholder='學號')
+      #btn-submit.ui.blue.submit.button 註冊
       .ui.error.message
 block javascript
   script(src='/js/register.js')

@@ -27,7 +27,7 @@ html
               a.item(href='/participation_help') 報名須知
               a.item(href='/contact') 問題舉報
               .ui.dropdown.link.item
-                贊助商
+                | 贊助商
                 i.dropdown.icon
                 div.menu
                   a.item Garena
@@ -37,25 +37,25 @@ html
                 if user
                   a.item(href='/user/'+user.id)= "Hao, "+user.local.name
                   .ui.dropdown.link.item
-                    | Settings
+                    | 功能表
                     i.dropdown.icon
                     div.menu
-                      a.item
+                      a.item(href='/dashboard')
                         i.dashboard.icon
-                        | Dashboard
-                      a.item
+                        | 組隊系統
+                      a.item(href='/team')
                         i.users.icon
-                        | Teams
-                      a.item
+                        | 隊伍列表
+                      a.item(href='/user')
                         i.user.icon
-                        | Users
+                        | 選手列表
                       .ui.horizontal.divider
-                      a.item
+                      a.item(href='/user/'+user.id+'/edit')
                         i.settings.icon
-                        | Settings
+                        | 帳號設定
                       a.item(href='/logout')
                         i.log.out.icon
-                        | Logout
+                        | 登出
                 else
                   a.item(href='/login') 登入
                   .item
