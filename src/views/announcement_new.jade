@@ -5,24 +5,33 @@ block stylesheet
 
 block content
   .container
-    h1.center
+    h1.ui.center.aligned.header
       i.announcement.icon
       | 新增公告
-    .ui.styled.fluid.accordion
-      .active.title
-        i.dropdown.icon
-        | What is a dog?
-      .active.content
-        p A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome guest in many households across the world.
-        if user && user.local.level > 0
-          .ui.horizontal.divider Options
-          .ui.black.button Edit
-          .ui.red.button Delete
-      .title
-        i.dropdown.icon
-        | 123
-      .content
-        p hello world
+    form#form-ann.ui.form(method='post', action='/announcement/new')
+      .field
+        a.ui.black.button(href='/announcement') 返回
+        .ui.blue.submit.button 新增
+      .fields
+        .four.wide.field
+          label 公告層級
+          .ui.selection.dropdown
+            input(type='hidden', name='level')
+            .default.text 公告層級
+            i.dropdown.icon
+            .menu
+              .item(data-value='0') 一般公告
+              .item(data-value='1') 重要公告
+        .twelve.wide.field
+          label 公告標題
+          input(type='text', name='title', placeholder='公告標題')
+      .ui.message
+        .header 公告內文可用的HTML標籤
+        .content &lt;a&gt;&lt;h3~h5&gt;&lt;strong&gt;&lt;i&gt;&lt;ul&gt;&lt;li&gt;
+      .field
+        label 公告內文
+        textarea(name='content', placeholder='公告內文')
+      .ui.error.message
 
 block javascript
-  script $('.ui.accordion').accordion();
+  script(src='/js/announcement_new.js')

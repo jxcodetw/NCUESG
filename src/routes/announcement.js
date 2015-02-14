@@ -19,6 +19,17 @@ router.get('/new', isAdmin, function(req, res) {
   });
 });
 
+router.get('/:id/edit', isAdmin, function(req, res) {
+  Announcement.findById(req.params.id).sort({level: 'desc', 'created': 'desc'}).exec(function(err, ann) {
+    if (ann) {
+      res.render('announcement_edit', {
+        user: req.user,
+        announcement: ann
+      });
+    }
+  });
+});
+
 router.post('/new', isAdmin, function(req, res) {
   var ann = new Announcement();
   ann.title = sanitize(req.body.title);
@@ -29,8 +40,8 @@ router.post('/new', isAdmin, function(req, res) {
   res.redirect('/announcement');
 });
 
-router.post('/edit', isAdmin, function(req, res) {
-  Announcement.findById(req.body.id, function(err, doc) {
+router.post('/:id/edit', isAdmin, function(req, res) {
+  Announcement.findById(req.params.id, function(err, doc) {
     doc.title = sanitize(req.body.title);
     doc.level = sanitize(req.body.level);
     doc.content = sanitize(req.body.content);

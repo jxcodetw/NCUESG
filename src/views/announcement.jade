@@ -5,24 +5,25 @@ block stylesheet
 
 block content
   .container
-    h1.center
+    h1.ui.center.aligned.header
       i.announcement.icon
       | 公告事項
+    if user && user.local.level > 0
+      a.ui.blue.button(href='/announcement/new') 新增公告
+    .ui.horizontal.divider 公告列表
     .ui.styled.fluid.accordion
-      .active.title
-        i.dropdown.icon
-        | What is a dog?
-      .active.content
-        p A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome guest in many households across the world.
-        if user && user.local.level > 0
-          .ui.horizontal.divider Options
-          .ui.black.button Edit
-          .ui.red.button Delete
-      .title
-        i.dropdown.icon
-        | 123
-      .content
-        p hello world
+      each ann in announcements
+        .title
+          i.dropdown.icon
+          if ann.level == 1
+            span.ui.purple.label 重要
+          = ' '+ann.title + ' - '  + ann.created.getFullYear() + "/" + (ann.created.getMonth()+1) + "/" + ann.created.getDate()
+        .content
+          p !{ann.content.replace(/\n/g, '<br/>')}
+          if user && user.local.level > 0
+            .ui.horizontal.divider 選項
+            a.ui.black.button(href='/announcement/' + ann.id + '/edit') 編輯
+            a.ui.red.button(href='/announcement/' + ann.id + '/delete') 刪除
 
 block javascript
   script $('.ui.accordion').accordion();
