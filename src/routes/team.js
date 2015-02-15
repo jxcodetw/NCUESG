@@ -43,7 +43,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/new', isLoggedIn, function(req, res) {
-  var game = req.body.game;
+  var game = req.query.gametype;
   if (game === undefined) game = 'lol';
   res.render('team_new', {
     user: req.user,
