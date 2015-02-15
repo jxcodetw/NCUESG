@@ -19,7 +19,9 @@ router.get('/:id', function(req, res) {
 });
 
 router.get('/:id/edit', isEditable, function(req, res) {
-  res.render('useredit', {user: req.user})
+  User.findById(req.params.id).exec(function(err, user) {
+    res.render('user_edit', {user: user});
+  });
 });
 
 function isLoggedIn(req, res, next) {

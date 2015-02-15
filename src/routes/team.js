@@ -42,6 +42,15 @@ router.get('/', function(req, res) {
   );
 });
 
+router.get('/new', isLoggedIn, function(req, res) {
+  var game = req.body.game;
+  if (game === undefined) game = 'lol';
+  res.render('team_new', {
+    user: req.user,
+    game: game
+  });
+});
+
 
 router.post('/updateinfo', function(req, res) {
   var teamId = req.body.teamId;
@@ -164,9 +173,9 @@ router.post('/new', isLoggedIn, function(req, res) {
   } else if (req.body.gametype >= 0 && req.body.gametype <= 3) {
     // check activate code
     var newTeam = new Team();
-    newTeam.name = sanitize(req.body.teamName);
+    newTeam.name = sanitize(req.body.name);
     newTeam.game = req.body.gametype;
-    newTeam.intro = sanitize(req.body.teamIntro);
+    newTeam.intro = sanitize(req.body.intro);
     newTeam.leader = req.user;
     newTeam.save(function(err, team) {
       User.findById(req.user.id, function(err, doc) {
