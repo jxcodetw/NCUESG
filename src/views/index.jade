@@ -23,12 +23,10 @@ block content
                   th 標題
                   th.right.aligned.collapsing 發布時間
               tbody
-                tr
-                  td hello
-                  td.right.aligned.collapsing 10 hours ago
-                tr
-                  td hello
-                  td.right.aligned.collapsing hours ago
+                each ann in announcement_important
+                  tr
+                    td= ann.title
+                    td.right.aligned.collapsing= ann.created.getFullYear() + "/" + (ann.created.getMonth()+1) + "/" + ann.created.getDate()
           .column
             h1.center
               i.announcement.icon
@@ -39,21 +37,10 @@ block content
                   th 標題
                   th.right.aligned.collapsing 發布時間
               tbody
-                tr
-                  td hello
-                  td.right.aligned.collapsing 10 hours ago
-                tr
-                  td hello
-                  td.right.aligned.collapsing 10 hours ago
-                tr
-                  td hello
-                  td.right.aligned.collapsing 10 hours ago
-                tr
-                  td hello
-                  td.right.aligned.collapsing 10 hours ago
-                tr
-                  td hello
-                  td.right.aligned.collapsing hours ago
+                each ann in announcement_normal
+                  tr
+                    td= ann.title
+                    td.right.aligned.collapsing= ann.created.getFullYear() + "/" + (ann.created.getMonth()+1) + "/" + ann.created.getDate()
   .ui.vertical.feature.segment(style='min-height:200px;')
 block javascript
   script(src='/js/modal.js')
