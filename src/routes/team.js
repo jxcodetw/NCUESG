@@ -157,42 +157,33 @@ router.post('/new', isLoggedIn, function(req, res) {
   }
 });
 
-router.post('/addmember', isLoggedIn, function(req, res) {
-  var teamId = req.body.teamId;
-  var email = req.body.email;
-  User.findOne({'local.email': email}, function(err, user) {
+router.post('/:id/addmember', isLoggedIn, isAdmin, function(req, res) {
+  User.findOne({'local.email': req.body.email}, function(err, user) {
     if (err || !user) {
-      res.json({ok:false, msg: 'user not found'});
+      res.json({ok:false, msg: '找不到該使用者'});
       return;
     }
-    Team.findById(teamId).populate('leader').exec(function(err, team) {
-      var isfull = team.isFull();
-      if (err || !team) {
-        res.json({ok:false, msg: 'team not found'});
-        return;
+    if (user.local.team[authTeam.game] != null) {
+      res.json({ok:false, msg: '該玩家在同一個遊戲中已經有加入其他隊伍'});
+      return;
+    }
+    if (authTeam.isFull() != false) {
+      res.json({ok:false, msg: isfull});
+      return;
+    }
+    user.local.team[authTeam.game] = authTeam.id;
+    user.markModified('local.team');
+    authTeam.member.push(user);
+    user.save();
+    authTeam.save();
+    res.json({
+      ok:true, 
+      msg:'done',
+      addedUser: {
+        id: user.id,
+        name: user.local.name,
+        email: user.local.email
       }
-      if (team.leader.id != req.user.id) {
-        res.json({ok:false, msg: 'you are not leader'});
-        return;
-      }
-      if (user.local.team[team.game] != null) {
-        res.json({ok:false, msg: 'already joined a team'});
-        return;
-      }
-      if (isfull != false) {
-        res.json({ok:false, msg: isfull});
-        return;
-      }
-      user.local.team[team.game] = team._id;
-      user.markModified('local.team');
-      team.member.push(user);
-      user.save();
-      team.save();
-      res.json({
-        ok:true, 
-        msg:'done',
-        row:'<tr><td>' + user.local.name + '</td><td>' + user.local.email + '</td></tr>'
-      });
     });
   });
 });
@@ -207,7 +198,11 @@ function isAdmin(req, res, next) {
   if (req.user.local.level > 10) {
     return next();
   }
-  Team.findById(req.params.id).populate('leader').exec(function(err, team) {
+  Team.findById(req.params.id).populate('leader').populate('member').exec(function(err, team) {
+    if (err || !team) {
+      res.redirect('/team/dashboard');
+      return;
+    }
     if (team.leader.id == req.user.id) {
       authTeam = team;
       return next();
