@@ -23,11 +23,17 @@ block content
                 h4.ui.header
                   | 隊員：
                   each mem in team.lol.member
-                    a.ui.horizontal.label(href='/user/'+mem.id)= mem.local.name
+                    if mem.id == user.id
+                      a.ui.horizontal.green.label(href='/user/'+mem.id)= mem.local.name
+                    else
+                      a.ui.horizontal.label(href='/user/'+mem.id)= mem.local.name
               else
                 | 狀態: 尚未加入隊伍
             if team.lol
-              a.ui.right.floated.green.button(href='/team/'+team.lol.id+'/edit') 編輯隊伍
+              if team.lol.leader.id == user.id
+                a.ui.right.floated.green.button(href='/team/'+team.lol.id+'/edit') 編輯隊伍
+              else
+                a.ui.right.floated.red.button(href='/team/'+team.lol.id+'/unlink') 退出組隊
               a.ui.right.floated.button(href='/team/'+team.lol.id) 隊伍公開頁面
             else
               a.ui.right.floated.blue.button(href='/team/new?gametype=lol') 創立隊伍

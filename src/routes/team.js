@@ -43,6 +43,34 @@ router.get('/', function(req, res) {
   );
 });
 
+router.get('/:id/unlink', isLoggedIn, function(req, res) {
+  // kick myself
+  Team.findById(req.params.id).populate('leader').populate('member').exec(function(err, team) {
+    if (err || !team) {
+      res.redirect('/team/dashboard');
+      return;
+    }
+    var index = -1;
+    for(var i = 0; i < team.member.length; ++i) {
+      if (team.member[i].id == req.user.id) {
+        index = i;
+        break;
+      }
+    }
+    if (index > -1) {
+      team.member.splice(index, 1);
+    }
+    team.markModified('member');
+    team.save();
+    User.findById(req.user.id, function(err, doc) {
+      doc.local.team[team.game] = null;
+      doc.markModified('local.team');
+      doc.save();
+      res.redirect('/team/dashboard');
+    });
+  });
+});
+
 router.get('/new', isLoggedIn, function(req, res) {
   var game = req.query.gametype;
   var gametype = 0;
