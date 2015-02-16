@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  .container
+    h1.ui.center.aligned.header
+      i.trophy.icon
+      | 修改隊伍-
+      = gameName
+    form#form-team.ui.form(method='post', action='/team/'+team.id+'/edit')
+      .field
+        a.ui.black.button(href='/team/dashboard') 返回
+        .ui.blue.submit.button 更新
+      .fields
+        .four.wide.field
+          label 遊戲類別
+          input(type='text', value=gameName, disabled)
+        .twelve.wide.field
+          label 隊伍名稱
+          input(type='text', name='name', autocomplete='off', placeholder='隊伍名稱', value=team.name)
+      .field
+        label 隊伍介紹
+        textarea(name='intro', placeholder='隊伍介紹')= team.intro
+      .ui.error.message
+block javascript
+  script(src='/js/team_edit.js')

@@ -12,12 +12,13 @@ block content
       .fields
         .four.wide.field
           label 公告層級
-          select.ui.selection.dropdown(name='level')
-            option(value='0') 一般公告
-            if announcement.level == 0
-              option(value='1') 重要公告
-            else
-              option(value='1', selected='selected') 重要公告
+          .ui.selection.dropdown
+            input(type='hidden', name='level', value=announcement.level)
+            .default.text 公告層級
+            i.dropdown.icon
+            .menu
+              .item(data-value='0') 一般公告
+              .item(data-value='1') 重要公告
 
         .twelve.wide.field
           label 公告標題

@@ -15,23 +15,15 @@ block content
       .fields
         .four.wide.field
           label 遊戲類別
-          select.ui.selection.dropdown(name='gametype')
-            if game === "lol"
-              option(value='0', selected='selected') 英雄聯盟
-            else
-              option(value='0') 英雄聯盟
-            if game === "hs"
-              option(value='1', selected='selected') 爐石戰記
-            else
-              option(value='1') 爐石戰記
-            if game === "sc2"
-              option(value='2', selected='selected') 星海爭霸2-蟲族之心
-            else
-              option(value='2') 星海爭霸2-蟲族之心
-            if game === "ava"
-              option(value='3', selected='selected') 戰地之王
-            else 
-              option(value='3') 戰地之王
+          .ui.selection.dropdown
+            input(type='hidden', name='gametype', value=game)
+            .default.text 遊戲類別
+            i.dropdown.icon
+            .menu
+              .item(data-value='0') 英雄聯盟
+              .item(data-value='1') 爐石戰記
+              .item(data-value='2') 星海爭霸2-蟲族之心
+              .item(data-value='3') 戰地之王
         .twelve.wide.field
           label 隊伍名稱
           input(type='text', name='name', autocomplete='off', placeholder='隊伍名稱')

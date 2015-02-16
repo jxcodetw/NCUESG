@@ -4,6 +4,7 @@ var Team = require('../models/team');
 var User = require('../models/user');
 var async = require('async');
 var sanitize = require('../lib/sanitize');
+var authTeam;
 
 router.get('/', function(req, res) {
   // async wait for all task to be done.
@@ -44,42 +45,22 @@ router.get('/', function(req, res) {
 
 router.get('/new', isLoggedIn, function(req, res) {
   var game = req.query.gametype;
-  if (game === undefined) game = 'lol';
+  var gametype = 0;
+  if (game === 'hs') gametype = 1;
+  else if (game === 'sc2') gametype = 2;
+  else if (game === 'ava') gametype = 3;
   res.render('team_new', {
     user: req.user,
-    game: game
+    game: gametype
   });
 });
 
 
-router.post('/updateinfo', function(req, res) {
-  var teamId = req.body.teamId;
-  var teamName = req.body.teamName;
-  var teamIntro = req.body.teamIntro;
-  if (!req.isAuthenticated()) {
-    res.json({
-      ok: false,
-      msg: 'login first'
-    });
-    return;
-  }
-  Team.findById(teamId).populate('leader').exec(function(err, team) {
-    if (team.leader.id == req.user.id) {
-      team.name = teamName;
-      team.intro = teamIntro;
-      team.save(function(err, doc) {
-        res.json({
-          ok: true,
-          msg: 'good'
-        });
-      });
-    } else {
-      res.json({
-        ok: false,
-        msg: 'you are not leader'
-      });
-    }
-  });
+router.post('/:id/edit', isLoggedIn, isAdmin, function(req, res) {
+  authTeam.name = req.body.name;
+  authTeam.intro = req.body.intro;
+  authTeam.save();
+  res.redirect('/team/dashboard');
 });
 
 router.get('/dashboard', isLoggedIn, function(req, res) {
@@ -144,25 +125,12 @@ router.get('/:id/unlink', isLoggedIn, function(req, res) {
   // check team same ?
 });
 
-router.get('/:id/edit', isLoggedIn, function(req, res) {
-  Team.findById(req.params.id).populate('leader').populate('member').exec(function(err, team) {
-    if (team.leader.id == req.user.id) {
-      var gameToName = ['LOL', 'HS', 'SC', 'AVA'];
-      var gameToBack = ['lol', 'hs', 'sc', 'ava'];
-      res.render('teamedit', {
-        user: req.user,
-        teamId: team.id,
-        gameType: team.game,
-        backTag: gameToBack[team.game],
-        gameName: gameToName[team.game],
-        teamLeader: req.user.local.name,
-        teamName: team.name,
-        teamIntro: team.intro,
-        teamMember: team.member
-      });
-    } else {
-      res.redirect('/team/'+req.params.id);
-    }
+router.get('/:id/edit', isLoggedIn, isAdmin, function(req, res) {
+  var gameToName = ['英雄聯盟', '爐石戰記', '星海爭霸2-蟲族之心', '戰地之王'];
+  res.render('team_edit', {
+    user: req.user,
+    team: authTeam,
+    gameName: gameToName[authTeam.game],
   });
 });
 
@@ -233,6 +201,20 @@ function isLoggedIn(req, res, next) {
   if (req.isAuthenticated())
     return next();
   res.redirect('/login');
+}
+
+function isAdmin(req, res, next) {
+  if (req.user.local.level > 10) {
+    return next();
+  }
+  Team.findById(req.params.id).populate('leader').exec(function(err, team) {
+    if (team.leader.id == req.user.id) {
+      authTeam = team;
+      return next();
+    } else {
+      res.redirect('/team/dashboard');
+    }
+  });
 }
 
 module.exports = router;
