@@ -46,7 +46,7 @@ router.get('/', function(req, res) {
 router.get('/:id/unlink', isLoggedIn, function(req, res) {
   // kick myself
   Team.findById(req.params.id).populate('leader').populate('member').exec(function(err, team) {
-    if (err || !team) {
+    if (err || !team || team.leader.id == req.user.id) {
       res.redirect('/team/dashboard');
       return;
     }
