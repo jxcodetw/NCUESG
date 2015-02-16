@@ -16,23 +16,14 @@ $(function() {
     }
   });
   
-  $('#newemail').keyup(function(e) {
-    if (e.keyCode == 13) {
-      addMember();
-    }
-  });
   $('#btn-add').click(function() {
     addMember();
   });
+  bindBtn();
 });
 
 function addMember() {
-  var toInsert = $('<tr><td class="collapsing">' + res.addedUser.name + 
-      '</td><td>' + res.addedUser.email +
-      '</td><td class="right aligned collapsing"><a class="ui icon button" href="' +
-      res.addedUser.id + '"><i class="trash icon"></i></a></td>');
-  $('#table-member').append(toInsert);
-  return;
+  $('#addmsg').addClass('hidden');
   $('#newemail').prop('disabled', true);
   $('#btn-add').addClass('disabled loading').text('新增中...');
   $.ajax({
@@ -42,12 +33,47 @@ function addMember() {
       email: $('#newemail').val(),
     },
     success: function(res) {
+      $('#addmsg').removeClass('hidden');
+      $('#errormsg').text(res.msg);
       $('#newemail').val('');
       $('#newemail').prop('disabled', false);
       $('#btn-add').removeClass('disabled loading').text('新增隊員');
       console.log(res);
       if (res.ok == true) {
+        $('#addmsg').removeClass('error').addClass('success');
+        var toInsert = $('<tr><td class="collapsing">' + res.addedUser.name + 
+          '</td><td>' + res.addedUser.email +
+          '</td><td class="right aligned collapsing"><div class="ui icon red remove button" target="' +
+          res.addedUser.id + '"><i class="trash icon"></i></div></td>');
+        $('#table-member').append(toInsert);
+        bindBtn();
+      } else {
+        $('#addmsg').removeClass('success').addClass('error');
       }
     }
+  });
+}
+
+function bindBtn() {
+  $('.remove.button').unbind('click').click(function(e) {
+    var self = $(this);
+    $.ajax({
+      url: '/team/' + $('#teamId').val() + '/kick',
+      type: 'POST',
+      data: {
+        target: $(this).attr('target')
+      },
+      success: function(res) {
+        console.log(res);
+        $('#addmsg').removeClass('hidden');
+        $('#errormsg').text(res.msg);
+        if (res.ok == true) {
+          $('#addmsg').removeClass('error').addClass('success');
+          self.parent().parent().remove();
+        } else {
+          $('#addmsg').removeClass('success').addClass('error');
+        }
+      }
+    });
   });
 }

@@ -17,7 +17,13 @@ block content
             .ui.segment
               if team.lol
                 h4.ui.header= "隊伍名稱：" + team.lol.name
-                h4.ui.header= "隊員："
+                h4.ui.header
+                  | 隊長：
+                  a.ui.blue.horizontal.label(href='/user/'+team.lol.leader.id)= team.lol.leader.local.name
+                h4.ui.header
+                  | 隊員：
+                  each mem in team.lol.member
+                    a.ui.horizontal.label(href='/user/'+mem.id)= mem.local.name
               else
                 | 狀態: 尚未加入隊伍
             if team.lol

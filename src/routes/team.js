@@ -121,8 +121,29 @@ router.get('/:id', isLoggedIn, function(req, res) {
   });
 });
 
-router.get('/:id/unlink', isLoggedIn, function(req, res) {
-  // check team same ?
+router.post('/:id/kick', isLoggedIn, isAdmin, function(req, res) {
+  User.findById(req.body.target, function(err, doc) {
+    var index = -1;
+    for(var i = 0; i < authTeam.member.length; ++i) {
+      if (authTeam.member[i].id == doc.id) {
+        index = i;
+        break;
+      }
+    }
+    if (index > -1) {
+      authTeam.member.splice(index, 1);
+    }
+    authTeam.markModified('member');
+    authTeam.save();
+    doc.local.team[authTeam.game] = null;
+    doc.markModified('local.team');
+    doc.save(function(err, user) {
+      res.json({
+        ok: true,
+        msg: '成功將隊員退出組隊'
+      });
+    });
+  });
 });
 
 router.get('/:id/edit', isLoggedIn, isAdmin, function(req, res) {
@@ -178,7 +199,7 @@ router.post('/:id/addmember', isLoggedIn, isAdmin, function(req, res) {
     authTeam.save();
     res.json({
       ok:true, 
-      msg:'done',
+      msg:'隊員加入成功',
       addedUser: {
         id: user.id,
         name: user.local.name,
