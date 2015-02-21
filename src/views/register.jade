@@ -11,6 +11,8 @@ block content
       a.section(href='/login') 登入
       .divider /
       .active.section 註冊
+    if error != ""
+      .ui.error.message= error
     form#form-reg.ui.form(method='post', action='/register')
       .field
         label 電子郵件

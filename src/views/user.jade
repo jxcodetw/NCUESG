@@ -1,16 +1,13 @@
 extends layout
 
 block content
-  h1= 'Name: ' + user.local.name
-  h1= 'Student ID: ' + user.local.studentid
-  h1= 'Department: ' + user.local.department
-  h1= 'Grade: ' + user.local.grade
-  hr
-  h1= 'Teams:'
-  each t in user.local.team
-    if t != null
-      h2= t.name
-      h2= t.intro
-      h2= t.game
-      hr
-
+  .container
+    h1.ui.center.aligned.header
+      i.user.icon
+      | 選手詳細資料
+    a.ui.black.button(href='/user/') 選手列表
+    .ui.segment
+      h4.ui.header= "姓名：" + toshow.local.name
+      h4.ui.header= "電子郵件：" + toshow.local.email
+      h4.ui.header= "系所：" + departmentToName[toshow.local.department]
+      h4.ui.header= "年級：" + gradeToName[toshow.local.grade]

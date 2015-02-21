@@ -28,9 +28,9 @@ module.exports = function(passport) {
         if (err)
           return done(err);
         if (!user)
-          return done(null, false, req.flash('loginMessage', '帳號錯誤'));
+          return done(null, false, req.flash('loginMessage', '帳號或密碼錯誤'));
         if (!user.validPassword(password))
-          return done(null, false, req.flash('loginMessage', '密碼錯誤'));
+          return done(null, false, req.flash('loginMessage', '帳號或密碼錯誤'));
         else
           return done(null, user);
       });

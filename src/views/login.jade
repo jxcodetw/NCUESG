@@ -11,12 +11,14 @@ block content
       .active.section 登入
       .divider /
       a.section(href='/register') 註冊
+    if error != ""
+      .ui.error.message= error
     form.ui.form(method='post', action='/login')
       label 電子郵件
       .field
-        input(type='email', name='email', placeholder='電子郵件')
+        input(type='email', name='email', placeholder='電子郵件', required)
       label 密碼
       .field
-        input(type='password', name='password', placeholder='密碼')
+        input(type='password', name='password', placeholder='密碼', required)
       .field
         input.ui.submit.button(type='submit', value='登入')

@@ -85,8 +85,8 @@ router.get('/new', isLoggedIn, function(req, res) {
 
 
 router.post('/:id/edit', isLoggedIn, isAdmin, function(req, res) {
-  authTeam.name = req.body.name;
-  authTeam.intro = req.body.intro;
+  authTeam.name = sanitize(req.body.name);
+  authTeam.intro = sanitize(req.body.intro);
   authTeam.save();
   res.redirect('/team/dashboard');
 });

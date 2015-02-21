@@ -2,25 +2,91 @@ var express = require('express');
 var router = express.Router();
 var Team = require('../models/team');
 var User = require('../models/user');
+var sanitize = require('../lib/sanitize');
 
-router.get('/', isLoggedIn, function(req, res) {
+var departmentList = [
+  "placeholder",
+  "校外人士",
+  "中國文學系",
+  "英美語文學系",
+  "法國語文學系",
+  "理學院學士班",
+  "物理學系",
+  "數學系",
+  "化學學系",
+  "生命科學系",
+  "光電科學與工程學系",
+  "化學工程與材料工程學系",
+  "土木工程學系",
+  "機械工程學系",
+  "企業管理學系",
+  "資訊管理學系",
+  "財務金融學系",
+  "經濟學系",
+  "電機工程學系",
+  "資訊工程學系",
+  "通訊工程學系",
+  "地球科學學系",
+  "大氣科學學系"
+];
+
+var gradeList = [
+  "1年級",
+  "2年級",
+  "3年級",
+  "4年級",
+  "碩士",
+  "博士"
+];
+
+router.get('/', function(req, res) {
   User.find().populate('team').exec(function(err, users) {
     res.render('users', {
       user: req.user,
-      users: users
+      users: users,
+      departmentToName: departmentList
     });
   });
 });
 
 router.get('/:id', function(req, res) {
   User.findById(req.params.id).populate('local.team').exec(function(err, user) {
-    res.render('user', { user: user });
+    res.render('user', {
+      user: req.user,
+      toshow: user,
+      departmentToName: departmentList,
+      gradeToName: gradeList
+    });
   });
 });
 
 router.get('/:id/edit', isEditable, function(req, res) {
   User.findById(req.params.id).exec(function(err, user) {
-    res.render('user_edit', {user: user});
+    res.render('user_edit', {user: req.user, toedit: user});
+  });
+});
+
+router.post('/:id/edit', isEditable, function(req, res) {
+  User.findById(req.params.id).exec(function(err, user) {
+    if (err || !user) {
+      res.redirect('/user/'+req.params.id+'/edit');
+      return;
+    }
+
+    user.local.name = sanitize(req.body.name);
+    user.local.studentid = sanitize(req.body.studentid);
+    user.local.phone= sanitize(req.body.phone);
+    user.local.department= sanitize(req.body.department);
+    user.local.grade= sanitize(req.body.grade);
+    user.local.updated = new Date();
+
+    if (req.body.newpassword.length >= 6 && req.body.newpassword == req.body.newpassword2) { 
+      user.local.password = user.generateHash(req.body.newpassword);
+    }
+
+    user.save();
+
+    res.redirect('/user/'+req.params.id+'/edit');
   });
 });
 

@@ -1,6 +1,21 @@
 extends layout
 
 block content
-  each u in users
-    h1= u.local.name
-    hr
+  .container
+    h1.ui.center.aligned.header
+      i.user.icon
+      | 選手列表
+    table.ui.table
+      thead
+        tr
+          th 姓名
+          th 電子郵件
+          th 系所
+      tbody
+      each u in users
+        tr
+          td
+            i.user.icon
+            a(href='/user/'+u.id)= u.local.name
+          td= u.local.email
+          td= departmentToName[u.local.department]

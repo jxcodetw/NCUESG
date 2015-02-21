@@ -58,7 +58,7 @@ module.exports = function(passport) {
   router.post('/login', isLoggedIn, passport.authenticate('local-login', {
     successRedirect: '/',
     failureRedirect: '/login',
-    failureFlash: true
+    failureFlash: 'Invalid username or password.'
   }));
 
   router.get('/register', isLoggedIn, function(req, res) {
