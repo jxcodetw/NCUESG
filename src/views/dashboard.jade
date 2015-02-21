@@ -27,6 +27,8 @@ block content
                       a.ui.horizontal.green.label(href='/user/'+mem.id)= mem.local.name
                     else
                       a.ui.horizontal.label(href='/user/'+mem.id)= mem.local.name
+                  if team.lol.member.length == 0
+                    | 無
               else
                 | 狀態: 尚未加入隊伍
             if team.lol
@@ -48,9 +50,17 @@ block content
           .description
             .ui.segment
               if team.hs
+                h4.ui.header= "隊伍名稱：" + team.hs.name
+                h4.ui.header
+                  | 隊長：
+                  a.ui.blue.horizontal.label(href='/user/'+team.hs.leader.id)= team.hs.leader.local.name
               else
                 | 尚未加入隊伍
-            a.ui.right.floated.blue.button(href='/team/new?gametype=hs') 創立隊伍
+            if team.hs
+              a.ui.right.floated.green.button(href='/team/'+team.hs.id+'/edit') 編輯隊伍
+              a.ui.right.floated.button(href='/team/'+team.hs.id) 隊伍公開頁面
+            else
+              a.ui.right.floated.blue.button(href='/team/new?gametype=hs') 創立隊伍
 
       .item
         .image

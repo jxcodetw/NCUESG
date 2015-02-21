@@ -244,15 +244,12 @@ function isLoggedIn(req, res, next) {
 }
 
 function isAdmin(req, res, next) {
-  if (req.user.local.level > 10) {
-    return next();
-  }
   Team.findById(req.params.id).populate('leader').populate('member').exec(function(err, team) {
     if (err || !team) {
       res.redirect('/team/dashboard');
       return;
     }
-    if (team.leader.id == req.user.id) {
+    if (team.leader.id == req.user.id || req.user.local.level >= 10) {
       authTeam = team;
       return next();
     } else {
