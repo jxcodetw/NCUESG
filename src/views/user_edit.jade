@@ -5,6 +5,10 @@ block content
     h1.ui.center.aligned.header
       i.settings.icon
       | 帳號設定
+    if successMessage != ""
+      .ui.success.message= successMessage
+    if errorMessage != ""
+      .ui.error.message= errorMessage
     form#form-user.ui.form(method='post', action='/user/'+toedit.id+'/edit')
       .field
         label 電子郵件

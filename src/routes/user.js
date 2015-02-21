@@ -62,7 +62,12 @@ router.get('/:id', function(req, res) {
 
 router.get('/:id/edit', isEditable, function(req, res) {
   User.findById(req.params.id).exec(function(err, user) {
-    res.render('user_edit', {user: req.user, toedit: user});
+    res.render('user_edit', {
+      user: req.user,
+      toedit: user,
+      successMessage: req.flash('editSuccessMessage'),
+      errorMessage: req.flash('editErrorMessage')
+    });
   });
 });
 
@@ -80,10 +85,22 @@ router.post('/:id/edit', isEditable, function(req, res) {
     user.local.grade= sanitize(req.body.grade);
     user.local.updated = new Date();
 
-    if (req.body.newpassword.length >= 6 && req.body.newpassword == req.body.newpassword2) { 
-      user.local.password = user.generateHash(req.body.newpassword);
+    if (req.body.newpassword.length > 0) { 
+      if (req.body.newpassword.length < 6) {
+        req.flash('editErrorMessage', '密碼須長度大於6');
+        res.redirect('/user/'+req.params.id+'/edit');
+        return;
+      }
+      if (req.body.newpassword == req.body.newpassword2) {
+        user.local.password = user.generateHash(req.body.newpassword);
+      } else {
+        req.flash('editErrorMessage', '兩次密碼輸入不符');
+        res.redirect('/user/'+req.params.id+'/edit');
+        return;
+      }
     }
 
+    req.flash('editSuccessMessage', '資料修改成功');
     user.save();
 
     res.redirect('/user/'+req.params.id+'/edit');
