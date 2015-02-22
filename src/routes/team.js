@@ -112,7 +112,7 @@ router.get('/dashboard', isLoggedIn, function(req, res) {
           });
         }
       },
-      sc: function(cb) {
+      sc2: function(cb) {
         if (req.user.local.team[2] == null) {
           cb(null, false);
         } else {
@@ -216,8 +216,9 @@ router.post('/:id/addmember', isLoggedIn, isAdmin, function(req, res) {
       res.json({ok:false, msg: '該玩家在同一個遊戲中已經有加入其他隊伍'});
       return;
     }
-    if (authTeam.isFull() != false) {
-      res.json({ok:false, msg: isfull});
+    var full = authTeam.isFull();
+    if (full != false) {
+      res.json({ok:false, msg: full});
       return;
     }
     user.local.team[authTeam.game] = authTeam.id;

@@ -12,7 +12,7 @@ teamSchema.methods.isFull = function() {
   // lol, hs, sc, ava
   // 0  , 1 , 2 , 3
   if ((this.game == 0 || this.game == 3) && this.member.length >= 5) 
-    return "team is fulled";
+    return "隊伍已經滿了";
   if (this.game == 1 || this.game == 2)
     return "only one player allowed";
   return false;

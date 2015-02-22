@@ -13,6 +13,10 @@ var userSchema = mongoose.Schema({
     grade: Number,
     level: Number,
     team: [{type: mongoose.Schema.Types.ObjectId, ref: 'Team'}],
+    lolid: String,
+    hsid: String,
+    sc2id: String,
+    avaid: String,
     created: Date,
     updated: {type: Date, default: Date.now}
   },

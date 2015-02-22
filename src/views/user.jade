@@ -11,3 +11,6 @@ block content
       h4.ui.header= "電子郵件：" + toshow.local.email
       h4.ui.header= "系所：" + departmentToName[toshow.local.department]
       h4.ui.header= "年級：" + gradeToName[toshow.local.grade]
+      if user.local.level >= 10
+        h4.ui.header= "手機:" + toshow.local.phone
+        h4.ui.header= "學號:" + toshow.local.studentid

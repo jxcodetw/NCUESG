@@ -14,6 +14,10 @@ block content
           .meta
             span.cinema League of Legend
           .description
+            if team.lol && (!user.local.lolid || user.local.lolid.length <= 0)
+              .ui.warning.message
+                | 請記得填寫ID，
+                a(href='/user/'+user.id+'/edit') 前往設定
             .ui.segment
               if team.lol
                 h4.ui.header= "隊伍名稱：" + team.lol.name
@@ -30,7 +34,7 @@ block content
                   if team.lol.member.length == 0
                     | 無
               else
-                | 狀態: 尚未加入隊伍
+                | 尚未加入隊伍
             if team.lol
               if team.lol.leader.id == user.id
                 a.ui.right.floated.green.button(href='/team/'+team.lol.id+'/edit') 編輯隊伍
@@ -48,6 +52,10 @@ block content
           .meta
             span.cinema Hearth of Stone
           .description
+            if team.hs && (!user.local.hsid || user.local.hsid.length <= 0)
+              .ui.warning.message
+                | 請記得填寫ID，
+                a(href='/user/'+user.id+'/edit') 前往設定
             .ui.segment
               if team.hs
                 h4.ui.header= "隊伍名稱：" + team.hs.name
@@ -70,11 +78,23 @@ block content
           .meta
             span.cinema Starcraft 2: Heart of Spawn
           .description
+            if team.sc2 && (!user.local.sc2id || user.local.sc2id.length <= 0)
+              .ui.warning.message
+                | 請記得填寫ID，
+                a(href='/user/'+user.id+'/edit') 前往設定
             .ui.segment
-              if team.hs
+              if team.sc2
+                h4.ui.header= "隊伍名稱：" + team.sc2.name
+                h4.ui.header
+                  | 隊長：
+                  a.ui.blue.horizontal.label(href='/user/'+team.sc2.leader.id)= team.sc2.leader.local.name
               else
                 | 尚未加入隊伍
-            a.ui.right.floated.blue.button(href='/team/new?gametype=sc2') 創立隊伍
+            if team.sc2
+              a.ui.right.floated.green.button(href='/team/'+team.sc2.id+'/edit') 編輯隊伍
+              a.ui.right.floated.button(href='/team/'+team.sc2.id) 隊伍公開頁面
+            else
+              a.ui.right.floated.blue.button(href='/team/new?gametype=sc2') 創立隊伍
 
       .item
         .image
@@ -84,8 +104,32 @@ block content
           .meta
             span.cinema AVA
           .description
+            if team.ava && (!user.local.avaid || user.local.avaid.length <= 0)
+              .ui.warning.message
+                | 請記得填寫ID，
+                a(href='/user/'+user.id+'/edit') 前往設定
             .ui.segment
-              if team.hs
+              if team.ava
+                h4.ui.header= "隊伍名稱：" + team.ava.name
+                h4.ui.header
+                  | 隊長：
+                  a.ui.blue.horizontal.label(href='/user/'+team.ava.leader.id)= team.ava.leader.local.name
+                h4.ui.header
+                  | 隊員：
+                  each mem in team.ava.member
+                    if mem.id == user.id
+                      a.ui.horizontal.green.label(href='/user/'+mem.id)= mem.local.name
+                    else
+                      a.ui.horizontal.label(href='/user/'+mem.id)= mem.local.name
+                  if team.ava.member.length == 0
+                    | 無
               else
                 | 尚未加入隊伍
-            a.ui.right.floated.blue.button(href='/team/new?gametype=ava') 創立隊伍
+            if team.ava
+              if team.ava.leader.id == user.id
+                a.ui.right.floated.green.button(href='/team/'+team.ava.id+'/edit') 編輯隊伍
+              else
+                a.ui.right.floated.red.button(href='/team/'+team.ava.id+'/unlink') 退出組隊
+              a.ui.right.floated.button(href='/team/'+team.ava.id) 隊伍公開頁面
+            else
+              a.ui.right.floated.blue.button(href='/team/new?gametype=ava') 創立隊伍
