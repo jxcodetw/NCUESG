@@ -6,6 +6,13 @@ var async = require('async');
 var sanitize = require('../lib/sanitize');
 var authTeam;
 
+var gameList = [
+  "英雄聯盟",
+  "爐石戰記：魔獸英雄傳",
+  "星海爭霸II：蟲族之心",
+  "AVA戰地之王"
+];
+
 router.get('/', function(req, res) {
   // async wait for all task to be done.
   async.parallel(
@@ -144,7 +151,8 @@ router.get('/:id', isLoggedIn, function(req, res) {
   Team.findById(req.params.id).populate('leader').populate('member').exec(function(err, team) {
     res.render('team', {
       user: req.user,
-      team:team
+      team:team,
+      gameToName: gameList
     });
   });
 });
