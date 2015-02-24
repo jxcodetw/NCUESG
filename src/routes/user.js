@@ -31,6 +31,7 @@ var departmentList = [
 ];
 
 var gradeList = [
+  "placeholder",
   "1年級",
   "2年級",
   "3年級",
@@ -55,7 +56,13 @@ router.get('/:id', function(req, res) {
       user: req.user,
       toshow: user,
       departmentToName: departmentList,
-      gradeToName: gradeList
+      gradeToName: gradeList,
+      gameToImg: [
+        "lol.png",
+        "hs.jpg",
+        "sc2.png",
+        "ava.jpg"
+      ]
     });
   });
 });

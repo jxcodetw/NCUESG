@@ -13,6 +13,7 @@ block content
       p= team.intro
       h4.ui.header 隊長：
       a.ui.blue.horizontal.label(href='/user/'+team.leader.id)= team.leader.local.name
-      h4.ui.header 隊員：
-      each mem in team.member
-        a.ui.horizontal.label(href='/user/'+mem.id)= mem.local.name
+      if team.member.length > 0
+        h4.ui.header 隊員：
+        each mem in team.member
+          a.ui.horizontal.label(href='/user/'+mem.id)= mem.local.name

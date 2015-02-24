@@ -1,76 +1,71 @@
 extends layout
 
-block stylesheet
-  link(rel='stylesheet', href='/css/team.css')
-
 block content
-  div.content-wrapper
-    div.section-team
-      h1(style='text-align:center;') 隊伍列表
-      div.tab
-        div#tab-nav-1.tab-nav 英雄聯盟
-        div#tab-nav-2.tab-nav 爐石戰記
-        div#tab-nav-3.tab-nav 星海爭霸
-        div#tab-nav-4.tab-nav AVA
-      div#panel-1.panel(style='display:block;')
-        table.team.pure-table.pure-table-horizontal
-          thead
+  .container
+    h1.ui.center.aligned.header
+      i.users.icon
+      | 隊伍列表
+    .ui.top.attached.tabular.menu
+      a.active.item(data-tab='lol') 英雄聯盟
+      a.item(data-tab='hs') 爐石戰記：魔獸英雄傳
+      a.item(data-tab='sc2') 星海爭霸II：蟲族之心
+      a.item(data-tab='ava') AVA戰地之王
+    .ui.bottom.attached.active.tab.segment(data-tab='lol')
+      table.ui.table
+        thead
+          tr
+            th 隊伍名稱
+            th 隊長
+        tbody
+          each team in lolTeams
             tr
-              th 隊名
-              th(width='100') 隊長
-              th(width='400') 隊員
-          tbody
-            each team in lolTeams
-              tr
-                td
-                  a(href='/team/'+team.id)= team.name
-                td
-                  a(href='/user/'+team.leader.id)= team.leader.local.name
-                td
-                  each member in team.member
-                    a.member(href='/user/'+member.id)= member.local.name
-      div#panel-2.panel(style='display:none;')
-        table.team.pure-table.pure-table-horizontal
-          thead
+              td
+                i.users.icon
+                a(href='/team/'+team.id)= team.name
+              td
+                a(href='/user/'+team.leader.id)= team.leader.local.name
+    .ui.bottom.attached.tab.segment(data-tab='hs')
+      table.ui.table
+        thead
+          tr
+            th 隊伍名稱
+            th 隊長
+        tbody
+          each team in hsTeams
             tr
-              th 隊名
-              th 隊長
-          tbody
-            each team in hsTeams
-              tr
-                td
-                  a(href='/team/'+team.id)= team.name
-                td
-                  a(href='/user/'+team.leader.id)= team.leader.local.name
-      div#panel-3.panel(style='display:none;')
-        table.team.pure-table.pure-table-horizontal
-          thead
+              td
+                i.users.icon
+                a(href='/team/'+team.id)= team.name
+              td
+                a(href='/user/'+team.leader.id)= team.leader.local.name
+    .ui.bottom.attached.tab.segment(data-tab='sc2')
+      table.ui.table
+        thead
+          tr
+            th 隊伍名稱
+            th 隊長
+        tbody
+          each team in sc2Teams
             tr
-              th 隊名
-              th 隊長
-          tbody
-            each team in scTeams
-              tr
-                td
-                  a(href='/team/'+team.id)= team.name
-                td
-                  a(href='/user/'+team.leader.id)= team.leader.local.name
-      div#panel-4.panel(style='display:none;')
-        table.team.pure-table.pure-table-horizontal
-          thead
+              td
+                i.users.icon
+                a(href='/team/'+team.id)= team.name
+              td
+                a(href='/user/'+team.leader.id)= team.leader.local.name
+    .ui.bottom.attached.tab.segment(data-tab='ava')
+      table.ui.table
+        thead
+          tr
+            th 隊伍名稱
+            th 隊長
+        tbody
+          each team in avaTeams
             tr
-              th 隊名
-              th(width='100') 隊長
-              th(width='400') 隊員
-          tbody
-            each team in avaTeams
-              tr
-                td
-                  a(href='/team/'+team.id)= team.name
-                td
-                  a(href='/user/'+team.leader.id)= team.leader.local.name
-                td
-                  each member in team.member
-                    a.member(href='/user/'+member.id)= member.local.name
+              td
+                i.users.icon
+                a(href='/team/'+team.id)= team.name
+              td
+                a(href='/user/'+team.leader.id)= team.leader.local.name
+
 block javascript
-  script(src='/js/team.js')
+  script(src='/js/teams.js')

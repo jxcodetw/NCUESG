@@ -43,7 +43,7 @@ router.get('/', function(req, res) {
         user: req.user,
         lolTeams: result.lolTeams,
         hsTeams: result.hsTeams,
-        scTeams: result.scTeams,
+        sc2Teams: result.scTeams,
         avaTeams: result.avaTeams
       });
     }
