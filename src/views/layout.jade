@@ -53,6 +53,10 @@ html
                       a.item(href='/user/'+user.id+'/edit')
                         i.settings.icon
                         | 帳號設定
+                      if user.local.level >= 10
+                        a.item(href='/code')
+                          i.privacy.icon
+                          | 啟動碼管理
                       a.item(href='/logout')
                         i.log.out.icon
                         | 登出

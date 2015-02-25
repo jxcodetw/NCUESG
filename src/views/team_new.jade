@@ -5,6 +5,8 @@ block content
     h1.ui.center.aligned.header
       i.trophy.icon
       | 新建隊伍
+    if errorMessage != ""
+      .ui.error.message= errorMessage
     form#form-team.ui.form(method='post', action='/team/new')
       .field
         a.ui.black.button(href='/team/dashboard') 返回

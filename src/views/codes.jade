@@ -1,0 +1,56 @@
+extends layout
+
+block content
+  .container
+    h1.ui.center.aligned.header
+      i.privacy.icon
+      | 啟動碼管理
+    a.ui.black.button(href='/code/new/50')
+      i.plus.icon
+      | 50元啟動碼
+    a.ui.yellow.button(href='/code/new/250')
+      i.plus.icon
+      | 250元啟動碼
+    .ui.divider
+    .ui.top.attached.tabular.menu
+      a.active.item(data-tab='new') 未使用
+      a.item(data-tab='used') 已使用
+    .ui.bottom.attached.active.tab.segment(data-tab='new')
+      h4.ui.header= "數量：" + newCodes.length
+      table.ui.table
+        thead
+          tr
+            th 啟動碼
+            th 價錢
+            th 生成時間
+            th 移除
+        tbody
+          each c in newCodes
+            tr
+              td= c.id
+              td= c.price
+              td= c.created
+              td.right.aligned.collapsing
+                a.ui.icon.red.button(href='/code/'+c.id+'/delete')
+                  i.trash.icon
+    .ui.bottom.attached.tab.segment(data-tab='used')
+      h4.ui.header= "數量：" + usedCodes.length
+      table.ui.table
+        thead
+          tr
+            th 啟動碼
+            th 價錢
+            th 啟用隊伍
+            th 生成時間
+            th 啟用時間
+        tbody
+          each c in usedCodes
+            tr
+              td= c.id
+              td= c.price
+              td
+                a(href='/team/'+c.team.id)= c.team.name
+              td= c.created
+              td= c.updated
+block javascript
+  script(src='/js/tabs.js')

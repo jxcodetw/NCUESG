@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Team = require('../models/team');
 var User = require('../models/user');
+var Code = require('../models/code');
 var async = require('async');
 var sanitize = require('../lib/sanitize');
 var authTeam;
@@ -86,7 +87,8 @@ router.get('/new', isLoggedIn, function(req, res) {
   else if (game === 'ava') gametype = 3;
   res.render('team_new', {
     user: req.user,
-    game: gametype
+    game: gametype,
+    errorMessage: req.flash('newteamMessage')
   });
 });
 
@@ -196,20 +198,31 @@ router.post('/new', isLoggedIn, function(req, res) {
   if (req.user.local.team[req.body.gametype] != undefined) {
     res.redirect('/team/dashboard');
   } else if (req.body.gametype >= 0 && req.body.gametype <= 3) {
-    // check activate code
-    var newTeam = new Team();
-    newTeam.name = sanitize(req.body.name);
-    newTeam.game = req.body.gametype;
-    newTeam.intro = sanitize(req.body.intro);
-    newTeam.leader = req.user;
-    newTeam.save(function(err, team) {
-      User.findById(req.user.id, function(err, doc) {
-        doc.local.team[team.game] = team._id;
-        doc.markModified('local.team');
-        doc.save(function(err, user) {
-          res.redirect('/team/dashboard');
+    Code.findById(req.body.regcode, function(err, code) {
+      if (err || !code || code.used == true || !priceCheck(req.body.gametype, code.price)) {
+        var gametypeToString = ['lol', 'hs', 'sc2', 'ava'];
+        req.flash('newteamMessage', '啟動碼錯誤');
+        res.redirect('/team/new?gametype='+gametypeToString[req.body.gametype]);
+      } else {
+        var newTeam = new Team();
+        newTeam.name = sanitize(req.body.name);
+        newTeam.game = Number(sanitize(req.body.gametype));
+        newTeam.intro = sanitize(req.body.intro);
+        newTeam.leader = req.user;
+        newTeam.save(function(err, team) {
+          code.used = true;
+          code.updated = new Date();
+          code.team = team.id;
+          code.save();
+          User.findById(req.user.id, function(err, doc) {
+            doc.local.team[team.game] = team._id;
+            doc.markModified('local.team');
+            doc.save(function(err, user) {
+              res.redirect('/team/dashboard');
+            });
+          });
         });
-      });
+      }
     });
   }
 });
@@ -265,6 +278,11 @@ function isAdmin(req, res, next) {
       res.redirect('/team/dashboard');
     }
   });
+}
+
+function priceCheck(gametype, price) {
+  var priceTable = [250, 50, 50, 250];
+  return priceTable[gametype] == price;
 }
 
 module.exports = router;

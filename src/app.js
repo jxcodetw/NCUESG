@@ -17,6 +17,7 @@ require('./config/passport')(passport);
 var routes = require('./routes/index')(passport);
 var users = require('./routes/user');
 var teams = require('./routes/team');
+var codes = require('./routes/code');
 var announcement = require('./routes/announcement');
 
 var app = express();
@@ -39,6 +40,7 @@ app.use(passport.session());
 app.use(flash());
 
 app.use('/', routes);
+app.use('/code',codes);
 app.use('/user', users);
 app.use('/team', teams);
 app.use('/announcement', announcement);
