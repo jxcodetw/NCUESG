@@ -22,9 +22,58 @@ block content
         label 隊伍介紹
         textarea(name='intro', placeholder='隊伍介紹')= team.intro
       .ui.error.message
+      h2.ui.horizontal.header.divider
+        i.calendar.icon
+        | 初賽日期選擇
+      table.ui.celled.table
+        thead
+          tr
+            th 日期/時間
+            each time in tryout_times
+              th= time.time
+            th 全選
+        tbody
+          each day in tryout
+            tr
+              td= day.datetime
+              each time in tryout_times
+                td
+                  .ui.checkbox(tryout-row=day.index)
+                    input(type='checkbox', name='tryout['+(day.index*tryout_times.length+time.index)+']')
+              td
+                .ui.icon.buttons
+                  .ui.blue.icon.checkall.button(tryout-row=day.index)
+                    i.checkmark.icon
+                  .ui.icon.uncheckall.button(tryout-row=day.index)
+                    i.remove.icon
+      h2.ui.horizontal.header.divider
+        i.calendar.icon
+        | 複賽日期選擇
+      table.ui.celled.table
+        thead
+          tr
+            th 日期/時間
+            each time in intermediary_times
+              th= time.time
+            th 全選
+        tbody
+          each day in intermediary
+            tr
+              td= day.datetime
+              each time in intermediary_times
+                td
+                  .ui.checkbox(inter-row=day.index)
+                    input(type='checkbox', name='intermediary['+(day.index*intermediary_times.length+time.index)+']')
+              td
+                .ui.icon.buttons
+                  .ui.blue.icon.checkall.button(inter-row=day.index)
+                    i.checkmark.icon
+                  .ui.icon.uncheckall.button(inter-row=day.index)
+                    i.remove.icon
+              
 
     if team.game == 0 || team.game == 3
-      h4.ui.horizontal.header.divider
+      h2.ui.horizontal.header.divider
         i.users.icon
         | 隊員管理
 
@@ -52,5 +101,7 @@ block content
               td.right.aligned.collapsing
                 .ui.icon.red.remove.button(target=mem.id)
                   i.trash.icon
+      
 block javascript
   script(src='/js/team_edit.js')
+  script(src='/js/tabs.js')

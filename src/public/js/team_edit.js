@@ -15,6 +15,15 @@ $(function() {
       }]
     }
   });
+
+  for(var i=0;i<8;++i) {
+    $('.ui.checkbox[tryout-row='+i+']').checkbox('attach events', '.checkall[tryout-row='+i+']', 'check');
+    $('.ui.checkbox[tryout-row='+i+']').checkbox('attach events', '.uncheckall[tryout-row='+i+']', 'uncheck');
+  }
+  for(var i=0;i<5;++i) {
+    $('.ui.checkbox[inter-row='+i+']').checkbox('attach events', '.checkall[inter-row='+i+']', 'check');
+    $('.ui.checkbox[inter-row='+i+']').checkbox('attach events', '.uncheckall[inter-row='+i+']', 'uncheck');
+  }
   
   $('#btn-add').click(function() {
     addMember();

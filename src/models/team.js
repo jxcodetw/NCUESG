@@ -5,7 +5,8 @@ var teamSchema = mongoose.Schema({
   name: String,
   intro: String,
   leader: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-  member: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
+  member: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+  time: [Boolean]
 });
 
 teamSchema.methods.isFull = function() {

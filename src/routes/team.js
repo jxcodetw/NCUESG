@@ -190,6 +190,41 @@ router.get('/:id/edit', isLoggedIn, isAdmin, function(req, res) {
     user: req.user,
     team: authTeam,
     gameName: gameToName[authTeam.game],
+    tryout: [
+      {index: 0, datetime: "3/23(一)"},
+      {index: 1, datetime: "3/24(二)"},
+      {index: 2, datetime: "3/25(三)"},
+      {index: 3, datetime: "3/26(四)"},
+      {index: 4, datetime: "3/27(五)"},
+      {index: 5, datetime: "3/28(六)"},
+      {index: 6, datetime: "3/29(日)"},
+      {index: 7, datetime: "3/30(一)"}
+    ],
+    tryout_times: [
+      {index: 0, time: "18:00"},
+      {index: 1, time: "19:00"},
+      {index: 2, time: "20:00"},
+      {index: 3, time: "21:00"},
+      {index: 4, time: "22:00"},
+      {index: 5, time: "23:00"}
+    ],
+    intermediary: [
+      {index: 0, datetime: "4/1(三)"},
+      {index: 1, datetime: "4/2(四)"},
+      {index: 2, datetime: "4/7(二)"},
+      {index: 3, datetime: "4/8(三)"},
+      {index: 4, datetime: "4/9(四)"}
+    ],
+    intermediary_times: [
+      {index: 0, time: "17:00"},
+      {index: 1, time: "18:00"},
+      {index: 2, time: "19:00"},
+      {index: 3, time: "20:00"},
+      {index: 4, time: "21:00"},
+      {index: 5, time: "22:00"},
+      {index: 6, time: "23:00"},
+      {index: 7, time: "24:00"}
+    ]
   });
 });
 
