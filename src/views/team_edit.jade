@@ -39,7 +39,7 @@ block content
               each time in tryout_times
                 td
                   .ui.checkbox(tryout-row=day.index)
-                    input(type='checkbox', name='tryout['+(day.index*tryout_times.length+time.index)+']')
+                    input(type='checkbox', name='tryout', value=(day.index*tryout_times.length+time.index))
               td
                 .ui.icon.buttons
                   .ui.blue.icon.checkall.button(tryout-row=day.index)
@@ -63,7 +63,7 @@ block content
               each time in intermediary_times
                 td
                   .ui.checkbox(inter-row=day.index)
-                    input(type='checkbox', name='intermediary['+(day.index*intermediary_times.length+time.index)+']')
+                    input(type='checkbox', name='intermediary', value=(day.index*tryout_times.length+time.index))
               td
                 .ui.icon.buttons
                   .ui.blue.icon.checkall.button(inter-row=day.index)
