@@ -26,13 +26,7 @@ html
               a.item(href='/rules') 大賽規則
               a.item(href='/participation_help') 報名須知
               a.item(href='/contact') 問題舉報
-              .ui.dropdown.link.item
-                | 贊助商
-                i.dropdown.icon
-                div.menu
-                  a.item Garena
-                  a.item Blizzard
-                  a.item 其他贊助
+              a.item(href='/sponsors') 贊助商
               .right.menu
                 if user
                   a.item(href='/user/'+user.id)= "Hao, "+user.local.name
