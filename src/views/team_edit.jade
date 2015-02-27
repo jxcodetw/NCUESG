@@ -7,6 +7,8 @@ block content
       i.trophy.icon
       | 修改隊伍-
       = gameName
+    if editTeamMessage != ""
+      .ui.success.message= editTeamMessage
     form#form-team.ui.form(method='post', action='/team/'+team.id+'/edit')
       .field
         a.ui.black.button(href='/team/dashboard') 返回
@@ -39,7 +41,8 @@ block content
               each time in tryout_times
                 td
                   .ui.checkbox(tryout-row=day.index)
-                    input(type='checkbox', name='tryout', value=(day.index*tryout_times.length+time.index))
+                    - var index = day.index*tryout_times.length+time.index;
+                    input(type='checkbox', name='tryout', value=index, checked=(team.tryout[index] ? "checked" : undefined) )
               td
                 .ui.icon.buttons
                   .ui.blue.icon.checkall.button(tryout-row=day.index)
@@ -63,7 +66,8 @@ block content
               each time in intermediary_times
                 td
                   .ui.checkbox(inter-row=day.index)
-                    input(type='checkbox', name='intermediary', value=(day.index*tryout_times.length+time.index))
+                    - var index = day.index*intermediary_times.length+time.index
+                    input(type='checkbox', name='intermediary', value=index, checked=(team.intermediary[index] ? "checked" : undefined))
               td
                 .ui.icon.buttons
                   .ui.blue.icon.checkall.button(inter-row=day.index)

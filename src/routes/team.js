@@ -96,10 +96,21 @@ router.get('/new', isLoggedIn, function(req, res) {
 router.post('/:id/edit', isLoggedIn, isAdmin, function(req, res) {
   authTeam.name = sanitize(req.body.name);
   authTeam.intro = sanitize(req.body.intro);
-  console.log(req.body.tryout);
-  console.log(req.body.intermediary);
+  authTeam.tryout = Array.apply(null, Array(48)).map(function() {return false;});
+  authTeam.intermediary = Array.apply(null, Array(40)).map(function() {return false;});
+  var tryout = req.body.tryout;
+  var intermediary = req.body.intermediary;
+  for(var key in tryout) {
+    authTeam.tryout[tryout[key]] = true;
+  }
+  for(var key in intermediary) {
+    authTeam.intermediary[intermediary[key]] = true;
+  }
+  authTeam.markModified('tryout');
+  authTeam.markModified('intermediary');
   authTeam.save();
-  res.redirect('/team/dashboard');
+  req.flash('editTeamMessage', '修改成功');
+  res.redirect('/team/' + req.params.id + '/edit');
 });
 
 router.get('/dashboard', isLoggedIn, function(req, res) {
@@ -192,6 +203,7 @@ router.get('/:id/edit', isLoggedIn, isAdmin, function(req, res) {
     user: req.user,
     team: authTeam,
     gameName: gameToName[authTeam.game],
+    editTeamMessage: req.flash('editTeamMessage'),
     tryout: [
       {index: 0, datetime: "3/23(一)"},
       {index: 1, datetime: "3/24(二)"},
@@ -246,6 +258,8 @@ router.post('/new', isLoggedIn, function(req, res) {
         newTeam.game = Number(sanitize(req.body.gametype));
         newTeam.intro = sanitize(req.body.intro);
         newTeam.leader = req.user;
+        newTeam.tryout = Array.apply(null, Array(48)).map(function() {return true;});
+        newTeam.intermediary = Array.apply(null, Array(40)).map(function() {return true;});
         newTeam.save(function(err, team) {
           code.used = true;
           code.updated = new Date();
@@ -255,7 +269,8 @@ router.post('/new', isLoggedIn, function(req, res) {
             doc.local.team[team.game] = team._id;
             doc.markModified('local.team');
             doc.save(function(err, user) {
-              res.redirect('/team/dashboard');
+              req.flash('editTeamMessage', '隊伍創建成功，請記得填寫相關資料');
+              res.redirect('/team/'+team.id+'/edit');
             });
           });
         });
