@@ -17,7 +17,7 @@ block content
             if team.lol && (!user.local.lolid || user.local.lolid.length <= 0)
               .ui.warning.message
                 | 請記得填寫ID，
-                a(href='/user/'+user.id+'/edit') 前往設定
+                a(href='/user/'+user.id+'/edit#lolid') 前往設定
             .ui.segment
               if team.lol
                 h4.ui.header= "隊伍名稱：" + team.lol.name
@@ -55,7 +55,7 @@ block content
             if team.hs && (!user.local.hsid || user.local.hsid.length <= 0)
               .ui.warning.message
                 | 請記得填寫ID，
-                a(href='/user/'+user.id+'/edit') 前往設定
+                a(href='/user/'+user.id+'/edit#hsid') 前往設定
             .ui.segment
               if team.hs
                 h4.ui.header= "隊伍名稱：" + team.hs.name
@@ -81,7 +81,7 @@ block content
             if team.sc2 && (!user.local.sc2id || user.local.sc2id.length <= 0)
               .ui.warning.message
                 | 請記得填寫ID，
-                a(href='/user/'+user.id+'/edit') 前往設定
+                a(href='/user/'+user.id+'/edit#sc2id') 前往設定
             .ui.segment
               if team.sc2
                 h4.ui.header= "隊伍名稱：" + team.sc2.name
@@ -107,7 +107,7 @@ block content
             if team.ava && (!user.local.avaid || user.local.avaid.length <= 0)
               .ui.warning.message
                 | 請記得填寫ID，
-                a(href='/user/'+user.id+'/edit') 前往設定
+                a(href='/user/'+user.id+'/edit#avaid') 前往設定
             .ui.segment
               if team.ava
                 h4.ui.header= "隊伍名稱：" + team.ava.name
