@@ -2,7 +2,16 @@
   background: url('/img/home.jpg');
   background-size: cover;
   min-height: 500px;
+  padding-top: 50px;
+  color: #fff;
 }
+
+#live > .centered {
+  background: rgba(0,0,0,0.3);
+  background-clip: content-box;
+  min-height: 300px;
+}
+
 #home .ui.segment {
   margin: 0;
 }

@@ -8,8 +8,25 @@ block content
 
   #live.ui.vertical.feature.segment
     .ui.centered.page.grid
+      .ten.wide.column
+        iframe(width="100%", height="315", src="https://www.youtube.com/embed/vzHrjOMfHPY", frameborder="0", allowfullscreen)
+      .six.wide.column
+        pre.
+          就在不久之前，
+          召喚峽谷歷經了歷史上的一次重大變革，
+          許多召喚師們彼此較勁的聖地，
+          有了一種和以往截然不同的新風貌。
+          身為一名召喚師，
+          我們享受著彼此競技的感覺，
+          但你是否可曾想過，
+          在這漫漫人海中，
+          誰是最能忍辱負重的上路？
+          又是誰是呼風喚雨的中路王者？
+          而誰才是最神出鬼沒的Jungler？
+          為了決定真正的「Top 1」，
+          我們需要一個專屬於電競的舞台 … (待續？)
       
-  .ui.vertical.feature.segment
+  .ui.vertical.feature.segment(style='min-height:300px;')
     .ui.centered.page.grid
       .fourteen.wide.column
         .ui.two.column.center.aligned.stackable.divided.grid
@@ -25,7 +42,8 @@ block content
               tbody
                 each ann in announcement_important
                   tr
-                    td= ann.title
+                    td
+                      a(href='/announcement/'+ann.id)= ann.title
                     td.right.aligned.collapsing= ann.created.getFullYear() + "/" + (ann.created.getMonth()+1) + "/" + ann.created.getDate()
           .column
             h1.center
@@ -39,8 +57,8 @@ block content
               tbody
                 each ann in announcement_normal
                   tr
-                    td= ann.title
+                    td
+                      a(href='/announcement/'+ann.id)= ann.title
                     td.right.aligned.collapsing= ann.created.getFullYear() + "/" + (ann.created.getMonth()+1) + "/" + ann.created.getDate()
-  .ui.vertical.feature.segment(style='min-height:200px;')
 block javascript
   script(src='/js/modal.js')

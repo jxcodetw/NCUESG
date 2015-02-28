@@ -10,12 +10,12 @@ block content
     .ui.horizontal.divider 公告列表
     .ui.styled.fluid.accordion
       each ann in announcements
-        .title
+        .title(class=(show==ann.id?"active":""))
           i.dropdown.icon
           if ann.level == 1
             span.ui.purple.label 重要
           = ' '+ann.title + ' - '  + ann.created.getFullYear() + "/" + (ann.created.getMonth()+1) + "/" + ann.created.getDate()
-        .content
+        .content(class=(show==ann.id?"active":""))
           p !{ann.content.replace(/\n/g, '<br/>')}
           if user && user.local.level > 0
             .ui.horizontal.divider 選項

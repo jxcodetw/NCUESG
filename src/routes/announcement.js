@@ -19,6 +19,16 @@ router.get('/new', isAdmin, function(req, res) {
   });
 });
 
+router.get('/:id', function(req, res) {
+  Announcement.find({}).sort({level: 'desc', 'created': 'desc'}).exec(function(err, ann) {
+    res.render('announcement', {
+      user: req.user,
+      announcements: ann,
+      show: req.params.id
+    });
+  });
+});
+
 router.get('/:id/edit', isAdmin, function(req, res) {
   Announcement.findById(req.params.id).sort({level: 'desc', 'created': 'desc'}).exec(function(err, ann) {
     if (ann) {
