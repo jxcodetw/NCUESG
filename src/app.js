@@ -18,6 +18,7 @@ var routes = require('./routes/index')(passport);
 var users = require('./routes/user');
 var teams = require('./routes/team');
 var announcement = require('./routes/announcement');
+var competition = require('./routes/competition');
 
 var app = express();
 
@@ -42,6 +43,7 @@ app.use('/', routes);
 app.use('/user', users);
 app.use('/team', teams);
 app.use('/announcement', announcement);
+app.use('/competition', competition);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
