@@ -4,59 +4,52 @@ $(function() {
       identifier: 'name',
       rules: [{
         type: 'empty',
-        prompt: 'Please enter your name'
+        prompt: '請輸入姓名'
       }]
     },
     email: {
       identifier: 'email',
       rules: [{
         type: 'empty',
-        prompt: 'Please enter your email'
+        prompt: '請輸入電子郵件'
       }]
     },
     password: {
       identifier: 'password',
       rules: [{
         type: 'empty',
-        prompt: 'Please enter your password'
+        prompt: '請輸入密碼'
       },{
         type: 'length[6]', 
-        prompt: 'Your password must at least 6 characters'
+        prompt: '密碼必須至少六個字'
       }]
     },
     password2: {
       identifier: 'password2',
       rules: [{
         type: 'match[password]',
-        prompt: 'two passwords must equal'
+        prompt: '第二次輸入的密碼須一致'
       }]
     },
     phone : {
       identifier: 'phone',
       rules: [{
         type: 'empty',
-        prompt: 'Please enter your phone'
-      }]
-    },
-    student_number : {
-      identifier: 'student_number',
-      rules: [{
-        type: 'empty',
-        prompt: 'Please enter your student number'
+        prompt: '請輸入手機號碼'
       }]
     },
     department : {
       identifier: 'department',
       rules: [{
         type: 'empty',
-        prompt: 'Please select a department'
+        prompt: '請選擇系所'
       }]
     },
     grade : {
       identifier: 'grade',
       rules: [{
         type: 'empty',
-        prompt: 'Please select a grade'
+        prompt: '請選擇年級'
       }]
     }
   });
