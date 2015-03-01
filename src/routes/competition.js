@@ -126,9 +126,22 @@ router.get('/', function(req, res) {
   });
 });
 
+router.post('/team-type', function(req, res) {
+  Team.find({'game': req.body.game}, function(err, tem) {
+    var opt = '';
+    for(var i in tem) {
+      opt += '<div class="item" data-value="' + tem[i].id + '">' + tem[i].name + '</div>'
+    }
+    var result = 
+      '<div class="field"><label>Team A</label><div class="options ui selection dropdown"><input type="hidden" name="team1"><div class="default text">Team A</div><i class="dropdown icon"></i><div class="menu">'+opt+'</div></div></div>' + 
+      '<div class="field"><label>Team B</label><div class="options ui selection dropdown"><input type="hidden" name="team1"><div class="default text">Team B</div><i class="dropdown icon"></i><div class="menu">'+opt+'</div></div></div>';
+    res.json(result);
+  });
+});
+
 //done
 router.get('/new',/* isAdmin,*/ function(req, res) {
-  Team.find({}).sort({'game': 'desc'}).exec(function(err, tem) {
+  Team.find({'game': 0}).exec(function(err, tem) {
     res.render('competition_new', {
       user: req.user,
       gametypes: gameList,

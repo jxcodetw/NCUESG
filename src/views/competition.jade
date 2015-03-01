@@ -5,6 +5,9 @@ block content
       i.flag.icon
       | 賽事中心
 
+    if user && user.local.level > 0
+      a.ui.blue.button(href='/competition/new') 新增賽事
+    .ui.horizontal.divider 賽事列表
     .ui.top.attached.tabular.menu
       a.item.active(data-tab="starcraft") 星海爭霸
       a.item(data-tab="hearthstone") 爐石戰記

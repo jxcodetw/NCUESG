@@ -11,7 +11,7 @@ block content
         .ui.blue.submit.button 創立
       .field
         label 遊戲類別
-        .ui.selection.dropdown
+        #gametype.ui.selection.dropdown
           input(type='hidden', name='gametype', value=gametype)
           .default.text 遊戲類別
           i.dropdown.icon
@@ -20,28 +20,29 @@ block content
             while i < gametypes.length
               .item(data-value=i)= gametypes[i]
               - i = i + 1
-      .field
-        label Team A
-        .ui.selection.dropdown
-          input(type='hidden', name='team1', value=team1)
-          .default.text Team A
-          i.dropdown.icon
-          .menu
-            - var i = 0
-            each tem in teams
-              .item(data-value=tem._id)= tem.name
-              - i = i + 1
-      .field
-        label Team B
-        .ui.selection.dropdown
-          input(type='hidden', name='team2', value=team2)
-          .default.text Team B
-          i.dropdown.icon
-          .menu
-            - var i = 0
-            each tem in teams
-              .item(data-value=tem._id)= tem.name
-              - i = i + 1
+      #options.two.fields
+        .field
+          label Team A
+          .ui.selection.dropdown
+            input(type='hidden', name='team1', value=team1)
+            .default.text Team A
+            i.dropdown.icon
+            .menu
+              - var i = 0
+              each tem in teams
+                .item(data-value=tem._id)= tem.name
+                - i = i + 1
+        .field
+          label Team B
+          .ui.selection.dropdown
+            input(type='hidden', name='team2', value=team2)
+            .default.text Team B
+            i.dropdown.icon
+            .menu
+              - var i = 0
+              each tem in teams
+                .item(data-value=tem._id)= tem.name
+                - i = i + 1
       .field
         label 賽別
         .ui.selection.dropdown
@@ -68,4 +69,4 @@ block content
               - i = i + 1
       .ui.error.message
 block javascript
-  script(src='/js/team.js')
+  script(src='/js/competition.js')
