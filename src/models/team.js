@@ -4,6 +4,7 @@ var teamSchema = mongoose.Schema({
   game: Number,
   name: String,
   intro: String,
+  head: String,
   leader: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   member: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
   tryout: [Boolean],

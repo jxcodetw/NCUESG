@@ -5,7 +5,7 @@ var User = require('../models/user');
 var Code = require('../models/code');
 var async = require('async');
 var sanitize = require('../lib/sanitize');
-var authTeam;
+var multer = require('multer');
 
 var gameList = [
   "英雄聯盟",
@@ -93,22 +93,38 @@ router.get('/new', isLoggedIn, function(req, res) {
 });
 
 
-router.post('/:id/edit', isLoggedIn, isAdmin, function(req, res) {
-  authTeam.name = sanitize(req.body.name);
-  authTeam.intro = sanitize(req.body.intro);
-  authTeam.tryout = Array.apply(null, Array(48)).map(function() {return false;});
-  authTeam.intermediary = Array.apply(null, Array(40)).map(function() {return false;});
+var updateHead = multer({
+  dest: './public/uploads',
+  onFileUploadStart: function (file, req, res) {
+    if (file.extension != 'jpg' &&
+        file.extension != 'jpeg' &&
+        file.extension != 'png' &&
+        file.extension != 'bmp')
+      return false;
+    console.log(file.fieldname + ' is starting ...')
+  },
+  onFileUploadComplete: function (file, req, res) {
+    req.uploadedName = file.name;
+    console.log(file.fieldname + ' uploaded to  ' + file.path)
+  }
+});
+router.post('/:id/edit', isLoggedIn, isAdmin, updateHead, function(req, res) {
+  req.authTeam.name = sanitize(req.body.name);
+  req.authTeam.intro = sanitize(req.body.intro);
+  req.authTeam.head = req.uploadedName;
+  req.authTeam.tryout = Array.apply(null, Array(48)).map(function() {return false;});
+  req.authTeam.intermediary = Array.apply(null, Array(40)).map(function() {return false;});
   var tryout = req.body.tryout;
   var intermediary = req.body.intermediary;
   for(var key in tryout) {
-    authTeam.tryout[tryout[key]] = true;
+    req.authTeam.tryout[tryout[key]] = true;
   }
   for(var key in intermediary) {
-    authTeam.intermediary[intermediary[key]] = true;
+    req.authTeam.intermediary[intermediary[key]] = true;
   }
-  authTeam.markModified('tryout');
-  authTeam.markModified('intermediary');
-  authTeam.save();
+  req.authTeam.markModified('tryout');
+  req.authTeam.markModified('intermediary');
+  req.authTeam.save();
   req.flash('editTeamMessage', '修改成功');
   res.redirect('/team/' + req.params.id + '/edit');
 });
@@ -175,18 +191,18 @@ router.get('/:id', isLoggedIn, function(req, res) {
 router.post('/:id/kick', isLoggedIn, isAdmin, function(req, res) {
   User.findById(req.body.target, function(err, doc) {
     var index = -1;
-    for(var i = 0; i < authTeam.member.length; ++i) {
-      if (authTeam.member[i].id == doc.id) {
+    for(var i = 0; i < req.authTeam.member.length; ++i) {
+      if (req.authTeam.member[i].id == doc.id) {
         index = i;
         break;
       }
     }
     if (index > -1) {
-      authTeam.member.splice(index, 1);
+      req.authTeam.member.splice(index, 1);
     }
-    authTeam.markModified('member');
-    authTeam.save();
-    doc.local.team[authTeam.game] = null;
+    req.authTeam.markModified('member');
+    req.authTeam.save();
+    doc.local.team[req.authTeam.game] = null;
     doc.markModified('local.team');
     doc.save(function(err, user) {
       res.json({
@@ -201,8 +217,8 @@ router.get('/:id/edit', isLoggedIn, isAdmin, function(req, res) {
   var gameToName = ['英雄聯盟', '爐石戰記', '星海爭霸2-蟲族之心', '戰地之王'];
   res.render('team_edit', {
     user: req.user,
-    team: authTeam,
-    gameName: gameToName[authTeam.game],
+    team: req.authTeam,
+    gameName: gameToName[req.authTeam.game],
     editTeamMessage: req.flash('editTeamMessage'),
     tryout: [
       {index: 0, datetime: "3/23(一)"},
@@ -242,7 +258,23 @@ router.get('/:id/edit', isLoggedIn, isAdmin, function(req, res) {
   });
 });
 
-router.post('/new', isLoggedIn, function(req, res) {
+
+var uploadHead = multer({
+  dest: './public/uploads',
+  onFileUploadStart: function (file, req, res) {
+    if (file.extension != 'jpg' &&
+        file.extension != 'jpeg' &&
+        file.extension != 'png' &&
+        file.extension != 'bmp')
+      return false;
+    console.log(file.fieldname + ' is starting ...')
+  },
+  onFileUploadComplete: function (file, req, res) {
+    req.uploadedName = file.name;
+    console.log(file.fieldname + ' uploaded to  ' + file.path)
+  }
+});
+router.post('/new', isLoggedIn, uploadHead, function(req, res) {
   // check if this user has joined req.body.gametype
   if (req.user.local.team[req.body.gametype] != undefined) {
     res.redirect('/team/dashboard');
@@ -253,11 +285,13 @@ router.post('/new', isLoggedIn, function(req, res) {
         req.flash('newteamMessage', '啟動碼錯誤');
         res.redirect('/team/new?gametype='+gametypeToString[req.body.gametype]);
       } else {
+        console.log('uploadedName:' + req.uploadedName);
         var newTeam = new Team();
         newTeam.name = sanitize(req.body.name);
         newTeam.game = Number(sanitize(req.body.gametype));
         newTeam.intro = sanitize(req.body.intro);
         newTeam.leader = req.user;
+        newTeam.head = req.uploadedName == undefined ? "" : req.uploadedName;
         newTeam.tryout = Array.apply(null, Array(48)).map(function() {return true;});
         newTeam.intermediary = Array.apply(null, Array(40)).map(function() {return true;});
         newTeam.save(function(err, team) {
@@ -285,20 +319,20 @@ router.post('/:id/addmember', isLoggedIn, isAdmin, function(req, res) {
       res.json({ok:false, msg: '找不到該使用者'});
       return;
     }
-    if (user.local.team[authTeam.game] != null) {
+    if (user.local.team[req.authTeam.game] != null) {
       res.json({ok:false, msg: '該玩家在同一個遊戲中已經有加入其他隊伍'});
       return;
     }
-    var full = authTeam.isFull();
+    var full = req.authTeam.isFull();
     if (full != false) {
       res.json({ok:false, msg: full});
       return;
     }
-    user.local.team[authTeam.game] = authTeam.id;
+    user.local.team[req.authTeam.game] = req.authTeam.id;
     user.markModified('local.team');
-    authTeam.member.push(user);
+    req.authTeam.member.push(user);
     user.save();
-    authTeam.save();
+    req.authTeam.save();
     res.json({
       ok:true, 
       msg:'隊員加入成功',
@@ -324,7 +358,7 @@ function isAdmin(req, res, next) {
       return;
     }
     if (team.leader.id == req.user.id || req.user.local.level >= 10) {
-      authTeam = team;
+      req.authTeam = team;
       return next();
     } else {
       res.redirect('/team/dashboard');

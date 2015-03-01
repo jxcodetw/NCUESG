@@ -7,10 +7,15 @@ block content
       | 新建隊伍
     if errorMessage != ""
       .ui.error.message= errorMessage
-    form#form-team.ui.form(method='post', action='/team/new')
+    form#form-team.ui.form(method='post', action='/team/new', enctype="multipart/form-data")
       .field
         a.ui.black.button(href='/team/dashboard') 返回
         .ui.blue.submit.button 創立
+      .field
+        label 隊伍頭像(盡量使用100x100的圖像，否則會造成圖片變形)
+        img#uploadPreview(style="width: 100px; height: 100px;", src='/uploads/defaultPortrait.png')
+        br
+        input#uploadImage(type='file', name='headPic', onchange='PreviewImage();',accept="image/*")
       .field
         label 啟動碼
         input(type='text', name='regcode', placeholder='啟動碼')

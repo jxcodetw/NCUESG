@@ -13,10 +13,9 @@ block content
       | 250元啟動碼
     .ui.divider
     .ui.top.attached.tabular.menu
-      a.active.item(data-tab='new') 未使用
-      a.item(data-tab='used') 已使用
+      a.active.item(data-tab='new')= '未使用('+newCodes.length+')'
+      a.item(data-tab='used')= '已使用('+usedCodes.length+')'
     .ui.bottom.attached.active.tab.segment(data-tab='new')
-      h4.ui.header= "數量：" + newCodes.length
       table.ui.table
         thead
           tr
@@ -34,7 +33,6 @@ block content
                 a.ui.icon.red.button(href='/code/'+c.id+'/delete')
                   i.trash.icon
     .ui.bottom.attached.tab.segment(data-tab='used')
-      h4.ui.header= "數量：" + usedCodes.length
       table.ui.table
         thead
           tr

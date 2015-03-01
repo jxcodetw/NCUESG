@@ -7,6 +7,11 @@ block content
       | 隊伍詳細資料
     a.ui.black.button(href='/team/') 隊伍列表
     .ui.segment
+      h4.ui.header 隊伍頭像：
+      if team.head != ""
+        img#uploadPreview(style="width: 100px; height: 100px;", src="/uploads/"+team.head)
+      else
+        img#uploadPreview(style="width: 100px; height: 100px;", src='/uploads/defaultPortrait.png')
       h4.ui.header= "隊伍名稱：" + team.name
       h4.ui.header= "參賽遊戲：" + gameToName[team.game]
       h4.ui.header 隊伍簡介：
