@@ -99,8 +99,10 @@ var updateHead = multer({
     if (file.extension != 'jpg' &&
         file.extension != 'jpeg' &&
         file.extension != 'png' &&
-        file.extension != 'bmp')
+        file.extension != 'bmp') {
+      req.uploadedName = "";
       return false;
+    }
     console.log(file.fieldname + ' is starting ...')
   },
   onFileUploadComplete: function (file, req, res) {
