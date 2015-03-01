@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Competition = require('../models/competition');
 var Team = require('../models/team');
+var User = require('../models/user');
 //var sanitize = require('../lib/sanitize');
 var gameList = [
   "英雄聯盟",
@@ -114,6 +115,7 @@ var timeList = [
     "2015-04-12 23:00:00"
 ];
 
+//done
 router.get('/', function(req, res) {
   Competition.find({}).sort({'time': 'desc'}).exec(function(err, com) {
     console.log(com.length),
@@ -147,6 +149,7 @@ router.get('/:id/edit', /*isAdmin,*/ function(req, res) {
   });
 });
 
+// todo: fix time, and team1 & team2 has bug?
 router.post('/new', /*isAdmin,*/ function(req, res) {
   var com = new Competition();
   com.gametype = req.body.gametype;

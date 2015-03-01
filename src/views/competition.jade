@@ -30,15 +30,15 @@ block content
             td 挖剛尬涼剃踢欸
             td test6
             td 決賽
-          each com in competitions
+          each comp in competitions
             tr
-              td= com.team1
-              td= com.team2
-              td= com.time
-              td detail
-              td= com.winner
-              td= com.replay_url
-              td= com.comp_type
+              td= comp.team1.name
+              td= comp.team2.name
+              td= comp.time
+              td gg
+              td= comp.winner
+              td= comp.replay_url
+              td= comp.comp_type
     .ui.bottom.attached.tab.segment(data-tab="hearthstone") 2
     .ui.bottom.attached.tab.segment(data-tab="lol") 3
     .ui.bottom.attached.tab.segment(data-tab="ava") 4
