@@ -1,0 +1,46 @@
+extends layout
+block content
+  .container
+    h1.ui.center.aligned.header
+      i.flag.icon
+      | 賽事中心
+
+    .ui.top.attached.tabular.menu
+      a.item.active(data-tab="starcraft") 星海爭霸
+      a.item(data-tab="hearthstone") 爐石戰記
+      a.item(data-tab="lol") 英雄聯盟
+      a.item(data-tab="ava") A.V.A
+    .ui.bottom.attached.tab.segment.active(data-tab="starcraft")
+      table.ui.table
+        thead
+          tr
+            th 甲隊
+            th 乙隊
+            th 對戰時間
+            th 詳細資料
+            th 戰勝隊伍
+            th 重播下載
+            th 賽別
+        tbody
+          tr
+            td 挖剛尬涼剃踢欸
+            td 頑皮豹笑你
+            td 2014-03-10 19:00:00
+            td test4
+            td 挖剛尬涼剃踢欸
+            td test6
+            td 決賽
+          each com in competitions
+            tr
+              td= com.team1
+              td= com.team2
+              td= com.time
+              td detail
+              td= com.winner
+              td= com.replay_url
+              td= com.comp_type
+    .ui.bottom.attached.tab.segment(data-tab="hearthstone") 2
+    .ui.bottom.attached.tab.segment(data-tab="lol") 3
+    .ui.bottom.attached.tab.segment(data-tab="ava") 4
+block javascript
+  script(src='/js/tab.js')
