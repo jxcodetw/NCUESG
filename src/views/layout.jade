@@ -23,7 +23,14 @@ html
                 = "2015中央電競大賽"
               a.item(href='/announcement') 公告
               a.item 賽事中心
-              a.item(href='/rules') 大賽規則
+              .ui.dropdown.link.item
+                | 大賽規則
+                i.dropdown.icon
+                .menu
+                  a.item(href='/rules/lol') 英雄聯盟
+                  a.item(href='/rules/hs') 爐石戰記
+                  a.item(href='/rules/sc2') 星海爭霸II：蟲族之心
+                  a.item(href='/rules/ava') A.V.A戰地之王
               a.item(href='/participation_help') 報名須知
               a.item(href='/contact') 問題舉報
               a.item(href='/sponsors') 贊助商

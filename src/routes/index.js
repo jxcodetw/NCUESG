@@ -28,9 +28,27 @@ module.exports = function(passport) {
     });
   });
 
-  router.get('/rules', function(req, res) {
-    res.render('rules', {
-      title: '大賽規則',
+  router.get('/rules/lol', function(req, res) {
+    res.render('rules_lol', {
+      title: '大賽規則-英雄聯盟',
+      user: req.user
+    });
+  });
+  router.get('/rules/hs', function(req, res) {
+    res.render('rules_hs', {
+      title: '大賽規則-爐石戰記',
+      user: req.user
+    });
+  });
+  router.get('/rules/sc2', function(req, res) {
+    res.render('rules_sc2', {
+      title: '大賽規則-星海爭霸2 蟲族之心',
+      user: req.user
+    });
+  });
+  router.get('/rules/ava', function(req, res) {
+    res.render('rules_ava', {
+      title: '大賽規則-A.V.A 戰地之王',
       user: req.user
     });
   });

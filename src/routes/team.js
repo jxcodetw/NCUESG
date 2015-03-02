@@ -1,4 +1,5 @@
 var express = require('express');
+var fs = require('fs');
 var router = express.Router();
 var Team = require('../models/team');
 var User = require('../models/user');
@@ -6,6 +7,7 @@ var Code = require('../models/code');
 var async = require('async');
 var sanitize = require('../lib/sanitize');
 var multer = require('multer');
+var maxFileSize = 1024*1024;
 
 var gameList = [
   "英雄聯盟",
@@ -93,27 +95,10 @@ router.get('/new', isLoggedIn, function(req, res) {
 });
 
 
-var updateHead = multer({
-  dest: './public/uploads',
-  onFileUploadStart: function (file, req, res) {
-    if (file.extension != 'jpg' &&
-        file.extension != 'jpeg' &&
-        file.extension != 'png' &&
-        file.extension != 'bmp') {
-      req.uploadedName = "";
-      return false;
-    }
-    console.log(file.fieldname + ' is starting ...')
-  },
-  onFileUploadComplete: function (file, req, res) {
-    req.uploadedName = file.name;
-    console.log(file.fieldname + ' uploaded to  ' + file.path)
-  }
-});
-router.post('/:id/edit', isLoggedIn, isAdmin, updateHead, function(req, res) {
+router.post('/:id/edit', isLoggedIn, isAdmin, function(req, res) {
   req.authTeam.name = sanitize(req.body.name);
   req.authTeam.intro = sanitize(req.body.intro);
-  req.authTeam.head = req.uploadedName;
+  req.authTeam.head = "";
   req.authTeam.tryout = Array.apply(null, Array(48)).map(function() {return false;});
   req.authTeam.intermediary = Array.apply(null, Array(40)).map(function() {return false;});
   var tryout = req.body.tryout;
@@ -216,7 +201,7 @@ router.post('/:id/kick', isLoggedIn, isAdmin, function(req, res) {
 });
 
 router.get('/:id/edit', isLoggedIn, isAdmin, function(req, res) {
-  var gameToName = ['英雄聯盟', '爐石戰記', '星海爭霸2-蟲族之心', '戰地之王'];
+  var gameToName = ['英雄聯盟', '爐石戰記', '星海爭霸2-蟲族之心', 'AVA戰地之王'];
   res.render('team_edit', {
     user: req.user,
     team: req.authTeam,
@@ -268,12 +253,13 @@ var uploadHead = multer({
         file.extension != 'jpeg' &&
         file.extension != 'png' &&
         file.extension != 'bmp')
+      req.uploadedName = "";
       return false;
-    console.log(file.fieldname + ' is starting ...')
+    console.log(file.fieldname + ' is starting ...');
   },
   onFileUploadComplete: function (file, req, res) {
     req.uploadedName = file.name;
-    console.log(file.fieldname + ' uploaded to  ' + file.path)
+    console.log(file.fieldname + ' uploaded to  ' + file.path);
   }
 });
 router.post('/new', isLoggedIn, uploadHead, function(req, res) {
