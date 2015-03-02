@@ -28,6 +28,13 @@ module.exports = function(passport) {
     });
   });
 
+  router.get('/awards', function(req, res) {
+    res.render('awards', {
+      title: '參賽獎勵',
+      user: req.user
+    });
+  });
+
   router.get('/rules/lol', function(req, res) {
     res.render('rules_lol', {
       title: '大賽規則-英雄聯盟',
