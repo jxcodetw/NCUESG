@@ -1,0 +1,56 @@
+extends layout
+
+block content
+  .container
+    input#teamId(type='hidden', value=com.id)
+    h1.ui.center.aligned.header
+      i.trophy.icon
+      | 修改賽事-
+      = gameName
+    form#form-team.ui.form(method='post', action='/competition/'+com.id+'/edit')
+      .field
+        a.ui.black.button(href='/competition') 返回
+        .ui.blue.submit.button 更新
+      .fields
+        .four.wide.field
+          label 遊戲類別
+          input(type='text', value=gameName, disabled)
+        .twelve.wide.required.field
+          label 隊伍名稱
+          input(type='text', name='name', autocomplete='off', placeholder='隊伍名稱', value=team.name)
+      .required.field
+        label 隊伍介紹
+        textarea(name='intro', placeholder='隊伍介紹')= team.intro
+      .ui.error.message
+
+    if team.game == 0 || team.game == 3
+      h4.ui.horizontal.header.divider
+        i.users.icon
+        | 隊員管理
+
+      .ui.form
+        .fields
+          .twelve.wide.field
+            input#newemail(type='email', name='email', placeholder='輸入Email')
+          .four.wide.field
+            #btn-add.ui.blue.button 新增隊員
+
+      #addmsg.ui.error.hidden.message
+        #errormsg.header 
+
+      table.ui.celled.striped.table
+        thead
+          tr
+            th 姓名
+            th 電子郵件
+            th 操作
+        tbody#table-member
+          each mem in team.member
+            tr
+              td.collapsing= mem.local.name
+              td= mem.local.email
+              td.right.aligned.collapsing
+                .ui.icon.red.remove.button(target=mem.id)
+                  i.trash.icon
+block javascript
+  script(src='/js/team_edit.js')

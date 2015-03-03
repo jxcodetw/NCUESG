@@ -117,7 +117,7 @@ var timeList = [
 
 //done
 router.get('/', function(req, res) {
-  Competition.find({}).sort({'time': 'desc'}).exec(function(err, com) {
+  Competition.find({}).populate('team1').populate('team2').sort({'time': 'desc'}).exec(function(err, com) {
     console.log(com.length),
     res.render('competition', {
       user: req.user,
@@ -126,9 +126,22 @@ router.get('/', function(req, res) {
   });
 });
 
+router.post('/team-type', function(req, res) {
+  Team.find({'game': req.body.game}, function(err, tem) {
+    var opt = '';
+    for(var i in tem) {
+      opt += '<div class="item" data-value="' + tem[i].id + '">' + tem[i].name + '</div>'   
+    }
+    var result = 
+            '<div class="field"><label>Team A</label><div class="options ui selection dropdown"><input type="hidden" name="team1"><div class="default text">Team A</div><i class="dropdown icon"></i><div class="menu">'+opt+'</div></div></div>' + 
+            '<div class="field"><label>Team B</label><div class="options ui selection dropdown"><input type="hidden" name="team2"><div class="default text">Team B</div><i class="dropdown icon"></i><div class="menu">'+opt+'</div></div></div>';
+      res.json(result);
+  });
+});
+
 //done
-router.get('/new',/* isAdmin,*/ function(req, res) {
-  Team.find({}).sort({'game': 'desc'}).exec(function(err, tem) {
+router.get('/new', isAdmin, function(req, res) {
+  Team.find({'game': '0'}).exec(function(err, tem) {
     res.render('competition_new', {
       user: req.user,
       gametypes: gameList,
@@ -138,11 +151,12 @@ router.get('/new',/* isAdmin,*/ function(req, res) {
   });
 });
 
-router.get('/:id/edit', /*isAdmin,*/ function(req, res) {
-  Competition.findById(req.params.id).sort({'time': 'desc'}).exec(function(err, com) {
+router.get('/:id/edit', isAdmin, function(req, res) {
+  Competition.findById(req.params.id).populate('team1').populate('team2').exec(function(err, com) {
     if (com) {
       res.render('competition_edit', {
         user: req.user,
+        gameName: gameList[com.gametype],
         competition: com
       });
     }
@@ -150,26 +164,26 @@ router.get('/:id/edit', /*isAdmin,*/ function(req, res) {
 });
 
 // todo: fix time, and team1 & team2 has bug?
-router.post('/new', /*isAdmin,*/ function(req, res) {
+router.post('/new', isAdmin, function(req, res) {
   var com = new Competition();
   com.gametype = req.body.gametype;
   com.comp_type = req.body.comp_type;
   Team.findById(req.body.team1, function(err, team) {
-    com.team1 = team
+    com.team1 = team;
+    Team.findById(req.body.team2, function(err, team) {
+      com.team2 = team;
+      com.finished = 0; // default: not finished
+      com.time = timeList[req.body.time];
+      com.winner = -1;
+      com.replay_url = 'NULL';
+      com.save();
+      res.redirect('/competition');
+    })
   });
-  Team.findById(req.body.team2, function(err, team) {
-    com.team2 = team
-  })
-  com.finished = 0; // default: not finished
-  com.time = new Date();
-  com.winner = -1;
-  com.replay_url = 'NULL';
-  com.save();
-  res.redirect('/competition');
 });
 
 router.post('/:id/edit', isAdmin, function(req, res) {
-  Announcement.findById(req.params.id, function(err, doc) {
+  Competition.findById(req.params.id, function(err, doc) {
     doc.title = sanitize(req.body.title);
     doc.level = sanitize(req.body.level);
     doc.content = sanitize(req.body.content);

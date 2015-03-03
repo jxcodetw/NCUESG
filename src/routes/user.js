@@ -84,7 +84,6 @@ router.post('/:id/edit', isEditable, function(req, res) {
       res.redirect('/user/'+req.params.id+'/edit');
       return;
     }
-
     user.local.name = sanitize(req.body.name);
     user.local.studentid = sanitize(req.body.studentid);
     user.local.phone= sanitize(req.body.phone);
