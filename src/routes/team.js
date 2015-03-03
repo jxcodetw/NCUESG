@@ -95,10 +95,28 @@ router.get('/new', isLoggedIn, function(req, res) {
 });
 
 
-router.post('/:id/edit', isLoggedIn, isAdmin, function(req, res) {
+var uploadHead = multer({
+  dest: './public/uploads',
+  onFileUploadStart: function (file, req, res) {
+    console.log(file.fieldname + ' is starting ...');
+    if (file.extension != 'jpg' &&
+        file.extension != 'jpeg' &&
+        file.extension != 'png' &&
+        file.extension != 'bmp') {
+      req.uploadedName = "";
+      return false;
+    }
+  },
+  onFileUploadComplete: function (file, req, res) {
+    req.uploadedName = file.name;
+    console.log(file.fieldname + ' uploaded to  ' + file.path);
+  }
+});
+
+router.post('/:id/edit', isLoggedIn, isAdmin, uploadHead, function(req, res) {
   req.authTeam.name = sanitize(req.body.name);
   req.authTeam.intro = sanitize(req.body.intro);
-  req.authTeam.head = "";
+  req.authTeam.head = req.uploadedName;
   req.authTeam.tryout = Array.apply(null, Array(48)).map(function() {return false;});
   req.authTeam.intermediary = Array.apply(null, Array(40)).map(function() {return false;});
   var tryout = req.body.tryout;
@@ -246,23 +264,7 @@ router.get('/:id/edit', isLoggedIn, isAdmin, function(req, res) {
 });
 
 
-var uploadHead = multer({
-  dest: './public/uploads',
-  onFileUploadStart: function (file, req, res) {
-    if (file.extension != 'jpg' &&
-        file.extension != 'jpeg' &&
-        file.extension != 'png' &&
-        file.extension != 'bmp')
-      req.uploadedName = "";
-      return false;
-    console.log(file.fieldname + ' is starting ...');
-  },
-  onFileUploadComplete: function (file, req, res) {
-    req.uploadedName = file.name;
-    console.log(file.fieldname + ' uploaded to  ' + file.path);
-  }
-});
-router.post('/new', isLoggedIn, uploadHead, function(req, res) {
+router.post('/new', isLoggedIn, function(req, res) {
   // check if this user has joined req.body.gametype
   if (req.user.local.team[req.body.gametype] != undefined) {
     res.redirect('/team/dashboard');
@@ -273,13 +275,12 @@ router.post('/new', isLoggedIn, uploadHead, function(req, res) {
         req.flash('newteamMessage', '啟動碼錯誤');
         res.redirect('/team/new?gametype='+gametypeToString[req.body.gametype]);
       } else {
-        console.log('uploadedName:' + req.uploadedName);
         var newTeam = new Team();
         newTeam.name = sanitize(req.body.name);
         newTeam.game = Number(sanitize(req.body.gametype));
         newTeam.intro = sanitize(req.body.intro);
         newTeam.leader = req.user;
-        newTeam.head = req.uploadedName == undefined ? "" : req.uploadedName;
+        newTeam.head = "";
         newTeam.tryout = Array.apply(null, Array(48)).map(function() {return true;});
         newTeam.intermediary = Array.apply(null, Array(40)).map(function() {return true;});
         newTeam.save(function(err, team) {
