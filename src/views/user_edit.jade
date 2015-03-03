@@ -81,18 +81,37 @@ block content
       .ui.info.message(style="display: block;")
         | 有參加該項遊戲須填寫，若無則留空
 
+      h5.ui.header(style='margin:0;') 英雄聯盟帳號：
+      .three.fields
+        .field
+          label 競時通帳號
+          input#lolid(type='text', name='lolgpid', placeholder='競時通帳號', value=toedit.local.lolgpid)
+        .field
+          label 召喚師ID
+          input(type='text', name='lolid', placeholder='召喚師ID', value=toedit.local.lolid)
+        .field
+          label UID
+          input(type='text', name='loluid', placeholder='UID', value=toedit.local.loluid)
+
       .field
-        label 英雄聯盟帳號
-        input#lolid(type='text', name='lolid', placeholder='英雄聯盟帳號', value=toedit.local.lolid)
+        label 爐石戰記 BattleTag
+        input#hsid(type='text', name='hsid', placeholder='爐石戰記 BattleTag', value=toedit.local.hsid)
       .field
-        label 爐石戰記帳號
-        input#hsid(type='text', name='hsid', placeholder='爐石戰記帳號', value=toedit.local.hsid)
-      .field
-        label 星海爭霸II：蟲族之心帳號
-        input#sc2id(type='text', name='sc2id', placeholder='星海爭霸II：蟲族之心帳號', value=toedit.local.sc2id)
-      .field
-        label AVA戰地之王帳號
-        input#avaid(type='text', name='avaid', placeholder='AVA戰地之王帳號', value=toedit.local.avaid)
+        label 星海爭霸II：蟲族之心 BattleTag
+        input#sc2id(type='text', name='sc2id', placeholder='星海爭霸II：蟲族之心 BattleTag', value=toedit.local.sc2id)
+          
+      h5.ui.header(style='margin:0;') AVA戰地之王帳號：
+      .three.fields
+        .field
+          label 競時通帳號
+          input#avaid(type='text', name='avagpid', placeholder='競時通帳號', value=toedit.local.avagpid)
+        .field
+          label 召喚師ID
+          input(type='text', name='avaid', placeholder='召喚師ID', value=toedit.local.avaid)
+        .field
+          label UID
+          input(type='text', name='avauid', placeholder='UID', value=toedit.local.avauid)
+
 
       #btn-submit.ui.blue.submit.button 更新帳號設定
       .ui.error.message

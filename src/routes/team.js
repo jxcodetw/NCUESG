@@ -269,13 +269,14 @@ router.get('/:id/edit', isLoggedIn, isAdmin, function(req, res) {
 
 router.post('/new', isLoggedIn, function(req, res) {
   // check if this user has joined req.body.gametype
+  var gametypeToString = ['lol', 'hs', 'sc2', 'ava'];
   if (req.user.local.team[req.body.gametype] != undefined) {
-    res.redirect('/team/dashboard');
+    req.flash('newteamMessage', '你已經在此遊戲有加入隊伍了');
+    res.redirect('/team/new?gametype='+gametypeToString[req.body.gametype]);
+    return;
   } else if (req.body.gametype >= 0 && req.body.gametype <= 3) {
-    // check already created
     Code.findById(req.body.regcode, function(err, code) {
       if (err || !code || code.used == true || !priceCheck(req.body.gametype, code.price)) {
-        var gametypeToString = ['lol', 'hs', 'sc2', 'ava'];
         req.flash('newteamMessage', '啟動碼錯誤');
         res.redirect('/team/new?gametype='+gametypeToString[req.body.gametype]);
       } else {

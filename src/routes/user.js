@@ -90,10 +90,18 @@ router.post('/:id/edit', isEditable, function(req, res) {
     user.local.phone= sanitize(req.body.phone);
     user.local.department= sanitize(req.body.department);
     user.local.grade= sanitize(req.body.grade);
+
     user.local.lolid = sanitize(req.body.lolid);
+    user.local.lolgpid = sanitize(req.body.lolgpid);
+    user.local.loluid = sanitize(req.body.loluid);
+
     user.local.hsid = sanitize(req.body.hsid);
     user.local.sc2id = sanitize(req.body.sc2id);
+
     user.local.avaid = sanitize(req.body.avaid);
+    user.local.avagpid = sanitize(req.body.avagpid);
+    user.local.avauid = sanitize(req.body.avauid);
+
     user.local.updated = new Date();
 
     if (req.body.newpassword.length > 0) { 
