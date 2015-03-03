@@ -103,6 +103,7 @@ var uploadHead = multer({
         file.extension != 'jpeg' &&
         file.extension != 'png' &&
         file.extension != 'bmp') {
+      console.log(file.filename + ' upload failed. incorrect file extension.')
       req.uploadedName = "";
       return false;
     }
@@ -116,7 +117,9 @@ var uploadHead = multer({
 router.post('/:id/edit', isLoggedIn, isAdmin, uploadHead, function(req, res) {
   req.authTeam.name = sanitize(req.body.name);
   req.authTeam.intro = sanitize(req.body.intro);
-  req.authTeam.head = req.uploadedName;
+  if (req.uploadedName != undefined) {
+    req.authTeam.head = req.uploadedName;
+  }
   req.authTeam.tryout = Array.apply(null, Array(48)).map(function() {return false;});
   req.authTeam.intermediary = Array.apply(null, Array(40)).map(function() {return false;});
   var tryout = req.body.tryout;
@@ -269,6 +272,7 @@ router.post('/new', isLoggedIn, function(req, res) {
   if (req.user.local.team[req.body.gametype] != undefined) {
     res.redirect('/team/dashboard');
   } else if (req.body.gametype >= 0 && req.body.gametype <= 3) {
+    // check already created
     Code.findById(req.body.regcode, function(err, code) {
       if (err || !code || code.used == true || !priceCheck(req.body.gametype, code.price)) {
         var gametypeToString = ['lol', 'hs', 'sc2', 'ava'];
