@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var async = require('async');
 var Competition = require('../models/competition');
 var Team = require('../models/team');
 var User = require('../models/user');
@@ -118,16 +119,55 @@ var timeList = [
 //done
 router.get('/', function(req, res) {
   var finished = 0;
-  if (req.query.old && req.qurey.old == 1) {
+  var query = {'winner': -1};
+  if (req.query.old && req.query.old == 1) {
       finished = 1;
+      query = {$or: [{'winner':0}, {'winner':1}]};
   }
-  Competition.find({'finished': finished}).populate('team1').populate('team2').sort({'time': 'desc'}).exec(function(err, com) {
-    console.log(com.length),
-    res.render('competition', {
-      user: req.user,
-      competitions: com
-    });
-  });
+  // async wait for all task to be done.
+  async.parallel(
+    {
+      lolcomps: function(cb) {
+        var qlol = query;
+        qlol.gametype=0;
+        Competition.find(qlol).populate('team1').populate('team2').exec(function(err, com) {
+          cb(null, com);
+        });
+      },
+      hscomps: function(cb) {
+        var qhs = query;
+        qhs.gametype=1;
+        Competition.find(qhs).populate('team1').populate('team2').exec(function(err, com) {
+          cb(null, com);
+        });
+      },
+      sc2comps: function(cb) {
+        var qsc2 = query;
+        qsc2.gametype=2;
+        Competition.find(qsc2).populate('team1').populate('team2').exec(function(err, com) {
+          cb(null, com);
+        });
+      },
+      avacomps: function(cb) {
+        var qava = query;
+        qava.gametype=3;
+        Competition.find(qava).populate('team1').populate('team2').exec(function(err, com) {
+          cb(null, com);
+        });
+      },
+    },
+    function(err, result) {
+      res.render('competition', {
+        user: req.user,
+        lolcomps: result.lolcomps,
+        hscomps: result.hscomps,
+        sc2comps: result.sc2comps,
+        avacomps: result.avacomps,
+        finished: finished,
+        times: timeList
+      });
+    }
+  );
 });
 
 router.post('/team-type', function(req, res) {
@@ -150,7 +190,8 @@ router.get('/new', isAdmin, function(req, res) {
       user: req.user,
       gametypes: gameList,
       times: timeList,
-      teams: tem
+      teams: tem,
+      message: req.flash('competitionEditMessage')
     });
   });
 });
@@ -158,11 +199,17 @@ router.get('/new', isAdmin, function(req, res) {
 router.get('/:id/edit', isAdmin, function(req, res) {
   Competition.findById(req.params.id).populate('team1').populate('team2').exec(function(err, com) {
     if (com) {
-      res.render('competition_edit', {
-        user: req.user,
-        gameName: gameList[com.gametype],
-        competition: com
+      Team.find({'game': com.gametype}).exec(function(err, tem) {
+        res.render('competition_edit', {
+          user: req.user,
+          gametypes: gameList,
+          competition: com,
+          times: timeList,
+          teams: tem
+        });
       });
+    } else {
+      res.redirect('/competition');
     }
   });
 });
@@ -177,9 +224,9 @@ router.post('/new', isAdmin, function(req, res) {
     Team.findById(req.body.team2, function(err, team) {
       com.team2 = team;
       com.finished = 0; // default: not finished
-      com.time = timeList[req.body.time];
+      com.time = req.body.time;
       com.winner = -1;
-      com.replay_url = 'NULL';
+      com.replay_url = '無';
       com.save();
       res.redirect('/competition');
     })
@@ -187,19 +234,23 @@ router.post('/new', isAdmin, function(req, res) {
 });
 
 router.post('/:id/edit', isAdmin, function(req, res) {
-  Competition.findById(req.params.id, function(err, doc) {
-    doc.title = sanitize(req.body.title);
-    doc.level = sanitize(req.body.level);
-    doc.content = sanitize(req.body.content);
-    doc.updated = new Date();
-    doc.save();
+  Competition.findById(req.params.id, function(err, com) {
+    com.gametype = req.body.gametype;
+    com.comp_type = req.body.comp_type;
+    com.team1 = req.body.team1;
+    com.team2 = req.body.team2;
+    com.time = req.body.time;
+    com.replay_url = req.body.replay_url;
+    com.winner = req.body.winner;
+    com.save();
+    req.flash('competitionEditMessage', '已修改賽事');
+    res.redirect('/competition/'+req.params.id+'/edit');
   });
-  res.redirect('/competition');
 });
 
 router.get('/:id/delete', isAdmin, function(req, res) {  
-  Announcement.findById(req.params.id, function(err, doc) {
-    doc.remove();
+  Competition.findById(req.params.id, function(err, com) {
+    com.remove();
   });
   res.redirect('/competition');
 });

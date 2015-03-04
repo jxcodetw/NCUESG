@@ -2,55 +2,76 @@ extends layout
 
 block content
   .container
-    input#teamId(type='hidden', value=com.id)
     h1.ui.center.aligned.header
       i.trophy.icon
-      | 修改賽事-
-      = gameName
-    form#form-team.ui.form(method='post', action='/competition/'+com.id+'/edit')
+      | 新增賽事
+    if message != ""
+      .ui.success.message= message
+    form#form-team.ui.form(method='post', action='/competition/'+competition.id+'/edit')
       .field
         a.ui.black.button(href='/competition') 返回
         .ui.blue.submit.button 更新
-      .fields
-        .four.wide.field
-          label 遊戲類別
-          input(type='text', value=gameName, disabled)
-        .twelve.wide.required.field
-          label 隊伍名稱
-          input(type='text', name='name', autocomplete='off', placeholder='隊伍名稱', value=team.name)
-      .required.field
-        label 隊伍介紹
-        textarea(name='intro', placeholder='隊伍介紹')= team.intro
+      .field
+        label 遊戲類別
+        #gametype.ui.selection.dropdown
+          input#oldtype(type='hidden', name='gametype', value=competition.gametype)
+          .default.text 遊戲類別
+          i.dropdown.icon
+          .menu
+            each gametype, i in gametypes
+              .item(data-value=i)= gametype
+      #options.two.fields
+        .field
+          label Team A
+          .ui.selection.options.dropdown
+            input(type='hidden', name='team1', value=competition.team1.id)
+            .text Team A
+            i.dropdown.icon
+            .menu
+              each tem in teams
+                .item(data-value=tem.id)= tem.name
+                
+        .field
+          label Team B
+          .ui.selection.dropdown
+            input(type='hidden', name='team2', value=competition.team2.id)
+            .default.text Team B
+            i.dropdown.icon
+            .menu
+              each tem in teams
+                .item(data-value=tem.id)= tem.name
+      .field
+        label 賽別
+        .ui.selection.dropdown
+          input(type='hidden', name='comp_type', value=competition.comp_type)
+          .default.text 賽別
+          i.dropdown.icon
+          .menu
+            .item(data-value='0') 預賽
+            .item(data-value='1') 複賽
+            .item(data-value='2') 決賽
+      .field
+        label 賽評重播連結
+        input(type='text', name='replay_url', autocomplete='off', placeholder='賽評重播連結', value=competition.replay_url)
+      .field
+        label Gametime
+        .ui.selection.dropdown
+          input(type='hidden', name='time', value=competition.time)
+          .default.text Gametime
+          i.dropdown.icon
+          .menu
+            each t, i in times
+              .item(data-value=i)= t
+      .field
+        label 勝利隊伍
+        .ui.selection.dropdown
+          input(type='hidden', name='winner', value=competition.winner)
+          .default.text 勝利隊伍
+          i.dropdown.icon
+          .menu
+            .item(data-value=-1) 尚未結束比賽
+            .item(data-value=0)= competition.team1.name
+            .item(data-value=1)= competition.team2.name
       .ui.error.message
-
-    if team.game == 0 || team.game == 3
-      h4.ui.horizontal.header.divider
-        i.users.icon
-        | 隊員管理
-
-      .ui.form
-        .fields
-          .twelve.wide.field
-            input#newemail(type='email', name='email', placeholder='輸入Email')
-          .four.wide.field
-            #btn-add.ui.blue.button 新增隊員
-
-      #addmsg.ui.error.hidden.message
-        #errormsg.header 
-
-      table.ui.celled.striped.table
-        thead
-          tr
-            th 姓名
-            th 電子郵件
-            th 操作
-        tbody#table-member
-          each mem in team.member
-            tr
-              td.collapsing= mem.local.name
-              td= mem.local.email
-              td.right.aligned.collapsing
-                .ui.icon.red.remove.button(target=mem.id)
-                  i.trash.icon
 block javascript
-  script(src='/js/team_edit.js')
+  script(src='/js/competition_edit.js')

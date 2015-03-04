@@ -52,19 +52,14 @@ block content
             .item(data-value='1') 複賽
             .item(data-value='2') 決賽
       .field
-        label 賽評重播連結
-        input(type='text', name='replay_url', autocomplete='off', placeholder='賽評重播連結')
-      .field
         label Gametime
         .ui.selection.dropdown
           input(type='hidden', name='time', value=time)
           .default.text Gametime
           i.dropdown.icon
           .menu
-            - var i = 0
-            while i < times.length
-              .item(data-value=i)= times[i]
-              - i = i + 1
+            each t, i in times
+              .item(data-value=i)= t
       .ui.error.message
 block javascript
   script(src='/js/competition.js')

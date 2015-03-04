@@ -2,6 +2,9 @@ $(function() {
   $('#gametype').dropdown({
     on: 'hover',
     onChange: function(value) {
+      if (value === undefined) {
+        return;
+      }
       $.ajax({
         url: '/competition/team-type',
         data: {game: value},
