@@ -117,7 +117,11 @@ var timeList = [
 
 //done
 router.get('/', function(req, res) {
-  Competition.find({}).populate('team1').populate('team2').sort({'time': 'desc'}).exec(function(err, com) {
+  var finished = 0;
+  if (req.query.old && req.qurey.old == 1) {
+      finished = 1;
+  }
+  Competition.find({'finished': finished}).populate('team1').populate('team2').sort({'time': 'desc'}).exec(function(err, com) {
     console.log(com.length),
     res.render('competition', {
       user: req.user,
