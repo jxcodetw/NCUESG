@@ -93,12 +93,21 @@ block content
           label UID
           input(type='text', name='loluid', placeholder='UID', value=toedit.local.loluid)
 
-      .field
-        label 爐石戰記 BattleTag
-        input#hsid(type='text', name='hsid', placeholder='爐石戰記 BattleTag', value=toedit.local.hsid)
-      .field
-        label 星海爭霸II：蟲族之心 BattleTag
-        input#sc2id(type='text', name='sc2id', placeholder='星海爭霸II：蟲族之心 BattleTag', value=toedit.local.sc2id)
+      .two.fields
+        .field
+          label 爐石戰記 BattleTag
+          input#hsid(type='text', name='hsid', placeholder='爐石戰記 BattleTag', value=toedit.local.hsid)
+        .field
+          label 排名模式階級
+          input(type='text', name='hsladder', placeholder='排名模式階級', value=toedit.local.hsladder)
+
+      .two.fields
+        .field
+          label 星海爭霸II：蟲族之心 BattleTag
+          input#sc2id(type='text', name='sc2id', placeholder='星海爭霸II：蟲族之心 BattleTag', value=toedit.local.sc2id)
+        .field
+          label 天梯階級
+          input(type='text', name='sc2ladder', placeholder='天梯階級', value=toedit.local.sc2ladder)
           
       h5.ui.header(style='margin:0;') AVA戰地之王帳號：
       .three.fields

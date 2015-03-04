@@ -96,7 +96,10 @@ router.post('/:id/edit', isEditable, function(req, res) {
     user.local.loluid = sanitize(req.body.loluid);
 
     user.local.hsid = sanitize(req.body.hsid);
+    user.local.hsladder = sanitize(req.body.hsladder);
+
     user.local.sc2id = sanitize(req.body.sc2id);
+    user.local.sc2ladder = sanitize(req.body.sc2ladder);
 
     user.local.avaid = sanitize(req.body.avaid);
     user.local.avagpid = sanitize(req.body.avagpid);

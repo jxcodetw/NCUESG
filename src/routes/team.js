@@ -236,7 +236,8 @@ router.get('/:id/edit', isLoggedIn, isAdmin, function(req, res) {
       {index: 4, datetime: "3/27(五)"},
       {index: 5, datetime: "3/28(六)"},
       {index: 6, datetime: "3/29(日)"},
-      {index: 7, datetime: "3/30(一)"}
+      {index: 7, datetime: "3/30(一)"},
+      {index: 8, datetime: "3/31(二)"}
     ],
     tryout_times: [
       {index: 0, time: "18:00"},
