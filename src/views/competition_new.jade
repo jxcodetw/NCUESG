@@ -12,17 +12,12 @@ block content
       .field
         label 遊戲類別
         #gametype.ui.selection.dropdown
-          input(type='hidden', name='gametype', value=gametype)
-          .text 英雄聯盟
+          input(type='hidden', name='gametype')
+          .default.text 遊戲類別
           i.dropdown.icon
           .menu
-            - var i = 0
-            while i < gametypes.length
-              if i == 0
-                .item.active(data-value=i)= gametypes[i]
-              else
-                .item(data-value=i)= gametypes[i]
-              - i = i + 1
+              each gametype, i in gametypes
+                  .item(data-value=i)= gametype
       #options.two.fields
         .field
           label Team A

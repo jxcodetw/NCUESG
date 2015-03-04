@@ -1,5 +1,6 @@
 $(function() {
   $('#gametype').dropdown({
+    on: 'hover',
     onChange: function(value) {
       $.ajax({
         url: '/competition/team-type',
@@ -11,10 +12,14 @@ $(function() {
           console.log(msg);
           $('#options').html(msg);
           $('.options').dropdown();
+          validateForm();
         }
       });
     }
   });
+  validateForm();
+});
+function validateForm() {
   $('#form-team').form({
       gametype: {
         identifier: 'gametype',
@@ -52,4 +57,4 @@ $(function() {
         }]
       }
   });
-});
+}
