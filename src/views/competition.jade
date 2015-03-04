@@ -45,10 +45,11 @@ block content
                 .ui.icon.buttons
                   a.ui.icon.button(href='/competition/'+comp.id)
                     i.list.layout.icon
-                  a.ui.icon.blue.button(href='/competition/'+comp.id+'/edit')
-                    i.edit.icon
-                  a.ui.icon.red.button(href='/competition/'+comp.id+'/delete')
-                    i.trash.icon
+                  if user && user.local.level > 0
+                    a.ui.icon.blue.button(href='/competition/'+comp.id+'/edit')
+                      i.edit.icon
+                    a.ui.icon.red.button(href='/competition/'+comp.id+'/delete')
+                      i.trash.icon
     .ui.bottom.attached.tab.segment(data-tab="hearthstone") 2
     .ui.bottom.attached.tab.segment(data-tab="lol") 3
     .ui.bottom.attached.tab.segment(data-tab="ava") 4
