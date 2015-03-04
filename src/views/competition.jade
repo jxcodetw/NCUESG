@@ -20,28 +20,35 @@ block content
             th 甲隊
             th 乙隊
             th 對戰時間
-            th 詳細資料
             th 戰勝隊伍
             th 重播下載
             th 賽別
+            th 操作
         tbody
           tr
             td 挖剛尬涼剃踢欸
             td 頑皮豹笑你
             td 2014-03-10 19:00:00
-            td test4
             td 挖剛尬涼剃踢欸
             td test6
             td 決賽
+            td 123
           each comp in competitions
             tr
               td= comp.team1.name
               td= comp.team2.name
               td= comp.time
-              td gg
               td= comp.winner
               td= comp.replay_url
               td= comp.comp_type
+              td
+                .ui.icon.buttons
+                  a.ui.icon.button(href='/competition/'+comp.id)
+                    i.list.layout.icon
+                  a.ui.icon.blue.button(href='/competition/'+comp.id+'/edit')
+                    i.edit.icon
+                  a.ui.icon.red.button(href='/competition/'+comp.id+'/delete')
+                    i.trash.icon
     .ui.bottom.attached.tab.segment(data-tab="hearthstone") 2
     .ui.bottom.attached.tab.segment(data-tab="lol") 3
     .ui.bottom.attached.tab.segment(data-tab="ava") 4
