@@ -14,9 +14,9 @@ block content
           .meta
             span.cinema League of Legend
           .description
-            if team.lol && (!user.local.lolid || user.local.lolid.length <= 0)
+            if team.lol && (!user.local.lolid || user.local.lolid.length <= 0 || !user.local.lolgpid || user.local.lolgpid.length <= 0 || !user.local.loluid || user.local.loluid.length <= 0)
               .ui.warning.message
-                | 請記得填寫ID，
+                | 請記得填寫遊戲相關資料，
                 a(href='/user/'+user.id+'/edit#lolid') 前往設定
             .ui.segment
               if team.lol
@@ -52,9 +52,9 @@ block content
           .meta
             span.cinema Hearth of Stone
           .description
-            if team.hs && (!user.local.hsid || user.local.hsid.length <= 0)
+            if team.hs && (!user.local.hsid || user.local.hsid.length <= 0 || !user.local.hsladder || user.local.hsladder.length <= 0)
               .ui.warning.message
-                | 請記得填寫ID，
+                | 請記得填寫遊戲相關資料，
                 a(href='/user/'+user.id+'/edit#hsid') 前往設定
             .ui.segment
               if team.hs
@@ -78,9 +78,9 @@ block content
           .meta
             span.cinema Starcraft 2: Heart of Spawn
           .description
-            if team.sc2 && (!user.local.sc2id || user.local.sc2id.length <= 0)
+            if team.sc2 && (!user.local.sc2id || user.local.sc2id.length <= 0 || !user.local.sc2ladder || user.local.sc2ladder.length <= 0)
               .ui.warning.message
-                | 請記得填寫ID，
+                | 請記得填寫遊戲相關資料，
                 a(href='/user/'+user.id+'/edit#sc2id') 前往設定
             .ui.segment
               if team.sc2
@@ -104,9 +104,9 @@ block content
           .meta
             span.cinema AVA
           .description
-            if team.ava && (!user.local.avaid || user.local.avaid.length <= 0)
+            if team.ava && (!user.local.avaid || user.local.avaid.length <= 0 || !user.local.avagpid || user.local.avagpid.length <= 0 || !user.local.avauid || user.local.avauid.length <= 0)
               .ui.warning.message
-                | 請記得填寫ID，
+                | 請記得填寫遊戲相關資料，
                 a(href='/user/'+user.id+'/edit#avaid') 前往設定
             .ui.segment
               if team.ava

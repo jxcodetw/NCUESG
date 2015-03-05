@@ -191,13 +191,10 @@ router.post('/team-type', function(req, res) {
 
 //done
 router.get('/new', isAdmin, function(req, res) {
-  Team.find({'game': '0'}).exec(function(err, tem) {
-    res.render('competition_new', {
-      user: req.user,
-      gametypes: gameList,
-      times: timeList,
-      teams: tem
-    });
+  res.render('competition_new', {
+    user: req.user,
+    gametypes: gameList,
+    times: timeList,
   });
 });
 

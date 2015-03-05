@@ -26,10 +26,7 @@ block content
             .default.text Team A
             i.dropdown.icon
             .menu
-              - var i = 0
-              each tem in teams
-                .item(data-value=tem.id)= tem.name
-                - i = i + 1
+
         .field
           label Team B
           .ui.selection.dropdown
@@ -37,10 +34,7 @@ block content
             .default.text Team B
             i.dropdown.icon
             .menu
-              - var i = 0
-              each tem in teams
-                .item(data-value=tem.id)= tem.name
-                - i = i + 1
+
       .field
         label 賽別
         .ui.selection.dropdown
