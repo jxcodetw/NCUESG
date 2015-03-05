@@ -7,6 +7,7 @@ var teamSchema = mongoose.Schema({
   head: String,
   leader: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   member: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+  competitions: [{type: mongoose.Schema.Types.ObjectId, ref: 'Competition'}],
   tryout: [Boolean],
   intermediary: [Boolean],
 });

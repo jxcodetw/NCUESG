@@ -157,7 +157,7 @@ router.get('/', function(req, res) {
       },
     },
     function(err, result) {
-      res.render('competition', {
+      res.render('competitions', {
         user: req.user,
         lolcomps: result.lolcomps,
         hscomps: result.hscomps,
@@ -219,15 +219,19 @@ router.post('/new', isAdmin, function(req, res) {
   var com = new Competition();
   com.gametype = req.body.gametype;
   com.comp_type = req.body.comp_type;
-  Team.findById(req.body.team1, function(err, team) {
-    com.team1 = team;
-    Team.findById(req.body.team2, function(err, team) {
-      com.team2 = team;
+  Team.findById(req.body.team1, function(err, team1) {
+    com.team1 = team1;
+    Team.findById(req.body.team2, function(err, team2) {
+      com.team2 = team2;
       com.finished = 0; // default: not finished
       com.time = req.body.time;
       com.winner = -1;
       com.replay_url = '無';
       com.save();
+      team1.competitions.push(com);
+      team2.competitions.push(com);
+      team1.save();
+      team2.save();
       res.redirect('/competition');
     })
   });
@@ -250,9 +254,38 @@ router.post('/:id/edit', isAdmin, function(req, res) {
 
 router.get('/:id/delete', isAdmin, function(req, res) {  
   Competition.findById(req.params.id, function(err, com) {
-    com.remove();
+    var i, index;
+    Team.findById(com.team1, function(err, team1) {
+      index = -1;
+      for(i=0;i<team1.competitions.length;++i) {
+        if (team1.competitions[i].id == com.id) {
+          index = i;
+          break;
+        }
+      }
+      if (index > -1) {
+        team1.competitions.splice(index, 1);
+        team1.markModified('competitions');
+        team1.save();
+      }
+      Team.findById(com.team2, function(err, team2) {
+        index = -1;
+        for(i=0;i<team2.competitions.length;++i) {
+          if (team2.competitions[i].id == com.id) {
+            index = i;
+            break;
+          }
+        }
+        if (index > -1) {
+          team2.competitions.splice(index, 1);
+          team2.markModified('competitions');
+          team2.save();
+        }
+        com.remove();
+        res.redirect('/competition');
+      })
+    });
   });
-  res.redirect('/competition');
 });
 
 module.exports = router;

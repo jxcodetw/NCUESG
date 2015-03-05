@@ -1,193 +1,27 @@
 extends layout
+
+block stylesheet
+  link(rel="stylesheet",type="text/css",href="/css/user.css")
+
 block content
   .container
     h1.ui.center.aligned.header
-      i.flag.icon
-      | 賽事中心
-
-    if user && user.local.level > 0
-      a.ui.blue.button(href='/competition/new') 新增賽事
-    if finished
-      a.ui.button(href='/competition/?old=0') 未完結賽事
-    else
-      a.ui.button(href='/competition/?old=1') 已完結賽事
-    .ui.horizontal.divider 賽事列表
-    .ui.top.attached.tabular.menu
-      a.item.active(data-tab="lol") 英雄聯盟
-      a.item(data-tab="hs") 爐石戰記
-      a.item(data-tab="sc2") 星海爭霸
-      a.item(data-tab="ava") A.V.A
-    .ui.bottom.attached.tab.segment.active(data-tab="lol")
-      table.ui.table
-        thead
-          tr
-            th 甲隊
-            th 乙隊
-            th 對戰時間
-            th 戰勝隊伍
-            th 重播下載
-            th 賽別
-            th 操作
-        tbody
-          each comp in lolcomps
-            tr
-              td= comp.team1.name
-              td= comp.team2.name
-              td= times[comp.time]
-              td
-                case comp.winner
-                  when -1
-                    | 尚未完結
-                  when 0
-                    = comp.team1.name
-                  when 1
-                    = comp.team2.name
-              td= comp.replay_url
-              td
-                case comp.comp_type
-                  when 0
-                    | 預賽
-                  when 1
-                    | 複賽
-                  when 2
-                    | 決賽
-              td
-                .ui.icon.buttons
-                  a.ui.icon.button(href='/competition/'+comp.id)
-                    i.list.layout.icon
-                  if user && user.local.level > 0
-                    a.ui.icon.blue.button(href='/competition/'+comp.id+'/edit')
-                      i.edit.icon
-                    a.ui.icon.red.button(href='/competition/'+comp.id+'/delete')
-                      i.trash.icon
-    .ui.bottom.attached.tab.segment(data-tab="hs")
-      table.ui.table
-        thead
-          tr
-            th 甲隊
-            th 乙隊
-            th 對戰時間
-            th 戰勝隊伍
-            th 重播下載
-            th 賽別
-            th 操作
-        tbody
-          each comp in hscomps
-            tr
-              td= comp.team1.name
-              td= comp.team2.name
-              td= times[comp.time]
-              td
-                case comp.winner
-                  when -1
-                    | 尚未完結
-                  when 0
-                    = comp.team1.name
-                  when 1
-                    = comp.team2.name
-              td= comp.replay_url
-              td
-                case comp.comp_type
-                  when 0
-                    | 預賽
-                  when 1
-                    | 複賽
-                  when 2
-                    | 決賽
-              td
-                .ui.icon.buttons
-                  a.ui.icon.button(href='/competition/'+comp.id)
-                    i.list.layout.icon
-                  if user && user.local.level > 0
-                    a.ui.icon.blue.button(href='/competition/'+comp.id+'/edit')
-                      i.edit.icon
-                    a.ui.icon.red.button(href='/competition/'+comp.id+'/delete')
-                      i.trash.icon
-    .ui.bottom.attached.tab.segment(data-tab="sc2")
-      table.ui.table
-        thead
-          tr
-            th 甲隊
-            th 乙隊
-            th 對戰時間
-            th 戰勝隊伍
-            th 重播下載
-            th 賽別
-            th 操作
-        tbody
-          each comp in sc2comps
-            tr
-              td= comp.team1.name
-              td= comp.team2.name
-              td= times[comp.time]
-              td
-                case comp.winner
-                  when -1
-                    | 尚未完結
-                  when 0
-                    = comp.team1.name
-                  when 1
-                    = comp.team2.name
-              td= comp.replay_url
-              td
-                case comp.comp_type
-                  when 0
-                    | 預賽
-                  when 1
-                    | 複賽
-                  when 2
-                    | 決賽
-              td
-                .ui.icon.buttons
-                  a.ui.icon.button(href='/competition/'+comp.id)
-                    i.list.layout.icon
-                  if user && user.local.level > 0
-                    a.ui.icon.blue.button(href='/competition/'+comp.id+'/edit')
-                      i.edit.icon
-                    a.ui.icon.red.button(href='/competition/'+comp.id+'/delete')
-                      i.trash.icon
-    .ui.bottom.attached.tab.segment(data-tab="ava")
-      table.ui.table
-        thead
-          tr
-            th 甲隊
-            th 乙隊
-            th 對戰時間
-            th 戰勝隊伍
-            th 重播下載
-            th 賽別
-            th 操作
-        tbody
-          each comp in avacomps
-            tr
-              td= comp.team1.name
-              td= comp.team2.name
-              td= times[comp.time]
-              td
-                case comp.winner
-                  when -1
-                    | 尚未完結
-                  when 0
-                    = comp.team1.name
-                  when 1
-                    = comp.team2.name
-              td= comp.replay_url
-              td
-                case comp.comp_type
-                  when 0
-                    | 預賽
-                  when 1
-                    | 複賽
-                  when 2
-                    | 決賽
-              td
-                .ui.icon.buttons
-                  a.ui.icon.button(href='/competition/'+comp.id)
-                    i.list.layout.icon
-                  if user && user.local.level > 0
-                    a.ui.icon.blue.button(href='/competition/'+comp.id+'/edit')
-                      i.edit.icon
-                    a.ui.icon.red.button(href='/competition/'+comp.id+'/delete')
-                      i.trash.icon
-block javascript
-  script(src='/js/tab.js')
+      i.user.icon
+      | 選手詳細資料
+    a.ui.black.button(href='/user/') 選手列表
+    .ui.segment
+      h4.ui.header= "姓名：" + toshow.local.name
+      h4.ui.header= "電子郵件：" + toshow.local.email
+      h4.ui.header= "系所：" + departmentToName[toshow.local.department]
+      h4.ui.header= "年級：" + gradeToName[toshow.local.grade]
+      h4.ui.header 參加遊戲(隊名)：
+      .ui.selection.animated.list
+        each team in toshow.local.team
+          if team
+            a.item(href='/team/'+team.id)
+              img.ui.icon.image(src='/img/icon/' + gameToImg[team.game])
+              .content
+                .header= team.name
+      if user.local.level >= 10
+        h4.ui.header= "手機:" + toshow.local.phone
+        h4.ui.header= "學號:" + toshow.local.studentid
