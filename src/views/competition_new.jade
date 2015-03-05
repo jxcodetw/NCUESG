@@ -1,0 +1,65 @@
+extends layout
+
+block content
+  .container
+    h1.ui.center.aligned.header
+      i.trophy.icon
+      | 新增賽事
+    form#form-team.ui.form(method='post', action='/competition/new')
+      .field
+        a.ui.black.button(href='/competition') 返回
+        .ui.blue.submit.button 創立
+      .field
+        label 遊戲類別
+        #gametype.ui.selection.dropdown
+          input(type='hidden', name='gametype')
+          .default.text 遊戲類別
+          i.dropdown.icon
+          .menu
+              each gametype, i in gametypes
+                  .item(data-value=i)= gametype
+      #options.two.fields
+        .field
+          label Team A
+          .ui.selection.dropdown
+            input(type='hidden', name='team1', value=team1)
+            .default.text Team A
+            i.dropdown.icon
+            .menu
+              - var i = 0
+              each tem in teams
+                .item(data-value=tem.id)= tem.name
+                - i = i + 1
+        .field
+          label Team B
+          .ui.selection.dropdown
+            input(type='hidden', name='team2', value=team2)
+            .default.text Team B
+            i.dropdown.icon
+            .menu
+              - var i = 0
+              each tem in teams
+                .item(data-value=tem.id)= tem.name
+                - i = i + 1
+      .field
+        label 賽別
+        .ui.selection.dropdown
+          input(type='hidden', name='comp_type', value=comp_type)
+          .default.text 賽別
+          i.dropdown.icon
+          .menu
+            .item(data-value='0') 預賽
+            .item(data-value='1') 複賽
+            .item(data-value='2') 決賽
+      .field
+        label Gametime
+        .ui.selection.dropdown
+          input(type='hidden', name='time', value=time)
+          .default.text Gametime
+          i.dropdown.icon
+          .menu
+            each t, i in times
+              .item(data-value=i)= t
+      .ui.error.message
+block javascript
+  script(src='/js/competition.js')

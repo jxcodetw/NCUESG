@@ -1,0 +1,77 @@
+extends layout
+
+block content
+  .container
+    h1.ui.center.aligned.header
+      i.trophy.icon
+      | 新增賽事
+    if message != ""
+      .ui.success.message= message
+    form#form-team.ui.form(method='post', action='/competition/'+competition.id+'/edit')
+      .field
+        a.ui.black.button(href='/competition') 返回
+        .ui.blue.submit.button 更新
+      .field
+        label 遊戲類別
+        #gametype.ui.selection.dropdown
+          input#oldtype(type='hidden', name='gametype', value=competition.gametype)
+          .default.text 遊戲類別
+          i.dropdown.icon
+          .menu
+            each gametype, i in gametypes
+              .item(data-value=i)= gametype
+      #options.two.fields
+        .field
+          label Team A
+          .ui.selection.options.dropdown
+            input(type='hidden', name='team1', value=competition.team1.id)
+            .text Team A
+            i.dropdown.icon
+            .menu
+              each tem in teams
+                .item(data-value=tem.id)= tem.name
+                
+        .field
+          label Team B
+          .ui.selection.dropdown
+            input(type='hidden', name='team2', value=competition.team2.id)
+            .default.text Team B
+            i.dropdown.icon
+            .menu
+              each tem in teams
+                .item(data-value=tem.id)= tem.name
+      .field
+        label 賽別
+        .ui.selection.dropdown
+          input(type='hidden', name='comp_type', value=competition.comp_type)
+          .default.text 賽別
+          i.dropdown.icon
+          .menu
+            .item(data-value='0') 預賽
+            .item(data-value='1') 複賽
+            .item(data-value='2') 決賽
+      .field
+        label 賽評重播連結
+        input(type='text', name='replay_url', autocomplete='off', placeholder='賽評重播連結', value=competition.replay_url)
+      .field
+        label Gametime
+        .ui.selection.dropdown
+          input(type='hidden', name='time', value=competition.time)
+          .default.text Gametime
+          i.dropdown.icon
+          .menu
+            each t, i in times
+              .item(data-value=i)= t
+      .field
+        label 勝利隊伍
+        .ui.selection.dropdown
+          input(type='hidden', name='winner', value=competition.winner)
+          .default.text 勝利隊伍
+          i.dropdown.icon
+          .menu
+            .item(data-value=-1) 尚未結束比賽
+            .item(data-value=0)= competition.team1.name
+            .item(data-value=1)= competition.team2.name
+      .ui.error.message
+block javascript
+  script(src='/js/competition_edit.js')

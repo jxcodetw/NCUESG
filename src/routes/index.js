@@ -21,6 +21,15 @@ module.exports = function(passport) {
     });
   });
 
+  /*
+  router.get('/competition', function(req, res) {
+    res.render('competition', {
+      title: '賽事中心',
+      user: req.user
+    });
+  });
+  */
+
   router.get('/sponsors', function(req, res) {
     res.render('sponsors', {
       title: '贊助商',
