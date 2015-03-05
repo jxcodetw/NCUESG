@@ -3,7 +3,10 @@ block content
   .container
     h1.ui.center.aligned.header
       i.flag.icon
-      | 賽事中心
+      if finished
+        | 賽事中心-已完結
+      else
+        | 賽事中心-未完結
 
     if user && user.local.level > 0
       a.ui.blue.button(href='/competition/new') 新增賽事
