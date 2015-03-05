@@ -22,3 +22,44 @@ block content
         h4.ui.header 隊員：
         each mem in team.member
           a.ui.horizontal.label(href='/user/'+mem.id)= mem.local.name
+      h4.ui.header 賽事：
+      if team.competitions.length > 0
+        table.ui.table
+          thead
+            tr
+              th 甲隊
+              th 乙隊
+              th 對戰時間
+              th 戰勝隊伍
+              th 重播下載
+              th 賽別
+              th 檢視
+          tbody
+            each comp in team.competitions
+              tr
+                td= comp.team1.name
+                td= comp.team2.name
+                td= times[comp.time]
+                td
+                  case comp.winner
+                    when -1
+                      | 尚未完結
+                    when 0
+                      = comp.team1.name
+                    when 1
+                      = comp.team2.name
+                td= comp.replay_url
+                td
+                  case comp.comp_type
+                    when 0
+                      | 預賽
+                    when 1
+                      | 複賽
+                    when 2
+                      | 決賽
+                td
+                  .ui.icon.buttons
+                    a.ui.icon.button(href='/competition/'+comp.id)
+                      i.list.layout.icon
+      else
+        | 無
