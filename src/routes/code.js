@@ -32,6 +32,15 @@ router.get('/new/250', isAdmin, function(req, res) {
   res.redirect('/code');
 });
 
+router.get('/print', isAdmin, function(req, res) {
+  Code.find({'used': false}).sort({price: 'asc'}).exec(function(err, codes) {
+    res.render('printcode', {
+      user: req.user,
+      codes: codes
+    });
+  });
+});
+
 router.get('/:id/delete', isAdmin, function(req, res) {
   Code.findById(req.params.id).remove().exec();
   res.redirect('/code');

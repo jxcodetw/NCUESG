@@ -107,6 +107,12 @@ module.exports = function(passport) {
     failureFlash: true
   }));
 
+  router.get('/live', function(req, res) {
+    res.render('live', {
+      user: req.user
+    });
+  });
+
   router.get('/logout', function(req, res) {
     req.logout();
     res.redirect('/');

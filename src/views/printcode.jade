@@ -1,0 +1,59 @@
+html
+  head
+    title 列印啟動碼
+    link(rel='stylesheet', href='/css/print.css')
+  body
+    each code, i in codes
+      table(border='1')
+        tbody
+          tr
+            th(colspan='2')
+              | 第五屆中央校園電競大賽啟動碼
+              .sub(style='text-align:center;') (收執聯)
+            th(colspan='2')
+              | 第五屆中央校園電競大賽啟動碼
+              .sub(style='text-align:center;') (存根聯)
+          tr
+            td 遊戲類別
+            td= code.price === 50 ? "單人" : "多人"
+            td 遊戲類別
+            td= code.price === 50 ? "單人" : "多人"
+          tr
+            td 費用
+            td= code.price
+            td 費用
+            td= code.price
+          tr
+            td 啟動碼
+            td= code.id
+            td 啟動碼
+            td= code.id
+          tr
+            td(colspan='2', rowspan='6')
+              pre.
+                報名步驟:
+                1. 隊長至宵夜街購買啟動碼。
+                2. 隊長和隊員皆至電競官網註冊會員。
+                3. 隊長和隊員註冊完成後,在「帳號設
+                定」裡填齊相關資料。
+                4. 隊長在「組隊系統」裡透過啟動碼創建
+                隊伍,並將隊員加入隊伍中。
+                5. 確認個人資訊和隊伍資訊齊全與否。
+            td(colspan='2') 購買者資訊
+          tr
+            td 姓名
+            td 
+          tr
+            td 系級
+            td 
+          tr
+            td 學號
+            td 
+          tr
+            td 聯絡電話
+            td 
+          tr
+            td 經手人
+            td 
+      if i % 4 == 3
+        .page-break

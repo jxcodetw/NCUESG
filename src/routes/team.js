@@ -120,7 +120,7 @@ router.post('/:id/edit', isLoggedIn, isAdmin, uploadHead, function(req, res) {
   if (req.uploadedName != undefined) {
     req.authTeam.head = req.uploadedName;
   }
-  req.authTeam.tryout = Array.apply(null, Array(48)).map(function() {return false;});
+  req.authTeam.tryout = Array.apply(null, Array(54)).map(function() {return false;});
   req.authTeam.intermediary = Array.apply(null, Array(40)).map(function() {return false;});
   var tryout = req.body.tryout;
   var intermediary = req.body.intermediary;
@@ -409,7 +409,7 @@ router.post('/new', isLoggedIn, function(req, res) {
         newTeam.intro = sanitize(req.body.intro);
         newTeam.leader = req.user;
         newTeam.head = "";
-        newTeam.tryout = Array.apply(null, Array(48)).map(function() {return true;});
+        newTeam.tryout = Array.apply(null, Array(54)).map(function() {return true;});
         newTeam.intermediary = Array.apply(null, Array(40)).map(function() {return true;});
         newTeam.save(function(err, team) {
 

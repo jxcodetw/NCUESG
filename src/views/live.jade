@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  .container
+    h1.ui.center.aligned.header
+      i.video.play.outline.red.icon
+      | 直播
+    .ui.top.attached.tabular.menu
+      a.active.item(data-tab='youtube')
+        img(src='/img/live/youtube_icon.jpg')
+      a.item(data-tab='twitch')
+        img(src='/img/live/twitch_icon.jpg')
+      a.item(data-tab='ncu')
+        img(src='/img/live/ncu_icon.jpg')
+    .ui.bottom.attached.active.tab.segment(data-tab='youtube')
+      iframe(src="//www.youtube.com/embed/ADB8bkvAOJE?autoplay=1" id="player" allowfullscreen="" frameborder="0" height="550" width="100%")
+    .ui.bottom.attached.tab.segment(data-tab='twitch')
+      object(type="application/x-shockwave-flash" id="player" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=ncuinfo_esport_ob1" height="520" width="100%")
+        param(name="allowFullScreen" value="true")
+        param(name="allowScriptAccess" value="always")
+        param(name="allowNetworking" value="all")
+        param(name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf")
+        param(name="flashvars" value="hostname=www.twitch.tv&amp;channel=ncuesg&amp;auto_play=true&amp;start_volume=25")
+    .ui.bottom.attached.tab.segment(data-tab='ncu')
+      | 尚未開放
+
+block javascript
+  script(src='/js/live.js')
+

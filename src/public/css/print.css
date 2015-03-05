@@ -1,0 +1,14 @@
+@media print {
+  .page-break {
+    display: block;
+    page-break-before: always;
+  }
+}
+
+table {
+  border-collapse: collapse;
+  margin-top:10px;
+  width:100%;
+  font-size:.95em;
+  height:20%;
+}

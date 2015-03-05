@@ -71,7 +71,7 @@ router.get('/:id/delete', isAdmin, function(req, res) {
 module.exports = router;
 
 function isAdmin(req, res, next) {
-  if (req.isAuthenticated() && req.user.local.level > 0)
+  if (req.isAuthenticated() && req.user.local.level >= 10)
     return next();
   else
     res.redirect('/announcement');
