@@ -11,9 +11,9 @@ block content
     if user && user.local.level > 0
       a.ui.blue.button(href='/competition/new') 新增賽事
     if finished
-      a.ui.button(href='/competition/?old=0') 未完結賽事
+      a.ui.button(href='/competition/?old=0') 檢視未完結賽事
     else
-      a.ui.button(href='/competition/?old=1') 已完結賽事
+      a.ui.button(href='/competition/?old=1') 檢視已完結賽事
     .ui.horizontal.divider 賽事列表
     .ui.top.attached.tabular.menu
       a.item.active(data-tab="lol") 英雄聯盟
