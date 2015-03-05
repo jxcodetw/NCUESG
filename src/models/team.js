@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var teamSchema = mongoose.Schema({
   game: Number,
-  name: String,
+  name: {type: String, index: { unique: true }},
   intro: String,
   head: String,
   leader: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},

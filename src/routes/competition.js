@@ -190,8 +190,22 @@ router.get('/new', isAdmin, function(req, res) {
       user: req.user,
       gametypes: gameList,
       times: timeList,
-      teams: tem,
-      message: req.flash('competitionEditMessage')
+      teams: tem
+    });
+  });
+});
+
+router.get('/:id', function(req, res) {
+  Competition.findById(req.params.id).populate('team1').populate('team2').exec(function(err, com) {
+    if (err || !com) {
+      res.redirect('/competition');
+      return;
+    }
+    res.render('competition', {
+      user: req.user,
+      com: com,
+      game: gameList[com.gametype],
+      time: timeList[com.time]
     });
   });
 });
@@ -205,7 +219,8 @@ router.get('/:id/edit', isAdmin, function(req, res) {
           gametypes: gameList,
           competition: com,
           times: timeList,
-          teams: tem
+          teams: tem,
+          messages: req.flash('info')
         });
       });
     } else {
@@ -247,7 +262,7 @@ router.post('/:id/edit', isAdmin, function(req, res) {
     com.replay_url = req.body.replay_url;
     com.winner = req.body.winner;
     com.save();
-    req.flash('competitionEditMessage', '已修改賽事');
+    req.flash('info', '已修改賽事');
     res.redirect('/competition/'+req.params.id+'/edit');
   });
 });

@@ -1,27 +1,52 @@
 extends layout
 
 block stylesheet
-  link(rel="stylesheet",type="text/css",href="/css/user.css")
 
 block content
   .container
     h1.ui.center.aligned.header
       i.user.icon
-      | 選手詳細資料
-    a.ui.black.button(href='/user/') 選手列表
+      | 賽事詳細資料
+    a.ui.black.button(href='/competition/') 賽事中心
     .ui.segment
-      h4.ui.header= "姓名：" + toshow.local.name
-      h4.ui.header= "電子郵件：" + toshow.local.email
-      h4.ui.header= "系所：" + departmentToName[toshow.local.department]
-      h4.ui.header= "年級：" + gradeToName[toshow.local.grade]
-      h4.ui.header 參加遊戲(隊名)：
-      .ui.selection.animated.list
-        each team in toshow.local.team
-          if team
-            a.item(href='/team/'+team.id)
-              img.ui.icon.image(src='/img/icon/' + gameToImg[team.game])
-              .content
-                .header= team.name
-      if user.local.level >= 10
-        h4.ui.header= "手機:" + toshow.local.phone
-        h4.ui.header= "學號:" + toshow.local.studentid
+      h1.ui.center.aligned.header= "遊戲類別：" + game
+      h2.ui.center.aligned.header
+        | 賽別：
+        case com.comp_type
+          when 0
+            | 預賽
+          when 1
+            | 複賽
+          when 2
+            | 決賽
+      .ui.right.aligned.grid
+        .right.floated.center.aligned.two.wide.column
+        .right.floated.center.aligned.five.wide.column
+          .ui.segment
+            if com.team2.head == ""
+              img(width='200', src='/uploads/defaultPortrait.png')
+            else
+              img(width='200', src='/uploads/'+com.team2.head)
+            br
+            a(href='/team/'+com.team2.id)= com.team2.name
+        .two.wide.column
+          h1.ui.center.aligned.header(style='margin-top: 50px;') V.S
+        .left.floated.center.aligned.two.wide.column
+        .left.floated.center.aligned.five.wide.column
+          .ui.segment
+            if com.team1.head == ""
+              img(width='200', src='/uploads/defaultPortrait.png')
+            else
+              img(width='200', src='/uploads/'+com.team1.head)
+            br
+            a(href='/team/'+com.team1.id)= com.team1.name
+      h2.ui.center.aligned.header= "比賽時間：" + time
+      h2.ui.center.aligned.header
+        | 獲勝隊伍：
+        case com.winner
+          when -1
+            | 尚未完結
+          when 0
+            = com.team1.name
+          when 1
+            = com.team2.name

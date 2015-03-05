@@ -9,12 +9,14 @@ block content
       = gameName
     if editTeamMessage != ""
       .ui.success.message= editTeamMessage
+    if editTeamErrorMessage != ""
+      .ui.error.message= editTeamErrorMessage
     form#form-team.ui.form(method='post', action='/team/'+team.id+'/edit', enctype="multipart/form-data")
       .field
         a.ui.black.button(href='/team/dashboard') 返回
         .ui.blue.submit.button 更新
       .field
-        label 隊伍頭像(盡量使用100x100的圖像，否則會造成圖片變形)
+        label 隊伍頭像(盡量使用200x200的圖像，否則會造成圖片變形)
         if team.head != ""
           img#uploadPreview(style="width: 100px; height: 100px;", src="/uploads/"+team.head)
         else

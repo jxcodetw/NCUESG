@@ -4,9 +4,9 @@ block content
   .container
     h1.ui.center.aligned.header
       i.trophy.icon
-      | 新增賽事
-    if message != ""
-      .ui.success.message= message
+      | 編輯賽事
+    if messages != ""
+      .ui.success.message= messages
     form#form-team.ui.form(method='post', action='/competition/'+competition.id+'/edit')
       .field
         a.ui.black.button(href='/competition') 返回

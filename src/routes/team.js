@@ -132,9 +132,14 @@ router.post('/:id/edit', isLoggedIn, isAdmin, uploadHead, function(req, res) {
   }
   req.authTeam.markModified('tryout');
   req.authTeam.markModified('intermediary');
-  req.authTeam.save();
-  req.flash('editTeamMessage', '修改成功');
-  res.redirect('/team/' + req.params.id + '/edit');
+  req.authTeam.save(function(err) {
+    if (err && err.code == 11000) {
+      req.flash('editTeamErrorMessage', '隊伍名稱重複了');
+    } else {
+      req.flash('editTeamMessage', '修改成功');
+    }
+    res.redirect('/team/' + req.params.id + '/edit');
+  });
 });
 
 router.get('/dashboard', isLoggedIn, function(req, res) {
@@ -228,6 +233,7 @@ router.get('/:id/edit', isLoggedIn, isAdmin, function(req, res) {
     team: req.authTeam,
     gameName: gameToName[req.authTeam.game],
     editTeamMessage: req.flash('editTeamMessage'),
+    editTeamErrorMessage: req.flash('editTeamErrorMessage'),
     tryout: [
       {index: 0, datetime: "3/23(一)"},
       {index: 1, datetime: "3/24(二)"},
@@ -290,6 +296,13 @@ router.post('/new', isLoggedIn, function(req, res) {
         newTeam.tryout = Array.apply(null, Array(48)).map(function() {return true;});
         newTeam.intermediary = Array.apply(null, Array(40)).map(function() {return true;});
         newTeam.save(function(err, team) {
+
+          if (err && err.code == 11000) {
+            req.flash('newteamMessage', '隊伍名稱重複了');
+            res.redirect('/team/new?gametype='+gametypeToString[req.body.gametype]);
+            return;
+          }
+
           code.used = true;
           code.updated = new Date();
           code.team = team.id;
