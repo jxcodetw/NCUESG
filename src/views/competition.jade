@@ -22,24 +22,26 @@ block content
       .ui.right.aligned.grid
         .right.floated.center.aligned.two.wide.column
         .right.floated.center.aligned.five.wide.column
-          .ui.segment
-            if com.team2.head == ""
-              img(width='200', src='/uploads/defaultPortrait.png')
-            else
-              img(width='200', src='/uploads/'+com.team2.head)
-            br
-            a(href='/team/'+com.team2.id)= com.team2.name
+          .ui.segments
+            .ui.top.attached.blue.segment
+              if com.team2.head == ""
+                img(width='200', src='/uploads/defaultPortrait.png')
+              else
+                img(width='200', src='/uploads/'+com.team2.head)
+            .ui.bottom.attached.secondary.segment
+              a(href='/team/'+com.team2.id)= com.team2.name
         .two.wide.column
           h1.ui.center.aligned.header(style='margin-top: 50px;') V.S
         .left.floated.center.aligned.two.wide.column
         .left.floated.center.aligned.five.wide.column
-          .ui.segment
-            if com.team1.head == ""
-              img(width='200', src='/uploads/defaultPortrait.png')
-            else
-              img(width='200', src='/uploads/'+com.team1.head)
-            br
-            a(href='/team/'+com.team1.id)= com.team1.name
+          .ui.segments
+            .ui.top.attached.blue.segment
+              if com.team1.head == ""
+                img(width='200', src='/uploads/defaultPortrait.png')
+              else
+                img(width='200', src='/uploads/'+com.team1.head)
+            .ui.bottom.attached.secondary.segment
+              a(href='/team/'+com.team1.id)= com.team1.name
       h2.ui.center.aligned.header= "比賽時間：" + time
       h2.ui.center.aligned.header
         | 獲勝隊伍：
