@@ -80,6 +80,9 @@ block content
         .field
           label 學號
           input(type='text', name='studentid', placeholder='學號')
+      .ui.message
+        | 按下註冊視同已閱讀
+        a(href='/participation_help', target="_blank") 報名須知
       #btn-submit.ui.blue.submit.button 註冊
       .ui.error.message
 block javascript
