@@ -53,6 +53,7 @@ router.get('/', function(req, res) {
 router.get('/:id', function(req, res) {
   User.findById(req.params.id).populate('local.team').exec(function(err, user) {
     if (err || !user) {
+      console.log(req.headers['x-forwarded-for'] || req.connection.remoteAddress);
       res.redirect('/user');
       return;
     }
