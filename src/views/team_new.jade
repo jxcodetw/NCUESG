@@ -7,6 +7,8 @@ block content
       | 新建隊伍
     if errorMessage != ""
       .ui.error.message= errorMessage
+    .ui.warning.message
+      | 創立隊伍後則無法修改遊戲類別，請再三確認是否正確
     form#form-team.ui.form(method='post', action='/team/new')
       .field
         a.ui.black.button(href='/team/dashboard') 返回
