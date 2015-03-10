@@ -1,7 +1,7 @@
 #live {
   background: url('/img/home.jpg');
   background-size: cover;
-  min-height: 500px;
+  min-height: 450px;
   padding-top: 50px;
   color: #fff;
 }
