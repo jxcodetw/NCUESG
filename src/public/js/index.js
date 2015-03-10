@@ -11,5 +11,5 @@ $(function() {
     sc2Anim.start();
     avaAnim.start();
     userAnim.start();
-  }, 200);
+  }, 400);
 });
