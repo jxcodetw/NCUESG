@@ -31,6 +31,27 @@ block content
 
           第五屆中央電競，強勢來襲！
       
+  .ui.vertical.feature.segment
+    .ui.centered.page.grid
+      .four.wide.column
+      .eight.wide.column
+        .ui.statistics
+          .ui.transition.hidden.red.statistic
+            #lolTeamsCount.value(data-max=lolTeamsCount) 0
+            .label 英雄聯盟隊伍
+          .ui.transition.hidden.green.statistic
+            #hsTeamsCount.value(data-max=hsTeamsCount) 0
+            .label 爐石戰記隊伍
+          .ui.transition.hidden.blue.statistic
+            #sc2TeamsCount.value(data-max=sc2TeamsCount) 0
+            .label 星海爭霸隊伍
+          .ui.transition.hidden.yellow.statistic
+            #avaTeamsCount.value(data-max=avaTeamsCount) 0
+            .label A.V.A隊伍
+          .ui.transition.hidden.statistic
+            #userCount.value(data-max=userCount) 0
+            .label 已註冊選手
+      .four.wide.column
   .ui.vertical.feature.segment(style='min-height:300px;')
     .ui.centered.page.grid
       .fourteen.wide.column
@@ -65,5 +86,7 @@ block content
                     td
                       a(href='/announcement/'+ann.id)= ann.title
                     td.right.aligned.collapsing= ann.created.getFullYear() + "/" + (ann.created.getMonth()+1) + "/" + ann.created.getDate()
+
 block javascript
-  script(src='/js/modal.js')
+  script(src='/js/countUp.min.js')
+  script(src='/js/index.js')

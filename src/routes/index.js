@@ -1,34 +1,66 @@
 var express = require('express');
 var router = express.Router();
+var async = require('async');
 var Announcement = require('../models/announcement');
+var Team = require('../models/team');
+var User = require('../models/user');
 
 module.exports = function(passport) {
   router.get('/', function(req, res) {
-    // get some announcements
-    var important;
-    var normal;
-    Announcement.find({'level': {$gt: 0}}).sort({created: 'desc'}).limit(5).exec(function(err, ann) {
-      important = ann;
-      Announcement.find({'level': {$lt: 1}}).sort({created: 'desc'}).limit(5).exec(function(err, ann) {
-        normal = ann;
+    // async wait for all task to be done.
+    async.parallel(
+      {
+        lolTeamsCount: function(cb) {
+          Team.count({'game':0}).exec(function(err, team) {
+            cb(null, team);
+          });
+        },
+        hsTeamsCount: function(cb) {
+          Team.count({'game':1}).exec(function(err, team) {
+            cb(null, team);
+          });
+        },
+        sc2TeamsCount: function(cb) {
+          Team.count({'game':2}).exec(function(err, team) {
+            cb(null, team);
+          });
+        },
+        avaTeamsCount: function(cb) {
+          Team.count({'game':3}).exec(function(err, team) {
+            cb(null, team);
+          });
+        },
+        userCount: function(cb) {
+          User.count({}).exec(function(err, c) {
+            cb(null,c);
+          });
+        },
+        important: function(cb) {
+          Announcement.find({'level': {$gt: 1}}).sort({created: 'desc'}).limit(5).exec(function(err, ann) {
+            cb(null, ann);
+          });
+        },
+        normal: function(cb) {
+          Announcement.find({'level': {$gt: 0}}).sort({created: 'desc'}).limit(5).exec(function(err, ann) {
+            cb(null, ann);
+          });
+        }
+      },
+      function(err, result) {
         res.render('index', {
           title: '',
           user: req.user,
-          announcement_important: important,
-          announcement_normal: normal
+          announcement_important: result.important,
+          announcement_normal: result.normal,
+          userCount: result.userCount,
+          lolTeamsCount: result.lolTeamsCount,
+          hsTeamsCount: result.hsTeamsCount,
+          sc2TeamsCount: result.sc2TeamsCount,
+          avaTeamsCount: result.avaTeamsCount
         });
-      });
-    });
+      }
+    );
   });
-
-  /*
-  router.get('/competition', function(req, res) {
-    res.render('competition', {
-      title: '賽事中心',
-      user: req.user
-    });
-  });
-  */
 
   router.get('/sponsors', function(req, res) {
     res.render('sponsors', {
