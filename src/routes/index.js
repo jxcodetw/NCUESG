@@ -36,12 +36,12 @@ module.exports = function(passport) {
           });
         },
         important: function(cb) {
-          Announcement.find({'level': {$gt: 1}}).sort({created: 'desc'}).limit(5).exec(function(err, ann) {
+          Announcement.find({'level': 1}).sort({created: 'desc'}).limit(5).exec(function(err, ann) {
             cb(null, ann);
           });
         },
         normal: function(cb) {
-          Announcement.find({'level': {$gt: 0}}).sort({created: 'desc'}).limit(5).exec(function(err, ann) {
+          Announcement.find({'level': 0}).sort({created: 'desc'}).limit(5).exec(function(err, ann) {
             cb(null, ann);
           });
         }
