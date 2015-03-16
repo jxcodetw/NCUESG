@@ -1,0 +1,96 @@
+extends layout
+
+block content
+  .container
+    h1.ui.center.aligned.header
+      i.users.icon
+      = gametype
+    each team, i in teams
+      .ui.red.segment(style='margin-bottom: 130px;')
+        h2.ui.center.aligned.header
+          i.users.icon
+          = "隊伍資料 - " + (i+1)
+        h2.ui.header= "隊伍名稱：" + team.name
+        h2.ui.header= "隊長：" + team.leader.local.name + "(" + team.leader.local.phone + ")"
+        if game == 1
+          h2.ui.header= "BattleTag: " + team.leader.local.hsid
+          h2.ui.header= "排名: " + team.leader.local.hsladder
+        if game == 2
+          h2.ui.header= "BattleTag: " + team.leader.local.sc2id
+          h2.ui.header= "排名: " + team.leader.local.sc2ladder
+        if game == 0 || game == 3
+          h2.ui.header 基本資料表
+          table.ui.celled.table
+            thead
+              tr
+                th 姓名
+                th 遊戲ID
+                th 競時通帳號
+                th UID
+            tbody
+              if game == 0
+                tr
+                  td
+                    i.trophy.icon
+                    = team.leader.local.name
+                  td= team.leader.local.lolid
+                  td= team.leader.local.lolgpid
+                  td= team.leader.local.loluid
+                each mem in team.member
+                  tr
+                    td= mem.local.name
+                    td= mem.local.lolid
+                    td= mem.local.lolgpid
+                    td= mem.local.loluid
+              if game == 3
+                tr
+                  td
+                    i.trophy.icon
+                    = team.leader.local.name
+                  td= team.leader.local.avaid
+                  td= team.leader.local.avagpid
+                  td= team.leader.local.avauid
+                each mem in team.member
+                  tr
+                    td= mem.local.name
+                    td= mem.local.avaid
+                    td= mem.local.avagpid
+                    td= mem.local.avauid
+        h2.ui.horizontal.header.divider
+          i.calendar.icon
+          | 初賽日期選擇
+        table.ui.celled.table
+          thead
+            tr
+              th 日期/時間
+              each time in tryout_times
+                th= time.time
+          tbody
+            each day in tryout
+              tr
+                td= day.datetime
+                each time in tryout_times
+                  td
+                    .ui.checkbox(tryout-row=day.index)
+                      - var index = day.index*tryout_times.length+time.index;
+                      if team.tryout[index]
+                        i.check.icon
+        h2.ui.horizontal.header.divider
+          i.calendar.icon
+          | 複賽日期選擇
+        table.ui.celled.table
+          thead
+            tr
+              th 日期/時間
+              each time in intermediary_times
+                th= time.time
+          tbody
+            each day in intermediary
+              tr
+                td= day.datetime
+                each time in intermediary_times
+                  td
+                    .ui.checkbox(inter-row=day.index)
+                      - var index = day.index*intermediary_times.length+time.index
+                      if team.intermediary[index]
+                        i.check.icon

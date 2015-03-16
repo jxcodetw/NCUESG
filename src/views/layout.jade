@@ -51,6 +51,20 @@ html
                       a.item(href='/user')
                         i.user.icon
                         | 選手列表
+                      if user.local.level > 0
+                        .ui.horizontal.divider
+                        a.item(href='/team/all/0')
+                          i.users.icon
+                          | LOL隊伍清單
+                        a.item(href='/team/all/1')
+                          i.users.icon
+                          | 爐石隊伍清單
+                        a.item(href='/team/all/2')
+                          i.users.icon
+                          | 星海隊伍清單
+                        a.item(href='/team/all/3')
+                          i.users.icon
+                          | AVA隊伍清單
                       .ui.horizontal.divider
                       a.item(href='/user/'+user.id+'/edit')
                         i.settings.icon

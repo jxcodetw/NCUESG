@@ -16,6 +16,43 @@ var gameList = [
   "AVA戰地之王"
 ];
 
+var tryout= [
+      {index: 0, datetime: "3/23(一)"},
+      {index: 1, datetime: "3/24(二)"},
+      {index: 2, datetime: "3/25(三)"},
+      {index: 3, datetime: "3/26(四)"},
+      {index: 4, datetime: "3/27(五)"},
+      {index: 5, datetime: "3/28(六)"},
+      {index: 6, datetime: "3/29(日)"},
+      {index: 7, datetime: "3/30(一)"},
+      {index: 8, datetime: "3/31(二)"}
+    ],
+    tryout_times= [
+      {index: 0, time: "18:00"},
+      {index: 1, time: "19:00"},
+      {index: 2, time: "20:00"},
+      {index: 3, time: "21:00"},
+      {index: 4, time: "22:00"},
+      {index: 5, time: "23:00"}
+    ],
+    intermediary= [
+      {index: 0, datetime: "4/1(三)"},
+      {index: 1, datetime: "4/2(四)"},
+      {index: 2, datetime: "4/7(二)"},
+      {index: 3, datetime: "4/8(三)"},
+      {index: 4, datetime: "4/9(四)"}
+    ],
+    intermediary_times= [
+      {index: 0, time: "17:00"},
+      {index: 1, time: "18:00"},
+      {index: 2, time: "19:00"},
+      {index: 3, time: "20:00"},
+      {index: 4, time: "21:00"},
+      {index: 5, time: "22:00"},
+      {index: 6, time: "23:00"},
+      {index: 7, time: "24:00"}
+    ];
+
 router.get('/', function(req, res) {
   // async wait for all task to be done.
   async.parallel(
@@ -193,6 +230,10 @@ router.get('/dashboard', isLoggedIn, function(req, res) {
 
 router.get('/:id', isLoggedIn, function(req, res) {
   Team.findById(req.params.id).populate('leader').populate('member').populate('competitions').exec(function(err, team) {
+    if (err || !team) {
+      res.redirect('/team');
+      return;
+    }
     var options = {
       path: 'competitions.team1 competitions.team2',
       model: 'Team'
@@ -350,42 +391,10 @@ router.get('/:id/edit', isLoggedIn, isAdmin, function(req, res) {
     gameName: gameToName[req.authTeam.game],
     editTeamMessage: req.flash('editTeamMessage'),
     editTeamErrorMessage: req.flash('editTeamErrorMessage'),
-    tryout: [
-      {index: 0, datetime: "3/23(一)"},
-      {index: 1, datetime: "3/24(二)"},
-      {index: 2, datetime: "3/25(三)"},
-      {index: 3, datetime: "3/26(四)"},
-      {index: 4, datetime: "3/27(五)"},
-      {index: 5, datetime: "3/28(六)"},
-      {index: 6, datetime: "3/29(日)"},
-      {index: 7, datetime: "3/30(一)"},
-      {index: 8, datetime: "3/31(二)"}
-    ],
-    tryout_times: [
-      {index: 0, time: "18:00"},
-      {index: 1, time: "19:00"},
-      {index: 2, time: "20:00"},
-      {index: 3, time: "21:00"},
-      {index: 4, time: "22:00"},
-      {index: 5, time: "23:00"}
-    ],
-    intermediary: [
-      {index: 0, datetime: "4/1(三)"},
-      {index: 1, datetime: "4/2(四)"},
-      {index: 2, datetime: "4/7(二)"},
-      {index: 3, datetime: "4/8(三)"},
-      {index: 4, datetime: "4/9(四)"}
-    ],
-    intermediary_times: [
-      {index: 0, time: "17:00"},
-      {index: 1, time: "18:00"},
-      {index: 2, time: "19:00"},
-      {index: 3, time: "20:00"},
-      {index: 4, time: "21:00"},
-      {index: 5, time: "22:00"},
-      {index: 6, time: "23:00"},
-      {index: 7, time: "24:00"}
-    ]
+    tryout: tryout,
+    tryout_times: tryout_times,
+    intermediary: intermediary,
+    intermediary_times: intermediary_times
   });
 });
 
@@ -468,6 +477,32 @@ router.post('/:id/addmember', isLoggedIn, isAdmin, function(req, res) {
     });
   });
 });
+
+router.get('/all/:game', isStaff, function(req, res) {
+  var gametype = 0;
+  if (req.params.game && req.params.game >=0 && req.params.game <= 3) {
+    gametype = req.params.game;
+  }
+  Team.find({'game':gametype}).populate('leader').populate('member').exec(function(err, teams) {
+    res.render('allteams', {
+      user: req.user,
+      teams: teams,
+      game: gametype,
+      gametype: gameList[gametype],
+      tryout: tryout,
+      tryout_times: tryout_times,
+      intermediary: intermediary,
+      intermediary_times: intermediary_times
+    });
+  });
+});
+
+function isStaff(req, res, next) {
+  if (req.isAuthenticated() && req.user.local.level > 0) {
+    return next();
+  }
+  res.redirect('/');
+}
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated())
