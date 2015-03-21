@@ -136,28 +136,28 @@ router.get('/', function(req, res) {
       lolcomps: function(cb) {
         var qlol = query;
         qlol.gametype=0;
-        Competition.find(qlol).populate('team1').populate('team2').exec(function(err, com) {
+        Competition.find(qlol).sort({'time': 1}).populate('team1').populate('team2').exec(function(err, com) {
           cb(null, com);
         });
       },
       hscomps: function(cb) {
         var qhs = query;
         qhs.gametype=1;
-        Competition.find(qhs).populate('team1').populate('team2').exec(function(err, com) {
+        Competition.find(qhs).sort({'time': 1}).populate('team1').populate('team2').exec(function(err, com) {
           cb(null, com);
         });
       },
       sc2comps: function(cb) {
         var qsc2 = query;
         qsc2.gametype=2;
-        Competition.find(qsc2).populate('team1').populate('team2').exec(function(err, com) {
+        Competition.find(qsc2).sort({'time': 1}).populate('team1').populate('team2').exec(function(err, com) {
           cb(null, com);
         });
       },
       avacomps: function(cb) {
         var qava = query;
         qava.gametype=3;
-        Competition.find(qava).populate('team1').populate('team2').exec(function(err, com) {
+        Competition.find(qava).sort({'time': 1}).populate('team1').populate('team2').exec(function(err, com) {
           cb(null, com);
         });
       },

@@ -6,7 +6,7 @@ var competitionSchema = mongoose.Schema({
   team1: {type: mongoose.Schema.Types.ObjectId, ref: 'Team'},
   team2: {type: mongoose.Schema.Types.ObjectId, ref: 'Team'},
   finished: Number, // finished: 1, not finished: 0
-  time: String,
+  time: Number,
   winner: Number, // no: -1, team1: 0, team2: 1
   replay_url: String,
 });

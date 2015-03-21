@@ -140,7 +140,7 @@ function isLoggedIn(req, res, next) {
 }
 
 function isEditable(req, res, next) {
-  if (req.isAuthenticated() && req.user.id == req.params.id || (req.user && req.user.level > 10))
+  if (req.isAuthenticated() && req.user.id == req.params.id || (req.user && req.user.local.level > 10))
     return next();
   res.redirect('/user/' + req.params.id);
 }
