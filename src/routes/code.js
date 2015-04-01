@@ -3,7 +3,7 @@ var router = express.Router();
 var Code = require('../models/code');
 
 router.get('/', isAdmin, function(req, res) {
-  Code.find({used: true}).sort({price: 'asc'}).populate('team').exec(function(err, usedCode) {
+  Code.find({used: true}).sort({"updated": 1}).populate('team').exec(function(err, usedCode) {
     Code.find({used: false}).sort({price: 'asc'}).exec(function(err, newCode) {
       res.render('codes', {
         user: req.user,

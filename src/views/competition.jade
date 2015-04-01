@@ -27,7 +27,7 @@ block content
               if com.team2.head == ""
                 img(width='200', src='/uploads/defaultPortrait.png')
               else
-                img(width='200', src='/uploads/'+com.team2.head)
+                img(width='200', height='200', src='/uploads/'+com.team2.head)
             .ui.bottom.attached.secondary.segment
               a(href='/team/'+com.team2.id)= com.team2.name
         .two.wide.column
@@ -39,7 +39,7 @@ block content
               if com.team1.head == ""
                 img(width='200', src='/uploads/defaultPortrait.png')
               else
-                img(width='200', src='/uploads/'+com.team1.head)
+                img(width='200', height='200', src='/uploads/'+com.team1.head)
             .ui.bottom.attached.secondary.segment
               a(href='/team/'+com.team1.id)= com.team1.name
       h2.ui.center.aligned.header= "比賽時間：" + time

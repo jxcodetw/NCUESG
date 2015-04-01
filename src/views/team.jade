@@ -49,7 +49,12 @@ block content
                       = comp.team1.name
                     when 1
                       = comp.team2.name
-                td= comp.replay_url
+                td
+                  if comp.replay_url != '無' && comp.replay_url.length > 0
+                    a.ui.icon.button(href=comp.replay_url)
+                      i.cloud.icon
+                  else
+                    | 無
                 td
                   case comp.comp_type
                     when 0
